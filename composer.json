@@ -1,0 +1,21 @@
+{
+    "name": "phlexible/indexer-component",
+    "description": "phlexible.core indexer component",
+    "license": "proprietary",
+    "autoload": {
+        "psr-0": { 
+            "MWF_Core_Indexer_": ""
+        }
+    },
+    "target-dir": "MWF/Core/Indexer",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.phlexible.net/v1/"
+        }
+    ],
+    "minimum-stability": "stable"
+}
