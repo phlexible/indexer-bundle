@@ -70,7 +70,7 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
                 ),
                 'indexerTools' => array(
                     'class'     => 'MWF_Core_Indexer_Tools',
-                    'arguments' => array('componentManager'),
+                    'arguments' => array('componentCallback'),
                     'scope'     => 'singleton',
                 ),
                 'indexerSearch' => array(

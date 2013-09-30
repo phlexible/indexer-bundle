@@ -22,21 +22,21 @@ class MWF_Core_Indexer_Tools
     /**
      * @var MWF_Component_Manager
      */
-    protected $_componentManager = null;
+    protected $_componentCallback = null;
 
     /**
      * Constructor
      *
-     * @param MWF_Component_Manager $componentManager
+     * @param MWF_Component_Callback $componentCallback
      */
-    public function __construct(MWF_Component_Manager $componentManager)
+    public function __construct(MWF_Component_Callback $componentCallback)
     {
-        $this->_componentManager = $componentManager;
+        $this->_componentCallback = $componentCallback;
     }
 
     public function getRepositoriesByAcceptedStorage($documentType)
     {
-        $storages = $this->_componentManager->callback->getIndexerStorages();
+        $storages = $this->_componentCallback->getIndexerStorages();
 
         return self::filterRepositoriesByAcceptedStorage($documentType, $storages);
     }
@@ -51,7 +51,7 @@ class MWF_Core_Indexer_Tools
         $documentTypes = $query->getDocumentTypes();
         $queryClassName = get_class($query);
 
-        $storages = $this->_componentManager->callback->getIndexerStorages();
+        $storages = $this->_componentCallback->getIndexerStorages();
 
         $ret = $this->filterRepositoriesByAcceptedStorage($documentTypes, $storages);
 
@@ -95,7 +95,7 @@ class MWF_Core_Indexer_Tools
         $documentTypes = (array) $documentTypes;
         $result = array();
 
-        $mappings = $this->_componentManager->callback->getIndexerStorageMappings();
+        $mappings = $this->_componentCallback->getIndexerStorageMappings();
 
         foreach ($documentTypes as $documentType)
         {
