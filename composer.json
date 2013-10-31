@@ -12,6 +12,9 @@
         "php": ">=5.3.0",
         "phlexible/queue-component": "*"
     },
+    "suggest": {
+        "phlexible/indexer-repository-solr-component": "SOLR repository for indexer"
+    },
     "repositories": [
         {
             "type": "composer",
