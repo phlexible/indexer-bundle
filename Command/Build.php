@@ -85,12 +85,11 @@ class MWF_Core_Indexer_Command_Build extends  MWF_Core_Commands_Command_Abstract
         $outputter = $this->getOutputter();
         $container = $this->getContainer();
 
-        $componentCallback = $container->componentCallback;
         $queueManager     = $container->queueManager;
         $indexerTools     = $container->indexerTools;
 
-        $allStorages = $componentCallback->getIndexerStorages();
-        $allIndexers = $componentCallback->getIndexers();
+        $allStorages = $container->findTaggedComponents('indexer.storage');
+        $allIndexers = $container->findTaggedComponents('indexer.indexer');
 
         foreach ($allIndexers as $indexerId => $indexer)
         {

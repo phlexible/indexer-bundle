@@ -114,11 +114,10 @@ class MWF_Core_Indexer_Job_AddNode extends MWF_Core_Queue_Job_Abstract
             throw new MWF_Core_Indexer_Job_Exception('Got empty Identifier!');
         }
 
-        $container         = MWF_Registry::getContainer();
-        $componentCallback = $container->componentCallback;
+        $container = $this->_container;
 
-        $indexers = $componentCallback->getIndexers();
-        $storages = $componentCallback->getIndexerStorages();
+        $indexers = $container->findTaggedComponents('indexer.indexer');
+        $storages = $container->findTaggedComponents('indexer.storage');
 
         $indexer = $indexers[$this->_indexerId];
 

@@ -42,7 +42,7 @@ class MWF_Core_Indexer_Command_Maintenance extends MWF_Core_Commands_Command_Abs
         $container = $this->getContainer();
         $outputter = $this->getOutputter();
 
-        $storages = $container->componentCallback->getIndexerStorages();
+        $storages = $container->findTaggedComponents('indexer.storage');
 
         $outputter->writeln('Maintaining repositories:');
 

@@ -39,11 +39,9 @@ class MWF_Core_Indexer_Command_List extends MWF_Core_Commands_Command_AbstractCo
     {
         ini_set('memory_limit', -1);
 
-        $callback = $this->getContainer()->componentCallback;
-
-        $storages = $callback->getIndexerStorages();
-        $searches = $callback->getIndexerSearches();
-        $indexers = $callback->getIndexers();
+        $storages = $this->getContainer()->findTaggedComponents('indexer.storage');
+        $searches = $this->getContainer()->findTaggedComponents('indexer.search');
+        $indexers = $this->getContainer()->findTaggedComponents('indexer.indexer');
 
         $this->getOutputter()->writeln(
             $this->_renderIndexers($indexers)

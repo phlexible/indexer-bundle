@@ -60,11 +60,10 @@ class MWF_Core_Indexer_Command_Flush implements MWF_Core_Commands_Command_Interf
         $container = $this->getContainer();
         $outputter = $this->getOutputter();
 
-        $componentCallback = $container->componentCallback;
-        $indexerTools      = $container->indexerTools;
+        $indexerTools = $container->indexerTools;
 
-        $allStorages = $componentCallback->getIndexerStorages();
-        $allIndexers = $componentCallback->getIndexers();
+        $allStorages = $container->findTaggedComponents('indexer.storage');
+        $allIndexers = $container->findTaggedComponents('indexer.indexer');
 
         foreach ($allIndexers as $indexerId => $indexer)
         {

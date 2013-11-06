@@ -20,44 +20,55 @@
 class MWF_Core_Indexer_Tools
 {
     /**
-     * @var MWF_Component_Manager
+     * @var array
      */
-    protected $_componentCallback = null;
+    protected $componentCallback;
 
     /**
-     * Constructor
-     *
-     * @param MWF_Component_Callback $componentCallback
+     * @var array
      */
-    public function __construct(MWF_Component_Callback $componentCallback)
+    protected $storages = null;
+
+    /**
+     * @param MWF_Component_Callback $componentCallback
+     * @param array                  $storages
+     */
+    public function __construct(MWF_Component_Callback $componentCallback, array $storages)
     {
-        $this->_componentCallback = $componentCallback;
+        $this->componentCallback = $componentCallback;
+        $this->storages = $storages;
     }
 
+    /**
+     * @param string $documentType
+     * @return array
+     */
     public function getRepositoriesByAcceptedStorage($documentType)
     {
-        $storages = $this->_componentCallback->getIndexerStorages();
-
-        return self::filterRepositoriesByAcceptedStorage($documentType, $storages);
+        return self::filterRepositoriesByAcceptedStorage($documentType, $this->storages);
     }
 
     /**
      * Get storages for search
      *
      * @param MWF_Core_Indexer_Query_Interface $query
+     * @return array
      */
     public function getRepositoriesForSearch(MWF_Core_Indexer_Query_Interface $query)
     {
         $documentTypes = $query->getDocumentTypes();
         $queryClassName = get_class($query);
 
-        $storages = $this->_componentCallback->getIndexerStorages();
-
-        $ret = $this->filterRepositoriesByAcceptedStorage($documentTypes, $storages);
+        $ret = $this->filterRepositoriesByAcceptedStorage($documentTypes, $this->storages);
 
         return $this->filterRepositoriesByAcceptedQuery($queryClassName, $ret);
     }
 
+    /**
+     * @param string $queryClassNames
+     * @param array  $storages
+     * @return array
+     */
     public function filterRepositoriesByAcceptedQuery($queryClassNames, $storages)
     {
         $queryClassNames = (array) $queryClassNames;
@@ -90,12 +101,17 @@ class MWF_Core_Indexer_Tools
         return $result;
     }
 
+    /**
+     * @param array $documentTypes
+     * @param array $storages
+     * @return array
+     */
     public function filterRepositoriesByAcceptedStorage($documentTypes, $storages)
     {
         $documentTypes = (array) $documentTypes;
         $result = array();
 
-        $mappings = $this->_componentCallback->getIndexerStorageMappings();
+        $mappings = $this->componentCallback->getIndexerStorageMappings();
 
         foreach ($documentTypes as $documentType)
         {

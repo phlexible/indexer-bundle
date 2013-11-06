@@ -90,7 +90,7 @@ class MWF_Core_Indexer_Command_Query extends  MWF_Core_Commands_Command_Abstract
 
         $indexerSearch = $container->indexerSearch;
 
-        foreach ($container->componentCallback->getIndexerSearches() as $id => $query)
+        foreach ($container->findTaggedComponents('indexer.search') as $id => $query)
         {
             if ($search && $search !== $id)
             {

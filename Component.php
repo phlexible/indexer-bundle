@@ -27,10 +27,11 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
      */
     public function __construct()
     {
-        $this->setVersion('0.7.0');
-        $this->setId('indexer');
-        $this->setFile(__FILE__);
-        $this->setPackage('mwf');
+        $this
+            ->setVersion('0.7.0')
+            ->setId('indexer')
+            ->setFile(__FILE__)
+            ->setPackage('mwf');
     }
 
     public function initContainer(MWF_Container_ContainerBuilder $container)
@@ -70,7 +71,7 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
                 ),
                 'indexerTools' => array(
                     'class'     => 'MWF_Core_Indexer_Tools',
-                    'arguments' => array('componentCallback'),
+                    'arguments' => array('componentCallback', '#indexer.storage'),
                     'scope'     => 'singleton',
                 ),
                 'indexerSearch' => array(
@@ -119,6 +120,13 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
                     'class'     => 'MWF_Core_Indexer_Problem_QueryCheck',
                     'arguments' => array('indexerQuery', 'indexerSearch', 'properties')
                 ),
+                // component callbacks
+                'indexerComponentCallbackGetIndexerStorageMappings' => array(
+                    'tag' => array(
+                        'name' => 'component.callback',
+                        'registerName' => 'getIndexerStorageMappings',
+                    ),
+                ),
                 // commands
                 'indexerCommandBuild' => array(
                     'class' => 'MWF_Core_Indexer_Command_Build',
@@ -142,33 +150,6 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
                 ),
             )
         );
-    }
-
-    public function init()
-    {
-        $container = $this->getContainer();
-
-        $callback = $container->componentCallback;
-        $callback
-            ->register(
-                'getIndexers',
-                array(
-                    MWF_Component_Callback::CONFIG_CONTAINER_KEYS => true,
-                )
-            )
-            ->register(
-                'getIndexerStorages',
-                array(
-                    MWF_Component_Callback::CONFIG_CONTAINER_KEYS => true,
-                )
-            )
-            ->register(
-                'getIndexerSearches',
-                array(
-                    MWF_Component_Callback::CONFIG_CONTAINER_KEYS => true,
-                )
-            )
-            ->register('getIndexerStorageMappings');
     }
 
     /**
