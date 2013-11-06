@@ -27,7 +27,7 @@ class MWF_Core_Indexer_Tools
     /**
      * @var array
      */
-    protected $storages = null;
+    protected $storages = array();
 
     /**
      * @param MWF_Component_Callback $componentCallback
@@ -36,7 +36,10 @@ class MWF_Core_Indexer_Tools
     public function __construct(MWF_Component_Callback $componentCallback, array $storages)
     {
         $this->componentCallback = $componentCallback;
-        $this->storages = $storages;
+
+        foreach ($storages as $storage) {
+            $this->storages[$storage->getId()] = $storage;
+        }
     }
 
     /**
@@ -117,10 +120,10 @@ class MWF_Core_Indexer_Tools
         {
             if (isset($mappings[$documentType]))
             {
-                $prefferedStoradeId = $mappings[$documentType];
-                if (isset($storages[$prefferedStoradeId]))
+                $preferredStorageId = $mappings[$documentType];
+                if (isset($storages[$preferredStorageId]))
                 {
-                    $result[$prefferedStoradeId] = $storages[$prefferedStoradeId];
+                    $result[$preferredStorageId] = $storages[$preferredStorageId];
                 }
 
                 continue;

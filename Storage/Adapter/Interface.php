@@ -102,6 +102,8 @@ interface MWF_Core_Indexer_Storage_Adapter_Interface
 
     public function getAcceptStorage();
 
+    public function getId();
+
     /**
      * Is this adapter healthy?
      *
