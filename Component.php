@@ -116,9 +116,11 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
                 'indexerBoost' => array(
                     'class'     => 'MWF_Core_Indexer_Boost',
                 ),
+                // problem checks
                 'indexerQueryCheck' => array(
                     'class'     => 'MWF_Core_Indexer_Problem_QueryCheck',
-                    'arguments' => array('indexerQuery', 'indexerSearch', 'properties')
+                    'arguments' => array('indexerQuery', 'indexerSearch', 'properties'),
+                    'tag'       => 'problem.check',
                 ),
                 // component callbacks
                 'indexerComponentCallbackGetIndexerStorageMappings' => array(
@@ -187,15 +189,6 @@ class MWF_Core_Indexer_Component extends MWF_Component_Abstract
         $views[] = $item;
 
         return $views;
-    }
-
-    public function getProblemChecks()
-    {
-        $checks = array(
-            'indexerQueryCheck',
-        );
-
-        return $checks;
     }
 
     public function getRoutes()
