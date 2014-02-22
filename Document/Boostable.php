@@ -1,23 +1,19 @@
 <?php
 /**
- * Phlexible
+ * phlexible
  *
- * PHP Version 5
- *
- * @category    MWF
- * @package     MWF_Core_Indexer
- * @copyright   2010 brainbits GmbH (http://www.brainbits.net)
+ * @copyright 2007-2013 brainbits GmbH (http://www.brainbits.net)
+ * @license   proprietary
  */
 
+namespace Phlexible\IndexerComponent\Document;
+
 /**
- * Boostable Interface
+ * Boostable interface
  *
- * @category    MWF
- * @package     MWF_Core_Indexer
- * @author      Marco Fischer <mf@brainbits.net>
- * @copyright   2010 brainbits GmbH (http://www.brainbits.net)
+ * @author Marco Fischer <mf@brainbits.net>
  */
-interface MWF_Core_Indexer_Document_Boostable
+interface Boostable
 {
     /**
      * Sets boost-factor of document.

@@ -3,17 +3,16 @@
     "description": "phlexible.core indexer component",
     "license": "proprietary",
     "autoload": {
-        "psr-0": { 
-            "MWF_Core_Indexer_": ""
+        "psr-4": {
+            "Phlexible\\IndexerComponent\\": ""
         }
     },
-    "target-dir": "MWF/Core/Indexer",
     "require": {
         "php": ">=5.3.0",
         "phlexible/queue-component": "*"
     },
     "suggest": {
-        "phlexible/indexer-repository-solr-component": "SOLR repository for indexer"
+        "phlexible/indexer-storage-elastica-component": "Elastica storage"
     },
     "repositories": [
         {

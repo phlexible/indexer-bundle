@@ -1,1 +1,1 @@
-Ext.ns('MWF.core.indexer');
+Ext.ns('Phlexible.indexer.menuhandle');

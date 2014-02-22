@@ -1,0 +1,87 @@
+parameters:
+    indexer.result_sorter.relevance.compare_field: ~
+    indexer.result_sorter.relevance.case_sensitive: ~
+
+tags:
+    - ["asset.translation", {namespace: "Phlexible.strings.Indexer", page: indexer}]
+
+services:
+    indexerDocumentFieldNameFilterCamelCaseToUnderscore:
+        class: Zend_Filter_Word_CamelCaseToUnderscore
+
+    indexerDocumentFieldNameFilterStringToLower:
+        class: Zend_Filter_StringToLower
+
+    indexerDocumentFieldNameFilter:
+        class: Zend_Filter
+        calls:
+            - ["addFilter", ["@indexerDocumentFieldNameFilterCamelCaseToUnderscore"]]
+            - ["addFilter", ["@indexerDocumentFieldNameFilterStringToLower"]]
+
+    indexerDocumentFactory:
+        class: Phlexible\IndexerComponent\Document\DocumentFactory
+        arguments: ["@dispatcher", "@indexerDocumentFieldNameFilter"]
+
+    indexerTools:
+        class: Phlexible\IndexerComponent\IndexerTools
+        arguments: ["@componentCallback", "@indexerStorages"]
+
+    indexerSearch:
+        class: Phlexible\IndexerComponent\Search\Search
+        arguments: ["@indexerTools", "@indexerResult"]
+
+    indexerQueryParser:
+        class: Phlexible\IndexerComponent\Query\QueryParser
+
+    indexerResultSorterRelevance:
+        class: Phlexible\IndexerComponent\Result\Sorter\RelevanceSorter
+
+    indexerResultSorterRelevanceReverse:
+        class: Phlexible\IndexerComponent\Result\Sorter\RelevanceReverseSorter
+
+    indexerResultSorterField:
+        class: Phlexible\IndexerComponent\Result\Sorter\FieldSorter
+        arguments:
+            - "%indexer.result_sorter.relevance.compare_field%"
+            - "%indexer.result_sorter.relevance.case_sensitive%"
+
+    indexerResultSorterFieldReverse:
+        class: Phlexible\IndexerComponent\Result\Sorter\FieldReverseSorter
+        arguments: ["%indexer.result_sorter.relevance.compare_field%"]
+
+    indexerResult:
+        class: Phlexible\IndexerComponent\Result\Result
+        arguments: ["@indexerResultSorterRelevance"]
+
+    indexerQuery:
+        class: Phlexible\IndexerComponent\Query\Query
+        arguments: ["@indexerQueryParser", "@indexerBoost"]
+
+    indexerBoost:
+        class: Phlexible\IndexerComponent\Boost\Boost
+
+    indexerIndexers:
+        class: Phlexible\IndexerComponent\Indexer\IndexerCollection
+
+    indexerStorages:
+        class: Phlexible\IndexerComponent\Storage\StorageCollection
+
+    # problem checks
+    indexerQueryChecker:
+        class: Phlexible\IndexerComponent\ProblemChecker\QueryChecker
+        arguments: ["@indexerQuery", "@indexerSearch", "@properties"]
+        tags:
+            - ["problem.checker"]
+
+    # component callbacks
+    indexerComponentCallbackGetIndexerStorageMappings:
+        class: stdClass
+        tags:
+            - ["component.callback", {registerName: getIndexerStorageMappings}]
+
+    # assets
+    indexerAssetScripts:
+        class: Phlexible\IndexerComponent\Asset\ScriptCollection
+        arguments: ["%indexer.asset.script_path%/"]
+        tags:
+            - ["asset.script"]

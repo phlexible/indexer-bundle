@@ -1,12 +1,12 @@
-MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
-    title: MWF.strings.Indexer.indexer,
-    iconCls: 'm-indexer-search-icon',
-    strings: MWF.strings.Indexer,
+Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
+    title: Phlexible.strings.Indexer.indexer,
+    iconCls: 'p-indexer-search-icon',
+    strings: Phlexible.strings.Indexer,
     layout: 'border',
 
     initComponent: function() {
         this.store = new Ext.data.JsonStore({
-            url: MWF.baseUrl + '/indexer/data/search/',
+            url: MWF.baseUrl + '/indexer/search',
             baseParams: {
                 query: ''
             },
@@ -42,12 +42,12 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
                 }],
                 bbar: [{
                     text: this.strings.search,
-                    iconCls: 'm-indexer-search-icon',
+                    iconCls: 'p-indexer-search-icon',
                     handler: this.onSearch,
                     scope: this
                 },'->',{
                     text: this.strings.save_check_query,
-                    iconCls: 'm-indexer-save-icon',
+                    iconCls: 'p-indexer-save-icon',
                     disabled: true,
                     handler: this.onSaveCheckQuery,
                     scope: this
@@ -70,13 +70,13 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
                 }],
                 bbar: [{
                     text: this.strings.check_now,
-                    iconCls: 'm-indexer-check-icon',
+                    iconCls: 'p-indexer-check-icon',
                     disabled: true,
                     handler: this.loadCheck,
                     scope: this
                 },'->',{
                     text: this.strings.show_results,
-                    iconCls: 'm-indexer-search-icon',
+                    iconCls: 'p-indexer-search-icon',
                     disabled: true,
                     handler: this.onSearchCheckQuery,
                     scope: this
@@ -126,19 +126,19 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
 
         this.on('render', this.loadCheck, this);
 
-        MWF.core.indexer.MainPanel.superclass.initComponent.call(this);
+        Phlexible.indexer.MainPanel.superclass.initComponent.call(this);
     },
 
     loadCheck: function() {
         Ext.Ajax.request({
-            url: MWF.baseUrl + '/indexer/data/check',
+            url: MWF.baseUrl + '/indexer/check/check',
             success: function(response) {
                 var data = Ext.decode(response.responseText);
 
                 if (data.success || data.data.query) {
                     this.checkQuery = data.data.query;
                     this.getComponent(0).getComponent(1).getComponent(0).body.update(this.strings.current_query + ':<br />' + data.data.query);
-                    this.getComponent(0).getComponent(1).getComponent(1).body.update(this.strings.result + ':<br />' + MWF.inlineIcon('m-indexer-' + (data.success ? 'ok' : 'nok') + '-icon') + ' ' + data.msg);
+                    this.getComponent(0).getComponent(1).getComponent(1).body.update(this.strings.result + ':<br />' + MWF.inlineIcon('p-indexer-' + (data.success ? 'ok' : 'nok') + '-icon') + ' ' + data.msg);
                     this.getComponent(0).getComponent(1).getComponent(1).show();
 
                     var tb = this.getComponent(0).getComponent(1).getBottomToolbar();
@@ -146,7 +146,7 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
                     tb.items.items[2].enable();
                 }
                 else if (!data.success) {
-                    this.getComponent(0).getComponent(1).getComponent(0).body.update(MWF.inlineIcon('m-indexer-nok-icon') + ' ' + data.msg);
+                    this.getComponent(0).getComponent(1).getComponent(0).body.update(MWF.inlineIcon('p-indexer-nok-icon') + ' ' + data.msg);
                     this.getComponent(0).getComponent(1).getComponent(1).body.update('');
                     this.getComponent(0).getComponent(1).getComponent(1).hide();
 
@@ -158,7 +158,7 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
             failure: function(response) {
                 var data = Ext.decode(response.responseText);
 
-                this.getComponent(0).getComponent(1).getComponent(0).body.update(this.strings.current_query + ':<br />' + MWF.inlineIcon('m-indexer-nok-icon') + ' Error occured');
+                this.getComponent(0).getComponent(1).getComponent(0).body.update(this.strings.current_query + ':<br />' + MWF.inlineIcon('p-indexer-nok-icon') + ' Error occured');
                 this.getComponent(0).getComponent(1).getComponent(1).body.update('');
                 this.getComponent(0).getComponent(1).getComponent(1).hide();
 
@@ -186,7 +186,7 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
         var query = this.getComponent(0).getComponent(0).getComponent(0).getValue();
 
         Ext.Ajax.request({
-            url: MWF.baseUrl + '/indexer/data/setcheck',
+            url: MWF.baseUrl + '/indexer/check/set',
             params: {
                 query: query
             },
@@ -207,5 +207,5 @@ MWF.core.indexer.MainPanel = Ext.extend(Ext.Panel, {
     }
 });
 
-Ext.reg('indexer-mainpanel', MWF.core.indexer.MainPanel);
+Ext.reg('indexer-mainpanel', Phlexible.indexer.MainPanel);
 

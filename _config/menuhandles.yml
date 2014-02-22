@@ -1,0 +1,4 @@
+cachestats:
+    parent: admin
+    xtype: Phlexible.indexer.menuhandle.SearchHandle
+    resources: [debug]

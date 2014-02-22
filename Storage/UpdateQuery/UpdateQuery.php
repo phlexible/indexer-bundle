@@ -1,0 +1,141 @@
+<?php
+/**
+ * phlexible
+ *
+ * @copyright 2007-2013 brainbits GmbH (http://www.brainbits.net)
+ * @license   proprietary
+ */
+
+namespace Phlexible\IndexerComponent\Storage\UpdateQuery;
+
+use Phlexible\Event\EventDispatcher;
+use Phlexible\IndexerComponent\Document\DocumentInterface;
+use Phlexible\IndexerComponent\Query\QueryInterface;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\AddCommand;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\CommandInterface;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\CommitCommand;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\DeleteCommand;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\FlushCommand;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\OptimizeCommand;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\RollbackCommand;
+use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\UpdateCommand;
+
+/**
+ * Update
+ *
+ * @author Stephan Wentz <sw@brainbits.net>
+ */
+class UpdateQuery
+{
+    /**
+      * @var EventDispatcher
+      */
+    protected $dispatcher;
+
+    /**
+     * @var CommandInterface[]
+     */
+    protected $commands = array();
+
+    /**
+     * @param EventDispatcher $dispatcher
+     */
+    public function __construct(EventDispatcher $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
+
+    /**
+     * @return CommandInterface[]
+     */
+    public function getCommands()
+    {
+        return $this->commands;
+    }
+
+    /**
+     * @param DocumentInterface $document
+     * @return $this
+     */
+    public function add(DocumentInterface $document)
+    {
+        return $this->addCommand(new AddCommand($document));
+    }
+
+    /**
+     * @param DocumentInterface $document
+     * @return $this
+     */
+    public function addUpdate(DocumentInterface $document)
+    {
+        return $this->addCommand(new UpdateCommand($document));
+    }
+
+    /**
+     * @param null $identifier
+     * @return $this
+     */
+    public function addDeleteByIdentifier($identifier = null)
+    {
+        return $this->addCommand(new DeleteCommand($identifier));
+    }
+
+    /**
+     * @param QueryInterface $query
+     * @return $this
+     */
+    public function addDeleteByQuery(QueryInterface $query)
+    {
+        return $this->addCommand(new DeleteCommand($query));
+    }
+
+    /**
+     * @return $this
+     */
+    public function addDeleteAll()
+    {
+        return $this->addCommand(new DeleteCommand());
+    }
+
+    /**
+     * @return $this
+     */
+    public function addCommit()
+    {
+        return $this->addCommand(new CommitCommand());
+    }
+
+    /**
+     * @return $this
+     */
+    public function addRollback()
+    {
+        return $this->addCommand(new RollbackCommand());
+    }
+
+    /**
+     * @return $this
+     */
+    public function addFlush()
+    {
+        return $this->addCommand(new FlushCommand());
+    }
+
+    /**
+     * @return $this
+     */
+    public function addOptimize()
+    {
+        return $this->addCommand(new OptimizeCommand());
+    }
+
+    /**
+     * @param CommandInterface $command
+     * @return $this
+     */
+    private function addCommand(CommandInterface $command)
+    {
+        $this->commands[] = $command;
+        return $this;
+    }
+}

@@ -1,0 +1,69 @@
+<?php
+/**
+ * phlexible
+ *
+ * @copyright 2007-2013 brainbits GmbH (http://www.brainbits.net)
+ * @license   proprietary
+ */
+
+namespace Phlexible\IndexerComponent\Storage;
+
+/**
+ * Abstract storage adapter
+ *
+ * @author Marco Fischer <mf@brainbits.net>
+ */
+abstract class AbstractStorageAdapter implements StorageAdapterInterface
+{
+    /**
+     * @var string
+     */
+    protected $label = 'Storage adapter';
+
+    /**
+     * @var string
+     */
+    protected $resultClass = 'MWF_Core_Indexer_Document_Interface';
+
+    /**
+     * @var array
+     */
+    protected $acceptQuery = array('MWF_Core_Indexer_Query_Interface');
+
+    /**
+     * @var array
+     */
+    protected $acceptStorage = array();
+
+    /**
+     * @inheritDoc
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getResultClass()
+    {
+        return $this->resultClass;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAcceptQuery()
+    {
+        return $this->acceptQuery;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAcceptStorage()
+    {
+        return $this->acceptStorage;
+    }
+}
