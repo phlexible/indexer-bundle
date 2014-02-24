@@ -60,9 +60,6 @@ class PopulateCommand extends ContainerAwareCommand
         $container = $this->getContainer();
 
         $queueManager = $container->queueService;
-        $indexerTools = $container->indexerTools;
-
-        $allStorages = $container->indexerStorages;
         $allIndexers = $container->indexerIndexers;
 
         foreach ($allIndexers as $indexerId => $indexer)
