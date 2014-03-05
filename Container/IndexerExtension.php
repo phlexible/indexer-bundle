@@ -13,6 +13,7 @@ use Phlexible\Container\Extension\Extension;
 use Phlexible\Container\Loader\YamlFileLoader;
 use Phlexible\IndexerComponent\Container\Compiler\AddIndexersPass;
 use Phlexible\IndexerComponent\Container\Compiler\AddStoragesPass;
+use Symfony\Component\Config\FileLocator;
 
 /**
  * Indexer extension
@@ -21,10 +22,13 @@ use Phlexible\IndexerComponent\Container\Compiler\AddStoragesPass;
  */
 class IndexerExtension extends Extension
 {
+    /**
+     * {@inheritdoc}
+     */
     public function load(ContainerBuilder $container, array $configs)
     {
-        $loader = new YamlFileLoader($container);
-        $loader->load(__DIR__ . '/../_config/services.yml');
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../_config'));
+        $loader->load('services.yml');
 
         //$configuration = $this->getConfiguration($container);
         //$config = $this->processConfiguration($configuration, $configs);
