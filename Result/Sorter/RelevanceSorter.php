@@ -18,7 +18,7 @@ use Phlexible\IndexerComponent\Document\DocumentInterface;
 class RelevanceSorter implements SorterInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sort(array $documents)
     {

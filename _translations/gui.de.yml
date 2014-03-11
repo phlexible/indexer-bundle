@@ -1,0 +1,22 @@
+indexer:
+    component_description: Indexer
+    component_name: Indexer
+    indexer: Indexer
+    search: Suchen
+    query: Abfrage
+    check: Überprüfung
+    save_check_query: 'Als Überprüfungsabfrage speichern'
+    current_query: 'Aktuelle Abfrage'
+    result: Ergebnis
+    check_now: 'Jetzt überprüfen'
+    no_results: 'Keine Suchergebnisse.'
+    show_results: 'Suchergebnisse anzeigen.'
+    no_check_query_defined: 'Keine Überprüfungsabfrage definiert.'
+    check_query_failed: 'Überprüfungsabfrage fehlgeschlagen, keine Ergebnisse.'
+    check_query_succeeded: 'Überprüfungsabfrage erfolgreich, {0} Ergebnisse.'
+    id: ID
+    tid: TID
+    eid: EID
+    language: Sprache
+    title: Titel
+    online: Online

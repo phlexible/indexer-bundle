@@ -61,7 +61,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __get($key)
     {
@@ -78,7 +78,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __set($key, $value)
     {
@@ -95,7 +95,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __isset($key)
     {
@@ -112,7 +112,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function __toString()
     {
@@ -178,7 +178,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValues()
     {
@@ -192,7 +192,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setValues($values, $implicitCreateField = false)
     {
@@ -210,7 +210,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function hasValue($key)
     {
@@ -218,7 +218,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValue($key)
     {
@@ -236,7 +236,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setValue($key, $value, $implicitCreateField = false)
     {
@@ -258,7 +258,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
                 throw new InvalidArgumentException('Unknown field "' . $key . '"');
             }
         }
-        
+
         if (isset($this->_fields[$key][self::CONFIG_MULTIVALUE]))
         {
             $value = (array) $value;
@@ -270,7 +270,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function hasField($key)
     {
@@ -278,7 +278,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setFields(array $fields)
     {
@@ -291,7 +291,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getFields()
     {
@@ -299,7 +299,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setField($key, array $config = array())
     {
@@ -314,25 +314,25 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getField($key)
     {
         return $this->_fields[$key];
     }
-    
+
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function removeField($key)
     {
         unset($this->_fields[$key], $this->_values[$key]);
-        
+
         return $this;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getIdentifier()
     {
@@ -340,7 +340,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setIdentifier($id)
     {
@@ -350,7 +350,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setBoost($boost)
     {
@@ -360,7 +360,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getBoost()
     {
@@ -368,7 +368,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDocumentClass()
     {
@@ -376,7 +376,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDocumentType()
     {
@@ -384,7 +384,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setRelevance($relevance)
     {
@@ -394,7 +394,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRelevance()
     {

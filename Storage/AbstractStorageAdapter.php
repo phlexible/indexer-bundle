@@ -36,7 +36,7 @@ abstract class AbstractStorageAdapter implements StorageAdapterInterface
     protected $acceptStorage = array();
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getLabel()
     {
@@ -44,7 +44,7 @@ abstract class AbstractStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getResultClass()
     {
@@ -52,7 +52,7 @@ abstract class AbstractStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAcceptQuery()
     {
@@ -60,7 +60,7 @@ abstract class AbstractStorageAdapter implements StorageAdapterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAcceptStorage()
     {

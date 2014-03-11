@@ -16,7 +16,7 @@ namespace Phlexible\IndexerComponent\Result\Sorter;
 class PassThrough implements SorterInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sort(array $documents)
     {

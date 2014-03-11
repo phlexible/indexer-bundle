@@ -19,7 +19,7 @@ use Phlexible\IndexerComponent\Document\DocumentInterface;
 abstract class AbstractIndexer implements IndexerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function useJobs()
     {

@@ -42,7 +42,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function addDocument(DocumentInterface $document)
     {
@@ -51,7 +51,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function addDocuments(array $documents = array())
     {
@@ -63,7 +63,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function addResult(ResultInterface $result)
     {
@@ -72,7 +72,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getResult()
     {
@@ -90,7 +90,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setSorter(SorterInterface $sorter)
     {
@@ -99,7 +99,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSorter()
     {
@@ -107,7 +107,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sort()
     {
@@ -116,7 +116,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toString()
     {
@@ -139,7 +139,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function toArray()
     {

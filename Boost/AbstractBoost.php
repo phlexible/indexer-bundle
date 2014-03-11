@@ -36,7 +36,7 @@ abstract class AbstractBoost implements BoostInterface
     protected $customPrecision = array('unittestvalue' => 2.0);
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getBoost($field)
     {
@@ -49,7 +49,7 @@ abstract class AbstractBoost implements BoostInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getPrecision($field)
     {

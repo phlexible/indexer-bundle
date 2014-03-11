@@ -70,8 +70,7 @@ class QueryChecker implements ProblemCheckerInterface
         {
             $queryString = $this->properties->get('indexer', 'checkQuery');
 
-            if (!$queryString)
-            {
+            if (!$queryString) {
                 $problem = new Problem();
                 $problem
                     ->setId('indexer_check_no_check_query_defined')
@@ -82,15 +81,12 @@ class QueryChecker implements ProblemCheckerInterface
                     ->setHint('Enter a check query in the indexer administration panel.')
                 ;
                 $problems[] = $problem;
-            }
-            else
-            {
+            } else {
 
                 $this->indexerQuery->parseInput($queryString);
                 $results = $this->indexerSearch->query($this->indexerQuery);
 
-                if (!count($results))
-                {
+                if (!count($results)) {
                     $problem = new Problem();
                     $problem
                         ->setId('indexer_check_no_result_for_check_query')
@@ -103,9 +99,7 @@ class QueryChecker implements ProblemCheckerInterface
                     $problems[] = $problem;
                 }
             }
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $problem = new Problem();
             $problem
                 ->setId('indexer_check_query_exception')

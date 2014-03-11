@@ -20,7 +20,7 @@ class FieldSorter extends RelevanceSorter
      * @var string
      */
     protected $compareField;
-    
+
     /**
      * @var boolean
      */
@@ -37,7 +37,7 @@ class FieldSorter extends RelevanceSorter
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function sort(array $documents)
     {
@@ -50,7 +50,7 @@ class FieldSorter extends RelevanceSorter
     {
         $aHasField = $a->hasField($this->compareField);
 		$bHasField = $b->hasField($this->compareField);
-		
+
 		if ($aHasField && $bHasField)
         {
             return $this->compareValues($a, $b);
