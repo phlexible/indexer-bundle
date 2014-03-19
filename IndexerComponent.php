@@ -7,14 +7,14 @@
  */
 
 namespace Phlexible\IndexerComponent;
-use Phlexible\Component\AbstractComponent;
+use Phlexible\Component\Component;
 
 /**
  * Indexer component
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-class IndexerComponent extends AbstractComponent
+class IndexerComponent extends Component
 {
     const RESOURCE_INDEXER = 'indexer';
 

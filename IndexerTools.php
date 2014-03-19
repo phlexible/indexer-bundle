@@ -7,6 +7,7 @@
  */
 
 namespace Phlexible\IndexerComponent;
+
 use Phlexible\Component\ComponentCallback;
 use Phlexible\IndexerComponent\Storage\StorageCollection;
 
