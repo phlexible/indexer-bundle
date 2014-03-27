@@ -7,6 +7,7 @@
  */
 
 namespace Phlexible\IndexerComponent;
+
 use Phlexible\Component\Component;
 
 /**
@@ -24,27 +25,5 @@ class IndexerComponent extends Component
             ->setVersion('0.7.0')
             ->setId('indexer')
             ->setPackage('phlexible');
-    }
-
-    /**
-     * ACL Callback
-     *
-     * Returns all ACL resources this component provides
-     *
-     * @return array
-     */
-    public function getAcl()
-    {
-        return array(
-            array(
-                'roles' => array(
-                ),
-                'resources' => array(
-                    self::RESOURCE_INDEXER,
-                ),
-                'allow' => array(
-                )
-            )
-        );
     }
 }

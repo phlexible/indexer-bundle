@@ -2,9 +2,6 @@ parameters:
     indexer.result_sorter.relevance.compare_field: ~
     indexer.result_sorter.relevance.case_sensitive: ~
 
-tags:
-    - ["asset.translation", {namespace: "Phlexible.strings.Indexer", page: indexer}]
-
 services:
     indexerDocumentFieldNameFilterCamelCaseToUnderscore:
         class: Zend_Filter_Word_CamelCaseToUnderscore
@@ -66,18 +63,18 @@ services:
     indexerStorages:
         class: Phlexible\IndexerComponent\Storage\StorageCollection
 
+    # acl resources
+    indexerResourceIndexer:
+        class: Zend_Acl_Resource
+        arguments: [indexer]
+        tags: [[security.acl.resource]]
+
     # problem checks
     indexerQueryChecker:
         class: Phlexible\IndexerComponent\ProblemChecker\QueryChecker
         arguments: ["@indexerQuery", "@indexerSearch", "@properties"]
         tags:
             - ["problem.checker"]
-
-    # component callbacks
-    indexerComponentCallbackGetIndexerStorageMappings:
-        class: stdClass
-        tags:
-            - ["component.callback", {registerName: getIndexerStorageMappings}]
 
     # assets
     indexerAssetScripts:

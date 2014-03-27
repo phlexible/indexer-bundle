@@ -1,6 +1,4 @@
 indexer:
-    component_description: Indexer
-    component_name: Indexer
     indexer: Indexer
     search: Search
     query: Query
