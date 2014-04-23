@@ -8,7 +8,7 @@ indexer_check_set:
     defaults: { module: indexer, controller: check, action: set }
     requirements: { _resource: indexer }
 
-indexer_check_check:
+indexer_check:
     path: /indexer/check/check/*
     defaults: { module: indexer, controller: check, action: check }
     requirements: { _resource: indexer }

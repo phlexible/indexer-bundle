@@ -6,7 +6,7 @@ Phlexible.indexer.SearchPanel = Ext.extend(Ext.Panel, {
 
     initComponent: function() {
         this.store = new Ext.data.JsonStore({
-            url: Phlexible.baseUrl + '/indexer/search',
+            url: Phlexible.Router.generate('indexer_search'),
             baseParams: {
                 query: '',
                 limit: 20,
@@ -127,7 +127,7 @@ Phlexible.indexer.SearchPanel = Ext.extend(Ext.Panel, {
 
     loadCheck: function() {
         Ext.Ajax.request({
-            url: Phlexible.baseUrl + '/indexer/check/check',
+            url: Phlexible.Router.generate('indexer_check'),
             success: function(response) {
                 var data = Ext.decode(response.responseText);
 
@@ -182,7 +182,7 @@ Phlexible.indexer.SearchPanel = Ext.extend(Ext.Panel, {
         var query = this.getComponent(0).getComponent(0).getComponent(0).getValue();
 
         Ext.Ajax.request({
-            url: Phlexible.baseUrl + '/indexer/check/set',
+            url: Phlexible.Router.generate('indexer_check_set'),
             params: {
                 query: query
             },

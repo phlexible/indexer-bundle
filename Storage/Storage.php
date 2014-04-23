@@ -8,13 +8,15 @@
 
 namespace Phlexible\IndexerComponent\Storage;
 
-use Phlexible\Event\EventDispatcher;
 use Phlexible\IndexerComponent\Document\DocumentInterface;
+use Phlexible\IndexerComponent\Event\DocumentEvent;
+use Phlexible\IndexerComponent\Exception\Events;
 use Phlexible\IndexerComponent\Query\QueryInterface;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\AddCommand;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\FlushCommand;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\UpdateCommand;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\UpdateQuery;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Storage
@@ -29,15 +31,15 @@ class Storage implements StorageInterface
     protected $adapter = null;
 
     /**
-      * @var EventDispatcher
+      * @var EventDispatcherInterface
       */
     protected $dispatcher;
 
     /**
-     * @param EventDispatcher         $dispatcher
-     * @param StorageAdapterInterface $adapter
+     * @param EventDispatcherInterface $dispatcher
+     * @param StorageAdapterInterface  $adapter
      */
-    public function __construct(EventDispatcher $dispatcher,
+    public function __construct(EventDispatcherInterface $dispatcher,
                                 StorageAdapterInterface $adapter)
     {
         $this->dispatcher = $dispatcher;
@@ -153,10 +155,10 @@ class Storage implements StorageInterface
      */
     public function update(UpdateQuery $update)
     {
-        #$beforeEvent = new BeforeStorageUpdateDocumentEvent($document);
-        #if (!$this->dispatcher->dispatch($beforeEvent)) {
-        #    return $this;
-        #}
+        $event = new DocumentEvent($document);
+        if (!$this->dispatcher->dispatch(Events::BEFORE_STORAGE_UPDATE_DOCUMENT, $event)) {
+            return $this;
+        }
 
         foreach ($update->getCommands() as $command) {
 
@@ -171,9 +173,8 @@ class Storage implements StorageInterface
             }
         }
 
-        #$event = new StorageUpdateDocumentEvent($document);
-        #$event->setBeforeEvent($beforeEvent);
-        #$this->dispatcher->dispatch($event);
+        $event = new DocumentEvent($document);
+        $this->dispatcher->dispatch(Events::STORAGE_UPDATE_DOCUMENT, $event);
 
         return $this;
     }

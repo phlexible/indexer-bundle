@@ -8,7 +8,9 @@
 
 namespace Phlexible\IndexerComponent\Document;
 
-use Phlexible\Event\EventDispatcher;
+use Phlexible\IndexerComponent\Exception\Events;
+use Phlexible\IndexerComponent\Event\DocumentEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Document factory
@@ -18,7 +20,7 @@ use Phlexible\Event\EventDispatcher;
 class DocumentFactory
 {
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     protected $dispatcher = null;
 
@@ -33,10 +35,10 @@ class DocumentFactory
     protected $fieldNameFilter;
 
     /**
-     * @param EventDispatcher        $dispatcher
-     * @param \Zend_Filter_Interface $fieldNameFilter
+     * @param EventDispatcherInterface $dispatcher
+     * @param \Zend_Filter_Interface   $fieldNameFilter
      */
-    public function __construct(EventDispatcher $dispatcher,
+    public function __construct(EventDispatcherInterface $dispatcher,
                                 \Zend_Filter_Interface $fieldNameFilter = null)
     {
         $this->dispatcher      = $dispatcher;
@@ -66,8 +68,8 @@ class DocumentFactory
             }
 
             // fire create event
-            #$event = new CreateDocumentEvent($document);
-            #$this->dispatcher->dispatch($event);
+            $event = new DocumentEvent($document);
+            $this->dispatcher->dispatch(Events::CREATE_DOCUMENT, $event);
 
             // cache prototype
             $this->prototypes[$prototypeKey] = $document;

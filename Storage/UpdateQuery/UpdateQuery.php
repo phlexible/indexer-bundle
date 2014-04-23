@@ -8,7 +8,6 @@
 
 namespace Phlexible\IndexerComponent\Storage\UpdateQuery;
 
-use Phlexible\Event\EventDispatcher;
 use Phlexible\IndexerComponent\Document\DocumentInterface;
 use Phlexible\IndexerComponent\Query\QueryInterface;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\AddCommand;
@@ -19,6 +18,7 @@ use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\FlushCommand;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\OptimizeCommand;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\RollbackCommand;
 use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\UpdateCommand;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Update
@@ -28,7 +28,7 @@ use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\UpdateCommand;
 class UpdateQuery
 {
     /**
-      * @var EventDispatcher
+      * @var EventDispatcherInterface
       */
     protected $dispatcher;
 
@@ -38,9 +38,9 @@ class UpdateQuery
     protected $commands = array();
 
     /**
-     * @param EventDispatcher $dispatcher
+     * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct(EventDispatcher $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
