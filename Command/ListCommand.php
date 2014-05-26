@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ListCommand extends ContainerAwareCommand
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -33,7 +33,7 @@ class ListCommand extends ContainerAwareCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

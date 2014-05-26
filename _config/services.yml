@@ -21,7 +21,7 @@ services:
 
     indexerTools:
         class: Phlexible\IndexerComponent\IndexerTools
-        arguments: ["@componentCallback", "@indexerStorages"]
+        arguments: ["@components", "@indexerStorages"]
 
     indexerSearch:
         class: Phlexible\IndexerComponent\Search\Search

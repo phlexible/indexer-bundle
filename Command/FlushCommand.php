@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class FlushCommand extends ContainerAwareCommand
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -34,7 +34,7 @@ class FlushCommand extends ContainerAwareCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

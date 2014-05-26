@@ -26,7 +26,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class PopulateCommand extends ContainerAwareCommand
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -39,7 +39,7 @@ class PopulateCommand extends ContainerAwareCommand
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
