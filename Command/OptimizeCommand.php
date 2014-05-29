@@ -38,7 +38,7 @@ class OptimizeCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $storages = $this->getContainer()->indexerStorages;
+        $storages = $this->getContainer()->get('indexer.storages');
 
         $output->writeln('Optimizing repositories:');
 

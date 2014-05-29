@@ -48,10 +48,10 @@ class FlushCommand extends ContainerAwareCommand
 
         $container = $this->getContainer();
 
-        $indexerTools = $container->indexerTools;
+        $indexerTools = $container->get('indexer.tools');
 
-        $allStorages = $container->indexerStorages;
-        $allIndexers = $container->indexerIndexers;
+        $allStorages = $container->get('indexer.storages');
+        $allIndexers = $container->get('indexer.indexers');
 
         foreach ($allIndexers as $indexerId => $indexer)
         {

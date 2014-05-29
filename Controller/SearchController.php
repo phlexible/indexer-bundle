@@ -37,8 +37,8 @@ class SearchController extends Action
     protected function _getResults($queryString)
     {
         $container     = $this->getContainer();
-        $query         = $container->indexerQuery;
-        $indexerSearch = $container->indexerSearch;
+        $query         = $container->get('indexer.query');
+        $indexerSearch = $container->get('indexer.search');
 
         $query->parseInput($queryString);
         $results = $indexerSearch->query($query);

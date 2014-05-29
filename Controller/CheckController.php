@@ -21,17 +21,14 @@ class CheckController extends Action
     {
         $query = $this->_getParam('query');
 
-        if ($query)
-        {
+        if ($query) {
             $container = $this->getContainer();
-            $properties = $container->properties;
+            $properties = $container->get('properties');
 
             $properties->set('indexer', 'checkQuery', $this->_getParam('query'));
 
             $this->_response->setResult(true, 0, 'Check query set.');
-        }
-        else
-        {
+        } else {
             $this->_response->setResult(false, 0, 'Check query can\'t be empty.');
         }
     }
@@ -39,7 +36,7 @@ class CheckController extends Action
     public function getAction()
     {
         $container = $this->getContainer();
-        $properties = $container->properties;
+        $properties = $container->get('properties');
 
         $checkString = $properties->get('indexer', 'checkQuery');
 
@@ -49,32 +46,26 @@ class CheckController extends Action
     public function checkAction()
     {
         $container = $this->getContainer();
-        $properties = $container->properties;
+        $properties = $container->get('properties');
 
         $checkString = $properties->get('indexer', 'checkQuery');
         $data = array(
             'query' => $checkString,
         );
 
-        $t9n = $container->t9n->indexer;
+        $translator = $container->get('translator');
 
-        if ($checkString)
-        {
+        if ($checkString) {
             $results = $this->_getResults($checkString);
 
             $cnt = count($results);
-            if ($cnt)
-            {
-                $this->_response->setResult(true, 0, $t9n->check_query_succeeded($cnt), $data);
+            if ($cnt) {
+                $this->_response->setResult(true, 0, $translator->translate('indexer.check_query_succeeded', $cnt), $data);
+            } else {
+                $this->_response->setResult(false, 0, $translator->translate('indexer.check_query_failed'), $data);
             }
-            else
-            {
-                $this->_response->setResult(false, 0, $t9n->check_query_failed, $data);
-            }
-        }
-        else
-        {
-            $this->_response->setResult(false, 0, $t9n->no_check_query_defined, $data);
+        } else {
+            $this->_response->setResult(false, 0, $translator->get('indexer.no_check_query_defined'), $data);
         }
     }
 }

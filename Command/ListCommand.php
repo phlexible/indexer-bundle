@@ -39,9 +39,9 @@ class ListCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $storages = $this->getContainer()->indexerStorages;
+        $storages = $this->getContainer()->get('indexer.storages');
         #$searches = $this->getContainer()->findTaggedComponents('indexer.search');
-        $indexers = $this->getContainer()->indexerIndexers;
+        $indexers = $this->getContainer()->get('indexer.indexers');
 
         $output->writeln(
             $this->_renderIndexers($indexers)

@@ -66,8 +66,8 @@ class SearchCommand extends ContainerAwareCommand
 
         $container = $this->getContainer();
 
-        $indexerSearch = $container->indexerSearch;
-        $indexerSearches = $container->indexerSearches;
+        $indexerSearch = $container->get('indexer.search');
+        $indexerSearches = $container->get('indexer.searches');
 
         foreach ($indexerSearches as $id => $query)
         {

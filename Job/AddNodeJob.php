@@ -118,8 +118,8 @@ class AddNodeJob extends ContainerAwareJob
 
         $container = $this->_container;
 
-        $indexers = $container->indexerIndexers;
-        $storages = $container->indexerStorages;
+        $indexers = $container->get('indexer.indexers');
+        $storages = $container->get('indexer.storages');
 
         $indexer = $indexers[$this->_indexerId];
 
@@ -138,7 +138,7 @@ class AddNodeJob extends ContainerAwareJob
             );
         }
 
-        $indexerTools = $container->indexerTools;
+        $indexerTools = $container->get('indexer.tools');
         $storages     = $indexerTools->filterRepositoriesByAcceptedStorage(
             $document->getDocumentType(),
             $storages
