@@ -8,27 +8,19 @@
 
 namespace Phlexible\IndexerComponent;
 
-use Phlexible\Component\Component;
 use Phlexible\IndexerComponent\DependencyInjection\Compiler\AddIndexersPass;
 use Phlexible\IndexerComponent\DependencyInjection\Compiler\AddStoragesPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
  * Indexer bundle
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-class IndexerBundle extends Component
+class IndexerBundle extends Bundle
 {
     const RESOURCE_INDEXER = 'indexer';
-
-    public function __construct()
-    {
-        $this
-            ->setVersion('0.7.0')
-            ->setId('indexer')
-            ->setPackage('phlexible');
-    }
 
     /**
      * {@inheritdoc}

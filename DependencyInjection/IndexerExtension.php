@@ -25,13 +25,13 @@ class IndexerExtension extends Extension
      */
     public function load(array $config, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../_config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         //$configuration = $this->getConfiguration($container);
         //$config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('indexer.asset.script_path', __DIR__ . '/../_scripts/');
-        $container->setParameter('indexer.asset.css_path', __DIR__ . '/../_styles/');
+        $container->setParameter('indexer.asset.script_path', __DIR__ . '/../Resources/scripts/');
+        $container->setParameter('indexer.asset.css_path', __DIR__ . '/../Resources/styles/');
     }
 }

@@ -8,64 +8,74 @@
 
 namespace Phlexible\IndexerComponent\Controller;
 
-use Phlexible\CoreComponent\Controller\Action\Action;
+use Phlexible\CoreComponent\Controller\Controller;
+use Phlexible\CoreComponent\Response\ResultResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Check controller
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class CheckController extends Action
+class CheckController extends Controller
 {
-    public function setAction()
+    /**
+     * @param Request $request
+     *
+     * @return ResultResponse
+     */
+    public function setAction(Request $request)
     {
-        $query = $this->_getParam('query');
+        $query = $request->query->get('query');
 
-        if ($query) {
-            $container = $this->getContainer();
-            $properties = $container->get('properties');
-
-            $properties->set('indexer', 'checkQuery', $this->_getParam('query'));
-
-            $this->_response->setResult(true, 0, 'Check query set.');
-        } else {
-            $this->_response->setResult(false, 0, 'Check query can\'t be empty.');
+        if (!$query) {
+            return new ResultResponse(true, 'Check query can\'t be empty.');
         }
+
+        $properties = $this->get('properties');
+
+        $properties->set('indexer', 'checkQuery', $query);
+
+        return new ResultResponse(true, 'Check query set.');
     }
 
+    /**
+     * @return ResultResponse
+     */
     public function getAction()
     {
-        $container = $this->getContainer();
-        $properties = $container->get('properties');
+        $properties = $this->get('properties');
 
         $checkString = $properties->get('indexer', 'checkQuery');
 
-        $this->_response->setResult(true, 0, 'Check query loaded.', array('query' => $checkString));
+        return new ResultResponse(true, 'Check query loaded.', array('query' => $checkString));
     }
 
+    /**
+     * @return ResultResponse
+     */
     public function checkAction()
     {
-        $container = $this->getContainer();
-        $properties = $container->get('properties');
+        $properties = $this->get('properties');
 
         $checkString = $properties->get('indexer', 'checkQuery');
         $data = array(
             'query' => $checkString,
         );
 
-        $translator = $container->get('translator');
+        $translator = $this->get('translator');
 
         if ($checkString) {
             $results = $this->_getResults($checkString);
 
             $cnt = count($results);
             if ($cnt) {
-                $this->_response->setResult(true, 0, $translator->translate('indexer.check_query_succeeded', $cnt), $data);
+                return new ResultResponse(true, $translator->translate('indexer.check_query_succeeded', $cnt), $data);
             } else {
-                $this->_response->setResult(false, 0, $translator->translate('indexer.check_query_failed'), $data);
+                return new ResultResponse(false, $translator->translate('indexer.check_query_failed'), $data);
             }
         } else {
-            $this->_response->setResult(false, 0, $translator->get('indexer.no_check_query_defined'), $data);
+            return new ResultResponse(false, $translator->get('indexer.no_check_query_defined'), $data);
         }
     }
 }

@@ -9,24 +9,32 @@
 namespace Phlexible\IndexerComponent\Controller;
 
 use Phlexible\CoreComponent\Controller\Action\Action;
+use Phlexible\CoreComponent\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Search controller
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class SearchController extends Action
+class SearchController extends Controller
 {
-    public function searchAction()
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function searchAction(Request $request)
     {
-        $start       = $this->_getParam('start');
-        $limit       = $this->_getParam('limit');
-        $queryString = $this->_getParam('query');
-        $language    = $this->_getParam('language', 'de');
+        $start       = $request->get('start');
+        $limit       = $request->get('limit');
+        $queryString = $request->get('query');
+        $language    = $request->get('language', 'de');
 
         $data = $this->_getResults($queryString);
 
-        $this->_response->setAjaxPayload(
+        return new JsonResponse(
             array(
                 'docs'  => array_slice($data, $start, $limit),
                 'total' => count($data),
@@ -34,18 +42,21 @@ class SearchController extends Action
         );
     }
 
+    /**
+     * @param string $queryString
+     *
+     * @return array
+     */
     protected function _getResults($queryString)
     {
-        $container     = $this->getContainer();
-        $query         = $container->get('indexer.query');
-        $indexerSearch = $container->get('indexer.search');
+        $query         = $this->get('indexer.query');
+        $indexerSearch = $this->get('indexer.search');
 
         $query->parseInput($queryString);
         $results = $indexerSearch->query($query);
 
         $data = array();
-        foreach ($results as $result)
-        {
+        foreach ($results as $result) {
             $data[] = array(
                 'id'      => $result->getIdentifier(),
                 'lang'    => $result->hasField('language') ? $result->getValue('language') : '',
