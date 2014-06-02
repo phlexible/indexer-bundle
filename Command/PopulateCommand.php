@@ -8,7 +8,7 @@
 
 namespace Phlexible\IndexerComponent\Command;
 
-use Phlexible\CoreComponent\Command\ContainerAwareCommand;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Phlexible\IndexerComponent\Indexer\IndexerInterface;
 use Phlexible\IndexerComponent\Job\AddNodeJob;
 use Phlexible\IndexerComponent\Storage\Storage;

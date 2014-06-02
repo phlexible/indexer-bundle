@@ -17,7 +17,7 @@ services:
 
     indexer.documentfactory:
         class: Phlexible\IndexerComponent\Document\DocumentFactory
-        arguments: ["@dispatcher", "@indexer.documentfieldnamefilter"]
+        arguments: ["@event_dispatcher", "@indexer.documentfieldnamefilter"]
 
     indexer.tools:
         class: Phlexible\IndexerComponent\IndexerTools

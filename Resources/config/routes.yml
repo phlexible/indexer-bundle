@@ -1,19 +1,19 @@
 indexer_check_get:
     path: /indexer/check/get/*
-    defaults: { module: indexer, controller: check, action: get, _controller: IndexerBundle:check:get }
+    defaults: { _controller: IndexerBundle:Check:get }
     requirements: { _resource: indexer }
 
 indexer_check_set:
     path: /indexer/check/set/*
-    defaults: { module: indexer, controller: check, action: set, _controller: IndexerBundle:check:set }
+    defaults: { _controller: IndexerBundle:Check:set }
     requirements: { _resource: indexer }
 
 indexer_check:
     path: /indexer/check/check/*
-    defaults: { module: indexer, controller: check, action: check, _controller: IndexerBundle:check:check }
+    defaults: { _controller: IndexerBundle:Check:check }
     requirements: { _resource: indexer }
 
 indexer_search:
     path: /indexer/search/*
-    defaults: { module: indexer, controller: search, action: search, _controller: IndexerBundle:check:search }
+    defaults: { _controller: IndexerBundle:Check:search }
     requirements: { _resource: indexer }

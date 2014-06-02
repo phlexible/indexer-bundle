@@ -8,7 +8,7 @@
 
 namespace Phlexible\IndexerComponent\Command;
 
-use Phlexible\CoreComponent\Command\ContainerAwareCommand;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Phlexible\IndexerComponent\Storage\Optimizable;
 use Phlexible\IndexerComponent\Storage\Storage;
 use Symfony\Component\Console\Input\InputInterface;
