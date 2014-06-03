@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-class IndexerBundle extends Bundle
+class PhlexibleIndexerBundle extends Bundle
 {
     const RESOURCE_INDEXER = 'indexer';
 

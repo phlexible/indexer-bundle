@@ -65,11 +65,11 @@ services:
         class: Phlexible\IndexerComponent\Storage\StorageCollection
         arguments: [[]]
 
-    # acl resources
-    indexer.resource.indexer:
-        class: Zend_Acl_Resource
-        arguments: [indexer]
-        tags: [{name: "security.acl.resource"}]
+    # acl provider
+    indexer.acl_provider:
+        class: Phlexible\IndexerComponent\Acl\IndexerAclProvider
+        tags:
+            - {name: "security.acl.provider"}
 
     # problem checks
     indexer.query.checker:

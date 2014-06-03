@@ -14,12 +14,10 @@ Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
             root: 'docs',
             totalProperty: 'total',
             listeners: {
-                load: {
-                    fn: function() {
-                        this.getComponent(0).getComponent(0).getBottomToolbar().items.items[2].enable();
-                    },
-                    scope: this
-                }
+                load: function() {
+					this.getComponent(0).getComponent(0).getBottomToolbar().items.items[2].enable();
+				},
+				scope: this
             }
         });
 

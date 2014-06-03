@@ -8,8 +8,9 @@
 
 namespace Phlexible\IndexerComponent\Controller;
 
-use Phlexible\CoreComponent\Controller\Action\Action;
 use Phlexible\CoreComponent\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
  * Search controller
  *
  * @author Stephan Wentz <sw@brainbits.net>
+ * @Route("/indexer/search")
+ * @Security("is_granted('indexer')")
  */
 class SearchController extends Controller
 {
@@ -24,6 +27,7 @@ class SearchController extends Controller
      * @param Request $request
      *
      * @return JsonResponse
+     * @Route("", name="indexer_search")
      */
     public function searchAction(Request $request)
     {
