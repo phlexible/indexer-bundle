@@ -8,7 +8,7 @@
 
 namespace Phlexible\IndexerComponent\Controller;
 
-use Phlexible\CoreComponent\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Phlexible\CoreComponent\Response\ResultResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
