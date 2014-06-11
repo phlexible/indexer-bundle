@@ -13,7 +13,8 @@ use Phlexible\IndexerComponent\Indexer\IndexerInterface;
 use Phlexible\IndexerComponent\Job\AddNodeJob;
 use Phlexible\IndexerComponent\Storage\Storage;
 use Phlexible\QueueComponent\Queue\QueueItem;
-use Phlexible\QueueComponent\Queue\QueueService;
+use Phlexible\QueueComponent\Queue\QueueManager;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -77,32 +78,26 @@ class PopulateCommand extends ContainerAwareCommand
 
             $documentIdList = $indexer->getAllIdentifiers();
 
-            if (count($onlyDocumentIdentifiers))
-            {
+            if (count($onlyDocumentIdentifiers)) {
                 $documentIdList = array_intersect($documentIdList, $onlyDocumentIdentifiers);
             }
 
-            if (count($documentIdList))
-            {
-                $progress = $this->getHelperSet()->get('progress');
-                $progress->start($output, count($documentIdList));
+            if (count($documentIdList)) {
+                $progress = new ProgressBar($output, count($documentIdList));
+                $progress->start();
 
                 /* @var $storage Storage */
                 $storage = $indexer->getStorage();
                 $update = $storage->createUpdate();
-                foreach ($documentIdList as $documentId)
-                {
-                    if ($useJobs)
-                    {
+                foreach ($documentIdList as $documentId) {
+                    if ($useJobs) {
                         $job = new AddNodeJob();
                         $job->setIdentifier($documentId);
                         $job->setStorageIds($storage->getId());
                         $job->setIndexerId($indexerId);
 
                         $queueManager->addUniqueJob($job, QueueItem::PRIORITY_LOW);
-                    }
-                    else
-                    {
+                    } else {
                         $document = $indexer->getDocumentByIdentifier($documentId);
                         $update->addUpdate($document);
                         $progress->advance();

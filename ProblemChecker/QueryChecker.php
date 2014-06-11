@@ -12,7 +12,7 @@
 
 namespace Phlexible\IndexerComponent\ProblemChecker;
 
-use Phlexible\CoreComponent\Properties\Properties;
+use Phlexible\GuiComponent\Properties\Properties;
 use Phlexible\IndexerComponent\Query\QueryInterface;
 use Phlexible\IndexerComponent\Search\Search;
 use Phlexible\ProblemsComponent\Entity\Problem;
@@ -66,8 +66,7 @@ class QueryChecker implements ProblemCheckerInterface
     {
         $problems = array();
 
-        try
-        {
+        try {
             $queryString = $this->properties->get('indexer', 'checkQuery');
 
             if (!$queryString) {
@@ -82,7 +81,6 @@ class QueryChecker implements ProblemCheckerInterface
                 ;
                 $problems[] = $problem;
             } else {
-
                 $this->indexerQuery->parseInput($queryString);
                 $results = $this->indexerSearch->query($this->indexerQuery);
 

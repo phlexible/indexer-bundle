@@ -9,7 +9,7 @@
 namespace Phlexible\IndexerComponent\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Phlexible\CoreComponent\Response\ResultResponse;
+use Phlexible\GuiComponent\Response\ResultResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
