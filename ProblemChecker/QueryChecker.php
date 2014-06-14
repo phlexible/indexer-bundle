@@ -48,13 +48,11 @@ class QueryChecker implements ProblemCheckerInterface
     protected $properties;
 
     /**
-     * @param QueryInterface $indexerQuery
      * @param Search         $indexerSearch
      * @param Properties     $properties
      */
-    public function __construct(QueryInterface $indexerQuery, Search $indexerSearch, Properties $properties)
+    public function __construct(Search $indexerSearch, Properties $properties)
     {
-        $this->indexerQuery = $indexerQuery;
         $this->indexerSearch = $indexerSearch;
         $this->properties = $properties;
     }

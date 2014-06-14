@@ -21,27 +21,6 @@ use Phlexible\IndexerComponent\Result\Sorter\SorterInterface;
 class Search implements SearchInterface
 {
     /**
-     * @var IndexerTools
-     */
-    protected $indexerTools = null;
-
-    /**
-     * @var ResultInterface
-     */
-    protected $indexerResult = null;
-
-    /**
-     * @param IndexerTools    $indexerTools
-     * @param ResultInterface $indexerResult
-     */
-    public function __construct(IndexerTools $indexerTools,
-                                ResultInterface $indexerResult)
-    {
-        $this->indexerTools     = $indexerTools;
-        $this->indexerResult    = $indexerResult;
-    }
-
-    /**
      * @param QueryInterface $query
      *
      * @return ResultInterface $indexerResult

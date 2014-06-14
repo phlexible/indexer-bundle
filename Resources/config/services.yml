@@ -19,13 +19,8 @@ services:
         class: Phlexible\IndexerComponent\Document\DocumentFactory
         arguments: ["@event_dispatcher", "@indexer.documentfieldnamefilter"]
 
-    indexer.tools:
-        class: Phlexible\IndexerComponent\IndexerTools
-        arguments: ["%kernel.bundles%", "@indexer.storages"]
-
     indexer.search:
         class: Phlexible\IndexerComponent\Search\Search
-        arguments: ["@indexer.tools", "@indexer.result"]
 
     indexer.query.parser:
         class: Phlexible\IndexerComponent\Query\QueryParser
@@ -74,7 +69,7 @@ services:
     # problem checks
     indexer.query.checker:
         class: Phlexible\IndexerComponent\ProblemChecker\QueryChecker
-        arguments: ["@indexer.query", "@indexer.search", "@properties"]
+        arguments: ["@indexer.search", "@properties"]
         tags:
             - {name: "problem.checker"}
 
