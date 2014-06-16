@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Result\Sorter;
+namespace Phlexible\IndexerBundle\Result\Sorter;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Relevance sorter

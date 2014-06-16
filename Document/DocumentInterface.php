@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Document;
+namespace Phlexible\IndexerBundle\Document;
 
 /**
  * Document interface
@@ -139,7 +139,7 @@ interface DocumentInterface extends \ArrayAccess
      * @return array
      */
     public function getField($key);
-    
+
     /**
      * Remove a field
      *

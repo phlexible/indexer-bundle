@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Result;
+namespace Phlexible\IndexerBundle\Result;
 
 use Phlexible\Identifier\Identifier;
 

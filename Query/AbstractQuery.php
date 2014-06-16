@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Query;
+namespace Phlexible\IndexerBundle\Query;
 
-use Phlexible\IndexerComponent\Boost\BoostInterface;
+use Phlexible\IndexerBundle\Boost\BoostInterface;
 
 /**
  * Abstract query

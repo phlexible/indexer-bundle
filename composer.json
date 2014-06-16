@@ -1,23 +1,25 @@
 {
-    "name": "phlexible/indexer-component",
-    "description": "phlexible.core indexer component",
+    "name": "phlexible/indexer-bundle",
+    "description": "phlexible indexer bundle",
     "license": "proprietary",
+	"type": "symfony-bundle",
+	"keywords": ["indexer", "search"],
     "autoload": {
         "psr-4": {
-            "Phlexible\\IndexerComponent\\": ""
+            "Phlexible\\IndexerBundle\\": ""
         }
     },
     "require": {
         "php": ">=5.3.0",
-        "phlexible/queue-component": "*"
+        "phlexible/queue-bundle": "*"
     },
     "suggest": {
-        "phlexible/indexer-storage-elastica-component": "Elastica storage"
+        "phlexible/indexer-storage-elastica-bundle": "Elastica indexer storage"
     },
     "repositories": [
         {
             "type": "composer",
-            "url": "https://packages.brainbits.net/phlexible-components/"
+            "url": "https://packages.brainbits.net/phlexible-bundles/"
         }
     ],
     "minimum-stability": "stable"

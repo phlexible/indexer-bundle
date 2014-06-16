@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Job;
+namespace Phlexible\IndexerBundle\Job;
 
 use JobException;
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\IndexerComponent\Indexer\IndexerInterface;
-use Phlexible\MediaCacheComponent\Storage\StorageInterface;
-use Phlexible\QueueComponent\Job\ContainerAwareJob;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Indexer\IndexerInterface;
+use Phlexible\MediaCacheBundle\Storage\StorageInterface;
+use Phlexible\QueueBundle\Job\ContainerAwareJob;
 
 /**
  * Add node job

@@ -6,14 +6,14 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Command;
+namespace Phlexible\IndexerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Phlexible\IndexerComponent\Indexer\IndexerInterface;
-use Phlexible\IndexerComponent\Job\AddNodeJob;
-use Phlexible\IndexerComponent\Storage\Storage;
-use Phlexible\QueueComponent\Queue\QueueItem;
-use Phlexible\QueueComponent\Queue\QueueManager;
+use Phlexible\IndexerBundle\Indexer\IndexerInterface;
+use Phlexible\IndexerBundle\Job\AddNodeJob;
+use Phlexible\IndexerBundle\Storage\Storage;
+use Phlexible\QueueBundle\Queue\QueueItem;
+use Phlexible\QueueBundle\Queue\QueueManager;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

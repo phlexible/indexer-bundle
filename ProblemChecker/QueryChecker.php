@@ -1,30 +1,23 @@
 <?php
 /**
- * MAKEweb
+ * phlexible
  *
- * PHP Version 5
- *
- * @category    MWF
- * @package     MWF_Core_Indexer
- * @copyright   2009 brainbits GmbH (http://www.brainbits.net)
- * @version     SVN: $Id: Generator.php 2312 2007-01-25 18:46:27Z swentz $
+ * @copyright 2007-2013 brainbits GmbH (http://www.brainbits.net)
+ * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\ProblemChecker;
+namespace Phlexible\IndexerBundle\ProblemChecker;
 
-use Phlexible\GuiComponent\Properties\Properties;
-use Phlexible\IndexerComponent\Query\QueryInterface;
-use Phlexible\IndexerComponent\Search\Search;
-use Phlexible\ProblemsComponent\Entity\Problem;
-use Phlexible\ProblemsComponent\ProblemChecker\ProblemCheckerInterface;
+use Phlexible\GuiBundle\Properties\Properties;
+use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Search\Search;
+use Phlexible\ProblemBundle\Entity\Problem;
+use Phlexible\ProblemBundle\ProblemChecker\ProblemCheckerInterface;
 
 /**
- * Query check
+ * Query checker
  *
- * @category    MWF
- * @package     MWF_Core_Indexer
- * @author      Stephan Wentz <sw@brainbits.net>
- * @copyright   2009 brainbits GmbH (http://www.brainbits.net)
+ * @author Stephan Wentz <sw@brainbits.net>
  */
 class QueryChecker implements ProblemCheckerInterface
 {

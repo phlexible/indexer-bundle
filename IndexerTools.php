@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent;
+namespace Phlexible\IndexerBundle;
 
 use Phlexible\Component\ComponentCallback;
-use Phlexible\IndexerComponent\Storage\StorageCollection;
+use Phlexible\IndexerBundle\Storage\StorageCollection;
 
 /**
  * Indexer tools

@@ -6,18 +6,18 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage\UpdateQuery;
+namespace Phlexible\IndexerBundle\Storage\UpdateQuery;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\IndexerComponent\Query\QueryInterface;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\AddCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\CommandInterface;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\CommitCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\DeleteCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\FlushCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\OptimizeCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\RollbackCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\UpdateCommand;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\CommandInterface;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\RollbackCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

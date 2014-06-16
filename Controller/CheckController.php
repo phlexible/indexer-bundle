@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Controller;
+namespace Phlexible\IndexerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Phlexible\GuiComponent\Response\ResultResponse;
+use Phlexible\GuiBundle\Response\ResultResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;

@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Indexer;
+namespace Phlexible\IndexerBundle\Indexer;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\MediaCacheComponent\Storage\StorageInterface;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\MediaCacheBundle\Storage\StorageInterface;
 
 /**
  * Indexer interface

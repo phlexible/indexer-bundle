@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Result;
+namespace Phlexible\IndexerBundle\Result;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\IndexerComponent\Result\Sorter\SorterInterface;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Result\Sorter\SorterInterface;
 
 /**
  * Result interface

@@ -6,11 +6,11 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage;
+namespace Phlexible\IndexerBundle\Storage;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\IndexerComponent\Query\QueryInterface;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\UpdateQuery;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 
 /**
  * Storage interface

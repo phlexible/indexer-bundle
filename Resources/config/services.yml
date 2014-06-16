@@ -16,66 +16,66 @@ services:
             - ["addFilter", ["@indexer.documentfieldnamefilter.stringtolower"]]
 
     indexer.documentfactory:
-        class: Phlexible\IndexerComponent\Document\DocumentFactory
+        class: Phlexible\IndexerBundle\Document\DocumentFactory
         arguments: ["@event_dispatcher", "@indexer.documentfieldnamefilter"]
 
     indexer.search:
-        class: Phlexible\IndexerComponent\Search\Search
+        class: Phlexible\IndexerBundle\Search\Search
 
     indexer.query.parser:
-        class: Phlexible\IndexerComponent\Query\QueryParser
+        class: Phlexible\IndexerBundle\Query\QueryParser
 
     indexer.result.sorter.relevance:
-        class: Phlexible\IndexerComponent\Result\Sorter\RelevanceSorter
+        class: Phlexible\IndexerBundle\Result\Sorter\RelevanceSorter
 
     indexer.result.sorter.relevance.reverse:
-        class: Phlexible\IndexerComponent\Result\Sorter\RelevanceReverseSorter
+        class: Phlexible\IndexerBundle\Result\Sorter\RelevanceReverseSorter
 
     indexer.result.sorter.field:
-        class: Phlexible\IndexerComponent\Result\Sorter\FieldSorter
+        class: Phlexible\IndexerBundle\Result\Sorter\FieldSorter
         arguments:
             - "%indexer.result_sorter.relevance.compare_field%"
             - "%indexer.result_sorter.relevance.case_sensitive%"
 
     indexer.result.sorter.field.reverse:
-        class: Phlexible\IndexerComponent\Result\Sorter\FieldReverseSorter
+        class: Phlexible\IndexerBundle\Result\Sorter\FieldReverseSorter
         arguments: ["%indexer.result_sorter.relevance.compare_field%"]
 
     indexer.result:
-        class: Phlexible\IndexerComponent\Result\Result
+        class: Phlexible\IndexerBundle\Result\Result
         arguments: ["@indexer.result.sorter.relevance"]
 
     indexer.query:
-        class: Phlexible\IndexerComponent\Query\Query
+        class: Phlexible\IndexerBundle\Query\Query
         arguments: ["@indexer.query.parser", "@indexer.boost"]
 
     indexer.boost:
-        class: Phlexible\IndexerComponent\Boost\Boost
+        class: Phlexible\IndexerBundle\Boost\Boost
 
     indexer.indexers:
-        class: Phlexible\IndexerComponent\Indexer\IndexerCollection
+        class: Phlexible\IndexerBundle\Indexer\IndexerCollection
         arguments: [[]]
 
     indexer.storages:
-        class: Phlexible\IndexerComponent\Storage\StorageCollection
+        class: Phlexible\IndexerBundle\Storage\StorageCollection
         arguments: [[]]
 
-    # acl provider
+    # acl providers
     indexer.acl_provider:
-        class: Phlexible\IndexerComponent\Acl\IndexerAclProvider
+        class: Phlexible\IndexerBundle\Acl\IndexerAclProvider
         tags:
             - {name: "security.acl.provider"}
 
+    # asset providers
+    indexer.asset_provider:
+        class: Phlexible\IndexerBundle\AssetProvider\IndexerAssetProvider
+        arguments: [@file_locator]
+        tags:
+            - {name: "asset.provider"}
+
     # problem checks
     indexer.query.checker:
-        class: Phlexible\IndexerComponent\ProblemChecker\QueryChecker
+        class: Phlexible\IndexerBundle\ProblemChecker\QueryChecker
         arguments: ["@indexer.search", "@properties"]
         tags:
             - {name: "problem.checker"}
-
-    # assets
-    indexer.asset.scripts:
-        class: Phlexible\IndexerComponent\Asset\ScriptCollection
-        arguments: ["%indexer.asset.script_path%/"]
-        tags:
-            - {name: "asset.script"}

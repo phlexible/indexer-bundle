@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage;
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\IndexerComponent\Query\QueryInterface;
+namespace Phlexible\IndexerBundle\Storage;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Query\QueryInterface;
 
 /**
  * Storage adapter interface

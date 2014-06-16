@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Command;
+namespace Phlexible\IndexerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Phlexible\IndexerComponent\Storage\Optimizable;
+use Phlexible\IndexerBundle\Storage\Optimizable;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

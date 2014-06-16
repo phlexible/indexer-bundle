@@ -6,12 +6,12 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Search;
+namespace Phlexible\IndexerBundle\Search;
 
-use Phlexible\IndexerComponent\IndexerTools;
-use Phlexible\IndexerComponent\Query\QueryInterface;
-use Phlexible\IndexerComponent\Result\ResultInterface;
-use Phlexible\IndexerComponent\Result\Sorter\SorterInterface;
+use Phlexible\IndexerBundle\IndexerTools;
+use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Result\ResultInterface;
+use Phlexible\IndexerBundle\Result\Sorter\SorterInterface;
 
 /**
  * Indexer search

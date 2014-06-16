@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Document;
+namespace Phlexible\IndexerBundle\Document;
 
 /**
  * Boostable interface

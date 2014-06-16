@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\DependencyInjection;
+namespace Phlexible\IndexerBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -30,8 +30,5 @@ class PhlexibleIndexerExtension extends Extension
 
         //$configuration = $this->getConfiguration($container);
         //$config = $this->processConfiguration($configuration, $configs);
-
-        $container->setParameter('indexer.asset.script_path', __DIR__ . '/../Resources/scripts/');
-        $container->setParameter('indexer.asset.css_path', __DIR__ . '/../Resources/styles/');
     }
 }

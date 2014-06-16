@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Boost;
+namespace Phlexible\IndexerBundle\Boost;
 
 /**
  * Boost interface

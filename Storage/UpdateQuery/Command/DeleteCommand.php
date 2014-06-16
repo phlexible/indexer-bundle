@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage\UpdateQuery\Command;
+namespace Phlexible\IndexerBundle\Storage\UpdateQuery\Command;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Delete command

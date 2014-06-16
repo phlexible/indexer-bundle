@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Event;
+namespace Phlexible\IndexerBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 

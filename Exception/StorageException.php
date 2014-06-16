@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Exception;
+namespace Phlexible\IndexerBundle\Exception;
 
 /**
  * Storage exception

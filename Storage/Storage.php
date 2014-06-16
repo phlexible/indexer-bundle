@@ -6,16 +6,16 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage;
+namespace Phlexible\IndexerBundle\Storage;
 
-use Phlexible\IndexerComponent\Document\DocumentInterface;
-use Phlexible\IndexerComponent\Event\DocumentEvent;
-use Phlexible\IndexerComponent\Exception\Events;
-use Phlexible\IndexerComponent\Query\QueryInterface;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\AddCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\FlushCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\Command\UpdateCommand;
-use Phlexible\IndexerComponent\Storage\UpdateQuery\UpdateQuery;
+use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\IndexerBundle\Event\DocumentEvent;
+use Phlexible\IndexerBundle\Exception\Events;
+use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

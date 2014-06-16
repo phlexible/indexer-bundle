@@ -6,8 +6,8 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Query;
-use Phlexible\IndexerComponent\Boost\BoostInterface;
+namespace Phlexible\IndexerBundle\Query;
+use Phlexible\IndexerBundle\Boost\BoostInterface;
 
 /**
  * Query interface

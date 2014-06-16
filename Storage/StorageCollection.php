@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage;
+namespace Phlexible\IndexerBundle\Storage;
 use Traversable;
 
 /**

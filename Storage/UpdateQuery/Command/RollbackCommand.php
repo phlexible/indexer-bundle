@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerComponent\Storage\UpdateQuery\Command;
+namespace Phlexible\IndexerBundle\Storage\UpdateQuery\Command;
 
 /**
  * Rollback command
