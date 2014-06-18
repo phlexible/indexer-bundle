@@ -7,8 +7,9 @@
  */
 
 namespace Phlexible\IndexerBundle\Storage;
+
 use Phlexible\IndexerBundle\Document\DocumentInterface;
-use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Storage\SelectQuery\SelectQuery;
 
 /**
  * Storage adapter interface
@@ -33,6 +34,7 @@ interface StorageAdapterInterface
      * Return document by identifier
      *
      * @param string $identifier
+     *
      * @return DocumentInterface
      */
     public function getByIdentifier($identifier);
@@ -40,10 +42,11 @@ interface StorageAdapterInterface
     /**
      * Return documents by query
      *
-     * @param QueryInterface $query
+     * @param SelectQuery $query
+     *
      * @return DocumentInterface[]
      */
-    public function getByQuery(QueryInterface $query);
+    public function getByQuery(SelectQuery $query);
 
     /**
      * Return all documents
@@ -67,6 +70,13 @@ interface StorageAdapterInterface
     public function updateDocument(DocumentInterface $document);
 
     /**
+     * Remove document
+     *
+     * @param DocumentInterface $document
+     */
+    public function removeDocument(DocumentInterface $document);
+
+    /**
      * Remove document by identifier
      *
      * @param string $identifier
@@ -76,9 +86,16 @@ interface StorageAdapterInterface
     /**
      * Remove documents by query
      *
-     * @param QueryInterface $query
+     * @param SelectQuery $query
      */
-    public function removeByQuery(QueryInterface $query);
+    public function removeByQuery(SelectQuery $query);
+
+    /**
+     * Remove documents by type
+     *
+     * @param string $type
+     */
+    public function removeByType($type);
 
     /**
      * Remove all documents
@@ -98,25 +115,14 @@ interface StorageAdapterInterface
     /**
      * @return string
      */
-    public function getResultClass();
-
-    /**
-     * @return array
-     */
-    public function getAcceptQuery();
-
-    /**
-     * @return array
-     */
-    public function getAcceptStorage();
-
-    /**
-     * @return string
-     */
     public function getId();
 
     /**
      * @return boolean
      */
     public function isHealthy();
+
+    public function optimize();
+
+    public function commit();
 }

@@ -19,18 +19,9 @@ use Phlexible\IndexerBundle\Document\DocumentInterface;
 abstract class AbstractIndexer implements IndexerInterface
 {
     /**
-     * {@inheritdoc}
-     */
-    public function useJobs()
-    {
-        return false;
-    }
-
-    /**
      * @return DocumentFactory
      */
     abstract public function getDocumentFactory();
-
 
     /**
      * Return new instance of indexers document class

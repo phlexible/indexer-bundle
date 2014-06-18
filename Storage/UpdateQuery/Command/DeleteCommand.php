@@ -17,8 +17,14 @@ use Phlexible\IndexerBundle\Document\DocumentInterface;
  */
 class DeleteCommand implements CommandInterface
 {
+    /**
+     * @var DocumentInterface
+     */
     private $document;
 
+    /**
+     * @param DocumentInterface $document
+     */
     public function __construct(DocumentInterface $document)
     {
         $this->document = $document;

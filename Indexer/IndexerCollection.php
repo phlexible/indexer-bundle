@@ -30,11 +30,13 @@ class IndexerCollection implements \IteratorAggregate, \Countable
 
     /**
      * @param IndexerInterface $indexer
+     *
      * @return $this
      */
     public function addIndexer(IndexerInterface $indexer)
     {
         $this->indexers[] = $indexer;
+
         return $this;
     }
 

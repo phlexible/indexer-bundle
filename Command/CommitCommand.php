@@ -9,17 +9,15 @@
 namespace Phlexible\IndexerBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Phlexible\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Flush command
+ * Commit command
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-class FlushCommand extends ContainerAwareCommand
+class CommitCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -27,8 +25,8 @@ class FlushCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('indexer:flush')
-            ->setDescription('Flush all documents in storage.')
+            ->setName('indexer:commit')
+            ->setDescription('Commit changes in storage.')
         ;
     }
 
@@ -43,15 +41,13 @@ class FlushCommand extends ContainerAwareCommand
 
         $output->writeln('Committing changes in storage ' . $storage->getLabel());
 
-        $update = $storage->createUpdate()->addFlush();
+        $update = $storage->createUpdate()->addCommit();
 
         if ($storage->update($update)) {
-            $output->writeln('<info>Flushed</info>');
+            $output->writeln('<info>Committed</info>');
         } else {
-            $output->writeln('<erro>Flush failed</erro>');
+            $output->writeln('<erro>Commit failed</erro>');
         }
-
-        $output->writeln('Flushing done.');
 
         return 0;
     }

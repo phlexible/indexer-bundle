@@ -25,9 +25,9 @@ class AddIndexersPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $indexers = array();
-        foreach ($container->findTaggedServiceIds('indexer.indexer') as $id => $definition) {
+        foreach ($container->findTaggedServiceIds('phlexible_indexer.indexer') as $id => $definition) {
             $indexers[$id] = new Reference($id);
         }
-        $container->getDefinition('indexer.indexers')->replaceArgument(0, $indexers);
+        $container->getDefinition('phlexible_indexer.indexers')->replaceArgument(0, $indexers);
     }
 }

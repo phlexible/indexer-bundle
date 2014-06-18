@@ -8,13 +8,20 @@
 
 namespace Phlexible\IndexerBundle\Storage;
 
-use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\FrontendSearchBundle\Query\SuggestQuery;
 use Phlexible\IndexerBundle\Event\DocumentEvent;
-use Phlexible\IndexerBundle\Exception\Events;
-use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\IndexerEvents;
+use Phlexible\IndexerBundle\Query\Query;
+use Phlexible\IndexerBundle\Result\Result;
+use Phlexible\IndexerBundle\Storage\SelectQuery\SelectQuery;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -28,12 +35,12 @@ class Storage implements StorageInterface
     /**
      * @var StorageAdapterInterface
      */
-    protected $adapter = null;
+    private $adapter;
 
     /**
       * @var EventDispatcherInterface
       */
-    protected $dispatcher;
+    private $dispatcher;
 
     /**
      * @param EventDispatcherInterface $dispatcher
@@ -87,56 +94,35 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return array
-     */
-    public function getAcceptQuery()
-    {
-        return $this->adapter->getAcceptQuery();
-    }
-
-    /**
-     * @return array
-     */
-    public function getAcceptStorage()
-    {
-        return $this->adapter->getAcceptStorage();
-    }
-
-    /**
-     * @param null $identifier
-     * @return DocumentInterface
-     */
-    public function getByIdentifier($identifier = null)
-    {
-        return $this->adapter->getByIdentifier($identifier);
-    }
-
-    /**
-     * @param QueryInterface $query
-     * @return array
-     */
-    public function getByQuery(QueryInterface $query)
-    {
-        return $this->adapter->getByQuery($query);
-    }
-
-    public function getAll()
-    {
-        return $this->adapter->getAll();
-    }
-
-    /**
      * @return SelectQuery
      */
     public function createSelect()
     {
-        return new SelectQuery();
+        return new SelectQuery($this->dispatcher);
     }
 
     /**
      * @param SelectQuery $select
+     *
+     * @return Result
      */
     public function select(SelectQuery $select)
+    {
+        return $this->adapter->getByQuery($select);
+    }
+
+    /**
+     * @return SuggestQuery
+     */
+    public function createSuggest()
+    {
+        return new SuggestQuery($this->dispatcher);
+    }
+
+    /**
+     * @param SuggestQuery $query
+     */
+    public function suggest(SuggestQuery $query)
     {
 
     }
@@ -151,30 +137,49 @@ class Storage implements StorageInterface
 
     /**
      * @param UpdateQuery $update
+     *
      * @return $this
      */
     public function update(UpdateQuery $update)
     {
-        $event = new DocumentEvent($document);
-        if (!$this->dispatcher->dispatch(Events::BEFORE_STORAGE_UPDATE_DOCUMENT, $event)) {
-            return $this;
-        }
-
         foreach ($update->getCommands() as $command) {
-
             if ($command instanceof AddCommand) {
+                $document = $command->getDocument();
+                $event = new DocumentEvent($document);
+                if ($this->dispatcher->dispatch(IndexerEvents::BEFORE_STORAGE_ADD_DOCUMENT, $event)->isPropagationStopped()) {
+                    continue;
+                }
+
                 $this->adapter->addDocument($command->getDocument());
-            }
-            elseif ($command instanceof UpdateCommand) {
-                $this->adapter->updateDocument($command->getDocument());
-            }
-            elseif ($command instanceof FlushCommand) {
+
+                $event = new DocumentEvent($document);
+                $this->dispatcher->dispatch(IndexerEvents::STORAGE_ADD_DOCUMENT, $event);
+            } elseif ($command instanceof UpdateCommand) {
+                $document = $command->getDocument();
+                $event = new DocumentEvent($document);
+                if ($this->dispatcher->dispatch(IndexerEvents::BEFORE_STORAGE_UPDATE_DOCUMENT, $event)->isPropagationStopped()) {
+                    continue;
+                }
+
+                $this->adapter->updateDocument($document);
+
+                $event = new DocumentEvent($document);
+                $this->dispatcher->dispatch(IndexerEvents::STORAGE_UPDATE_DOCUMENT, $event);
+            } elseif ($command instanceof DeleteCommand) {
+                $this->adapter->removeByIdentifier($command->getDocument());
+            } elseif ($command instanceof DeleteQueryCommand) {
+                $this->adapter->removeByQuery($command->getQuery());
+            } elseif ($command instanceof DeleteTypeCommand) {
+                $this->adapter->removeByType($command->getType());
+            } elseif ($command instanceof FlushCommand) {
                 $this->adapter->removeAll();
+            } elseif ($command instanceof OptimizeCommand) {
+                $this->adapter->optimize();
+            } elseif ($command instanceof CommitCommand) {
+                $this->adapter->commit();
             }
         }
 
-        $event = new DocumentEvent($document);
-        $this->dispatcher->dispatch(Events::STORAGE_UPDATE_DOCUMENT, $event);
 
         return $this;
     }

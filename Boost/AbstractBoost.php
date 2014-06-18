@@ -18,34 +18,33 @@ abstract class AbstractBoost implements BoostInterface
     /**
      * @var float
      */
-    protected $baseBoost = 1.0;
+    private $defaultBoost = 1.0;
 
     /**
      * @var float
      */
-    protected $basePrecision = 0.7;
+    private $defaultPrecision = 0.7;
 
     /**
      * @var array
      */
-    protected $customBoosts = array('unittestvalue' => 2.0);
+    private $fieldBoost = array('unittestvalue' => 2.0);
 
     /**
      * @var array
      */
-    protected $customPrecision = array('unittestvalue' => 2.0);
+    private $fieldPrecision = array('unittestvalue' => 2.0);
 
     /**
      * {@inheritdoc}
      */
     public function getBoost($field)
     {
-        if (true === array_key_exists($field, $this->customBoosts))
-        {
-            return (float) $this->customBoosts[$field];
+        if (true === array_key_exists($field, $this->fieldBoost)) {
+            return (float) $this->fieldBoost[$field];
         }
 
-        return (float)$this->baseBoost;
+        return (float) $this->defaultBoost;
     }
 
     /**
@@ -53,11 +52,30 @@ abstract class AbstractBoost implements BoostInterface
      */
     public function getPrecision($field)
     {
-        if (true === array_key_exists($field, $this->customPrecision))
-        {
-            return (float) $this->customPrecision[$field];
+        if (true === array_key_exists($field, $this->fieldPrecision)) {
+            return (float) $this->fieldPrecision[$field];
         }
 
-        return (float)$this->basePrecision;
+        return (float) $this->defaultPrecision;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addFieldBoost($field, $boost)
+    {
+        $this->fieldBoost[$field] = $boost;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addFieldPrecision($field, $precision)
+    {
+        $this->fieldPrecision[$field] = $precision;
+
+        return $this;
     }
 }

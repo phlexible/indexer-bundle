@@ -59,6 +59,8 @@ class IndexerAssetProvider implements AssetProviderInterface
 
             new FileAsset($this->locator->locate('@PhlexibleIndexerBundle/Resources/scripts/MainPanel.js')),
 
+            new FileAsset($this->locator->locate('@PhlexibleIndexerBundle/Resources/scripts/model/Result.js')),
+
             new FileAsset($this->locator->locate('@PhlexibleIndexerBundle/Resources/scripts/menuhandle/SearchHandle.js')),
         ));
 

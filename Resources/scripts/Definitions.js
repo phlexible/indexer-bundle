@@ -1,1 +1,4 @@
-Ext.ns('Phlexible.indexer.menuhandle');
+Ext.ns(
+	'Phlexible.indexer.model',
+	'Phlexible.indexer.menuhandle'
+);

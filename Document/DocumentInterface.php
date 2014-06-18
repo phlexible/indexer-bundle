@@ -16,11 +16,21 @@ namespace Phlexible\IndexerBundle\Document;
  */
 interface DocumentInterface extends \ArrayAccess
 {
-    const CONFIG_NOTINDEXED = 'indexed';
+    const CONFIG_NOTINDEXED = 'notindexed';
     const CONFIG_MULTIVALUE = 'multivalue';
-    const CONFIG_COPY       = 'copy';
     const CONFIG_READONLY   = 'readonly';
     const CONFIG_HIGHLIGHT  = 'highlight';
+    const CONFIG_TYPE       = 'type';
+
+    const TYPE_COPY       = 'copy';
+    const TYPE_STRING     = 'string';
+    const TYPE_INTEGER    = 'integer';
+    const TYPE_FLOAT      = 'float';
+    const TYPE_BOOLEAN    = 'boolean';
+    const TYPE_DOUBLE     = 'double';
+    const TYPE_LONG       = 'long';
+    const TYPE_DATE       = 'date';
+    const TYPE_CURRENCY   = 'currency';
 
     /**
      * @param string $documentType
@@ -31,6 +41,7 @@ interface DocumentInterface extends \ArrayAccess
      * Magic __get
      *
      * @param string $key
+     *
      * @return mixed
      */
     public function __get($key);
@@ -47,6 +58,7 @@ interface DocumentInterface extends \ArrayAccess
      * Magic __isset
      *
      * @param string $key
+     *
      * @return boolean
      */
     public function __isset($key);
@@ -70,6 +82,7 @@ interface DocumentInterface extends \ArrayAccess
      *
      * @param array   $values
      * @param boolean $implicitCreateField
+     *
      * @return $this
      */
     public function setValues($values, $implicitCreateField = false);
@@ -78,14 +91,16 @@ interface DocumentInterface extends \ArrayAccess
      * Is value set?
      *
      * @param string $key
+     *
      * @return boolean
      */
     public function hasValue($key);
 
     /**
-     * Get value
+     * Return value
      *
      * @param string $key
+     *
      * @return array
      */
     public function getValue($key);
@@ -96,6 +111,7 @@ interface DocumentInterface extends \ArrayAccess
      * @param string  $key
      * @param string  $value
      * @param boolean $implicitCreateField
+     *
      * @return $this
      */
     public function setValue($key, $value, $implicitCreateField = false);
@@ -104,6 +120,7 @@ interface DocumentInterface extends \ArrayAccess
      * Is field available?
      *
      * @param string $key
+     *
      * @return boolean
      */
     public function hasField($key);
@@ -112,12 +129,13 @@ interface DocumentInterface extends \ArrayAccess
      * Set fields
      *
      * @param array $fields
+     *
      * @return $this
      */
     public function setFields(array $fields);
 
     /**
-     * Get fields
+     * Return fields
      *
      * @return array
      */
@@ -128,14 +146,16 @@ interface DocumentInterface extends \ArrayAccess
      *
      * @param string $key
      * @param array  $config
+     *
      * @return $this
      */
     public function setField($key, array $config = array());
 
     /**
-     * Get field
+     * Return field
      *
      * @param string $key
+     *
      * @return array
      */
     public function getField($key);
@@ -144,6 +164,7 @@ interface DocumentInterface extends \ArrayAccess
      * Remove a field
      *
      * @param string $key
+     *
      * @return $this
      */
     public function removeField($key);
@@ -159,6 +180,7 @@ interface DocumentInterface extends \ArrayAccess
      * Set identifier
      *
      * @param string $id
+     *
      * @return $this
      */
     public function setIdentifier($id);
@@ -181,6 +203,7 @@ interface DocumentInterface extends \ArrayAccess
      * Set relevance
      *
      * @param mixed $relevance
+     *
      * @return $this
      */
     public function setRelevance($relevance);

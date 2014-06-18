@@ -1,81 +1,81 @@
 parameters:
-    indexer.result_sorter.relevance.compare_field: ~
-    indexer.result_sorter.relevance.case_sensitive: ~
+    phlexible_indexer.result_sorter.relevance.compare_field: ~
+    phlexible_indexer.result_sorter.relevance.case_sensitive: ~
 
 services:
-    indexer.documentfieldnamefilter.camelcasetounderscore:
+    phlexible_indexer.document_field_name_filter.camelcasetounderscore:
         class: Zend_Filter_Word_CamelCaseToUnderscore
 
-    indexer.documentfieldnamefilter.stringtolower:
+    phlexible_indexer.document_field_name_filter.stringtolower:
         class: Zend_Filter_StringToLower
 
-    indexer.documentfieldnamefilter:
+    phlexible_indexer.document_field_name_filter:
         class: Zend_Filter
         calls:
-            - ["addFilter", ["@indexer.documentfieldnamefilter.camelcasetounderscore"]]
-            - ["addFilter", ["@indexer.documentfieldnamefilter.stringtolower"]]
+            - [addFilter, [@phlexible_indexer.document_field_name_filter.camelcasetounderscore]]
+            - [addFilter, [@phlexible_indexer.document_field_name_filter.stringtolower]]
 
-    indexer.documentfactory:
+    phlexible_indexer.document_factory:
         class: Phlexible\IndexerBundle\Document\DocumentFactory
-        arguments: ["@event_dispatcher", "@indexer.documentfieldnamefilter"]
+        arguments: [@event_dispatcher, @phlexible_indexer.document_field_name_filter]
 
-    indexer.search:
+    phlexible_indexer.search:
         class: Phlexible\IndexerBundle\Search\Search
 
-    indexer.query.parser:
+    phlexible_indexer.query.parser:
         class: Phlexible\IndexerBundle\Query\QueryParser
 
-    indexer.result.sorter.relevance:
+    phlexible_indexer.result.sorter.relevance:
         class: Phlexible\IndexerBundle\Result\Sorter\RelevanceSorter
 
-    indexer.result.sorter.relevance.reverse:
+    phlexible_indexer.result.sorter.relevance.reverse:
         class: Phlexible\IndexerBundle\Result\Sorter\RelevanceReverseSorter
 
-    indexer.result.sorter.field:
+    phlexible_indexer.result.sorter.field:
         class: Phlexible\IndexerBundle\Result\Sorter\FieldSorter
         arguments:
-            - "%indexer.result_sorter.relevance.compare_field%"
-            - "%indexer.result_sorter.relevance.case_sensitive%"
+            - %phlexible_indexer.result_sorter.relevance.compare_field%
+            - %phlexible_indexer.result_sorter.relevance.case_sensitive%
 
-    indexer.result.sorter.field.reverse:
+    phlexible_indexer.result.sorter.field.reverse:
         class: Phlexible\IndexerBundle\Result\Sorter\FieldReverseSorter
-        arguments: ["%indexer.result_sorter.relevance.compare_field%"]
+        arguments: [%phlexible_indexer.result_sorter.relevance.compare_field%]
 
-    indexer.result:
+    phlexible_indexer.result:
         class: Phlexible\IndexerBundle\Result\Result
-        arguments: ["@indexer.result.sorter.relevance"]
+        arguments: [@phlexible_indexer.result.sorter.relevance]
 
-    indexer.query:
+    phlexible_indexer.query:
         class: Phlexible\IndexerBundle\Query\Query
-        arguments: ["@indexer.query.parser", "@indexer.boost"]
+        arguments: [@phlexible_indexer.query.parser, @phlexible_indexer.boost]
 
-    indexer.boost:
+    phlexible_indexer.boost:
         class: Phlexible\IndexerBundle\Boost\Boost
 
-    indexer.indexers:
+    phlexible_indexer.indexers:
         class: Phlexible\IndexerBundle\Indexer\IndexerCollection
         arguments: [[]]
 
-    indexer.storages:
+    phlexible_indexer.storages:
         class: Phlexible\IndexerBundle\Storage\StorageCollection
         arguments: [[]]
 
     # acl providers
-    indexer.acl_provider:
-        class: Phlexible\IndexerBundle\Acl\IndexerAclProvider
+    phlexible_indexer.acl_provider:
+        class: Phlexible\IndexerBundle\AclProvider\IndexerAclProvider
         tags:
-            - {name: "security.acl.provider"}
+            - {name: phlexible_security.acl.provider}
 
     # asset providers
-    indexer.asset_provider:
+    phlexible_indexer.asset_provider:
         class: Phlexible\IndexerBundle\AssetProvider\IndexerAssetProvider
         arguments: [@file_locator]
         tags:
-            - {name: "asset.provider"}
+            - {name: phlexible_gui.asset.provider}
 
     # problem checks
-    indexer.query.checker:
+    phlexible_indexer.query.checker:
         class: Phlexible\IndexerBundle\ProblemChecker\QueryChecker
-        arguments: ["@indexer.search", "@properties"]
+        arguments: [@phlexible_indexer.search, @properties]
         tags:
-            - {name: "problem.checker"}
+            - {name: phlexible_problem.problem_checker}

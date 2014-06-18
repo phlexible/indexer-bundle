@@ -10,11 +10,11 @@ indexer:
     no_results: 'Keine Suchergebnisse.'
     show_results: 'Suchergebnisse anzeigen.'
     no_check_query_defined: 'Keine Überprüfungsabfrage definiert.'
-    check_query_failed: 'Überprüfungsabfrage fehlgeschlagen, keine Ergebnisse.'
-    check_query_succeeded: 'Überprüfungsabfrage erfolgreich, {0} Ergebnisse.'
+    check_query_result: '{0} Überprüfungsabfrage fehlgeschlagen, keine Ergebnisse.|{1} Überprüfungsabfrage erfolgreich, ein Ergebniss.|]1,Inf]Überprüfungsabfrage erfolgreich, %num% Ergebnisse.'
     id: ID
     tid: TID
     eid: EID
     language: Sprache
     title: Titel
     online: Online
+    document: Dokument

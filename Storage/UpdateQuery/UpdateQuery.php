@@ -9,11 +9,13 @@
 namespace Phlexible\IndexerBundle\Storage\UpdateQuery;
 
 use Phlexible\IndexerBundle\Document\DocumentInterface;
-use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\IndexerBundle\Query\Query;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\CommandInterface;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
+use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\RollbackCommand;
@@ -55,6 +57,7 @@ class UpdateQuery
 
     /**
      * @param DocumentInterface $document
+     *
      * @return $this
      */
     public function add(DocumentInterface $document)
@@ -64,6 +67,7 @@ class UpdateQuery
 
     /**
      * @param DocumentInterface $document
+     *
      * @return $this
      */
     public function addUpdate(DocumentInterface $document)
@@ -73,6 +77,7 @@ class UpdateQuery
 
     /**
      * @param null $identifier
+     *
      * @return $this
      */
     public function addDeleteByIdentifier($identifier = null)
@@ -81,20 +86,23 @@ class UpdateQuery
     }
 
     /**
-     * @param QueryInterface $query
+     * @param Query $query
+     *
      * @return $this
      */
-    public function addDeleteByQuery(QueryInterface $query)
+    public function addDeleteByQuery(Query $query)
     {
-        return $this->addCommand(new DeleteCommand($query));
+        return $this->addCommand(new DeleteQueryCommand($query));
     }
 
     /**
+     * @param string $type
+     *
      * @return $this
      */
-    public function addDeleteAll()
+    public function addDeleteByType($type)
     {
-        return $this->addCommand(new DeleteCommand());
+        return $this->addCommand(new DeleteTypeCommand($type));
     }
 
     /**
@@ -131,11 +139,13 @@ class UpdateQuery
 
     /**
      * @param CommandInterface $command
+     *
      * @return $this
      */
     private function addCommand(CommandInterface $command)
     {
         $this->commands[] = $command;
+
         return $this;
     }
 }

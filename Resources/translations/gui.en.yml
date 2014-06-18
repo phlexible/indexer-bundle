@@ -10,8 +10,7 @@ indexer:
     no_results: 'No search results.'
     show_results: 'Show search results.'
     no_check_query_defined: 'No check query defined.'
-    check_query_failed: 'Check query failed, no results.'
-    check_query_succeeded: 'Check query succeeded, , {0} results.'
+    check_query_result: '{0} Check query failed, no results.|{1} Check query succeeded, one result.|]1,Inf] Check query succeeded, %num% results.'
     id: ID
     tid: TID
     eid: EID
@@ -20,3 +19,4 @@ indexer:
     online: Online
     admin: Admin
     home: Home
+    document: Document

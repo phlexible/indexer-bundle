@@ -8,6 +8,9 @@
 
 namespace Phlexible\IndexerBundle\Command;
 
+use Phlexible\IndexerBundle\Query\Filter\TermFilter;
+use Phlexible\IndexerBundle\Query\Query;
+use Phlexible\IndexerBundle\Query\Query\TermsQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,6 +43,17 @@ class SearchCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $client = $this->getContainer()->get('phlexible_indexer.storage.default');
+        $select = $client->createSelect()
+            ->addDocumentType('media')
+            ->addField('title')
+            ->setQuery(new TermsQuery('test'))
+            ->setFilter(new TermFilter('document_type', 'jpg'))
+            ->setHighlight(true)
+        ;
+        $result = $client->select($select);
+        ldd($result);
+
         $search = '';
         if ($input->getOption('search'))
         {

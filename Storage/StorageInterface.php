@@ -8,8 +8,9 @@
 
 namespace Phlexible\IndexerBundle\Storage;
 
-use Phlexible\IndexerBundle\Document\DocumentInterface;
-use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\FrontendSearchBundle\Query\SuggestQuery;
+use Phlexible\IndexerBundle\Query\Query;
+use Phlexible\IndexerBundle\Storage\SelectQuery\SelectQuery;
 use Phlexible\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 
 /**
@@ -45,30 +46,6 @@ interface StorageInterface
     public function getResultClass();
 
     /**
-     * @return array
-     */
-    public function getAcceptQuery();
-
-    /**
-     * @return array
-     */
-    public function getAcceptStorage();
-
-    /**
-     * @param null $identifier
-     * @return DocumentInterface
-     */
-    public function getByIdentifier($identifier = null);
-
-    /**
-     * @param QueryInterface $query
-     * @return array
-     */
-    public function getByQuery(QueryInterface $query);
-
-    public function getAll();
-
-    /**
      * @return SelectQuery
      */
     public function createSelect();
@@ -79,12 +56,23 @@ interface StorageInterface
     public function select(SelectQuery $select);
 
     /**
+     * @return SuggestQuery
+     */
+    public function createSuggest();
+
+    /**
+     * @param SuggestQuery $suggest
+     */
+    public function suggest(SuggestQuery $suggest);
+
+    /**
      * @return UpdateQuery
      */
     public function createUpdate();
 
     /**
      * @param UpdateQuery $update
+     *
      * @return $this
      */
     public function update(UpdateQuery $update);

@@ -8,6 +8,7 @@
 
 namespace Phlexible\IndexerBundle\Controller;
 
+use Phlexible\IndexerBundle\Query\Query\QueryString;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Phlexible\GuiBundle\Response\ResultResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,10 +32,10 @@ class CheckController extends Controller
      */
     public function setAction(Request $request)
     {
-        $query = $request->query->get('query');
+        $query = $request->request->get('query');
 
         if (!$query) {
-            return new ResultResponse(true, 'Check query can\'t be empty.');
+            return new ResultResponse(false, 'Check query can\'t be empty.');
         }
 
         $properties = $this->get('properties');
@@ -73,16 +74,20 @@ class CheckController extends Controller
         $translator = $this->get('translator');
 
         if ($checkString) {
-            $results = $this->_getResults($checkString);
+            $client = $this->get('phlexible_indexer_storage_solr.storage');
+            $select = $client->createSelect()
+                ->addDocumentType('media')
+                ->addField('_identifier_')
+                ->setQuery(new QueryString($checkString))
+                ->setRows(1)
+            ;
+            $results = $client->select($select);
 
-            $cnt = count($results);
-            if ($cnt) {
-                return new ResultResponse(true, $translator->translate('indexer.check_query_succeeded', $cnt), $data);
-            } else {
-                return new ResultResponse(false, $translator->translate('indexer.check_query_failed'), $data);
-            }
+            $cnt = $results->getTotal();
+
+            return new ResultResponse((bool) $cnt, $translator->transChoice('indexer.check_query_result', $cnt, array('%num%' => $cnt), 'gui'), $data);
         } else {
-            return new ResultResponse(false, $translator->get('indexer.no_check_query_defined'), $data);
+            return new ResultResponse(false, $translator->trans('indexer.no_check_query_defined', array(), 'gui'), $data);
         }
     }
 }

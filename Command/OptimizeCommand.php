@@ -38,30 +38,21 @@ class OptimizeCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $storages = $this->getContainer()->get('indexer.storages');
+        $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
 
-        $output->writeln('Optimizing repositories:');
+        $output->writeln('Committing changes in storage ' . $storage->getLabel());
 
-        foreach ($storages as $id => $storage)
-        {
-            $output->writeln(' * ' . $id . ':');
+        if ($storage->isOptimizable()) {
+            $update = $storage->createUpdate()->addOptimize();
 
-            if ($storage->isOptimizable()) {
-                if ($storage->optimize())
-                {
-                    $output->writeln('   - optimized.');
-                }
-                else
-                {
-                    $output->writeln('   - optimize failed.');
-                }
+            if ($storage->update($update)) {
+                $output->writeln('<info>Optimized</info>');
             } else {
-                $output->writeln('   - optimize not supported.');
+                $output->writeln('<erro>Optimize failed</erro>');
             }
+        } else {
+            $output->writeln('Optimize not supported.');
         }
-
-        $output->writeln('');
-        $output->writeln('Optimize finished.');
 
         return 0;
     }

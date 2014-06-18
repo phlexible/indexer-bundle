@@ -22,49 +22,51 @@ interface ResultInterface
      * Adds a document to local result. If an ID is already in local result, the highest relevance wins
      *
      * @param DocumentInterface $document
+     *
      * @return $this
      */
-    public function addDocument(DocumentInterface $document);
+    public function add(DocumentInterface $document);
+
+    /**
+     * Set documents
+     *
+     * @param DocumentInterface[] $documents
+     *
+     * @return $this
+     */
+    public function setDocuments(array $documents);
 
     /**
      * Adds multiple document to local result. If an ID is already in local result, the highest relevance wins
      *
      * @param DocumentInterface[] $documents
+     *
      * @return $this
      */
     public function addDocuments(array $documents = array());
 
     /**
+     * Return all documents
+     *
+     * @return DocumentInterface[]
+     */
+    public function getDocuments();
+
+    /**
+     * Remove all documents
+     *
+     * @return $this
+     */
+    public function removeAll();
+
+    /**
      * Merges a result to local result
      *
      * @param ResultInterface $result
+     *
      * @return $this
      */
     public function addResult(ResultInterface $result);
-
-    /**
-     * Return result, represented as array of Nodes
-     *
-     * @return array
-     */
-    public function getResult();
-
-    /**
-     * @param SorterInterface $sorter
-     * @return $this
-     */
-    public function setSorter(SorterInterface $sorter);
-
-    /**
-     * @return SorterInterface
-     */
-    public function getSorter();
-
-    /**
-     * Sorts result by nodes relevance
-     * @return $this
-     */
-    public function sort();
 
     /**
      * Renders result to HTML by calling nodes toHtml() method
@@ -82,10 +84,4 @@ interface ResultInterface
      * @deprecated
      */
     public function toArray();
-
-    /**
-     * Remove all current items.
-     * @return $this
-     */
-    public function clear();
 }

@@ -20,44 +20,44 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     /**
      * @var string
      */
-    protected $_id;
+    private $id;
 
     /**
      * @var integer
      */
-    protected $_relevance = 0;
+    private $relevance = 0;
 
     /**
      * @var float
      */
-    protected $_boost = 1.0;
+    private $boost = 1.0;
 
     /**
      * @var array
      */
-    protected $_fields = array();
+    private $fields = array();
 
     /**
      * @var array
      */
-    protected $_values = array();
+    private $values = array();
 
     /**
      * @var string
      */
-    protected $_documentType;
+    private $documentType;
 
     /**
      * @var \Zend_Filter_Interface
      */
-    protected $_fieldNameFilter;
+    private $fieldNameFilter;
 
     /**
      * @param string $documentType
      */
     public function __construct($documentType)
     {
-        $this->_documentType = $documentType;
+        $this->documentType = $documentType;
     }
 
     /**
@@ -65,11 +65,9 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function __get($key)
     {
-        if ($this->_fieldNameFilter)
-        {
-            $filteredKey = $this->_fieldNameFilter->filter($key);
-            if ($this->hasField($filteredKey))
-            {
+        if ($fieldNameFilter = $this->getFieldNameFilter()) {
+            $filteredKey = $fieldNameFilter->filter($key);
+            if ($this->hasField($filteredKey)) {
                 $key = $filteredKey;
             }
         }
@@ -82,11 +80,9 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function __set($key, $value)
     {
-        if ($this->_fieldNameFilter)
-        {
-            $filteredKey = $this->_fieldNameFilter->filter($key);
-            if ($this->hasField($filteredKey))
-            {
+        if ($fieldNameFilter = $this->getFieldNameFilter()) {
+            $filteredKey = $fieldNameFilter->filter($key);
+            if ($this->hasField($filteredKey)) {
                 $key = $filteredKey;
             }
         }
@@ -99,11 +95,9 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function __isset($key)
     {
-        if ($this->_fieldNameFilter)
-        {
-            $filteredKey = $this->_fieldNameFilter->filter($key);
-            if ($this->hasField($filteredKey))
-            {
+        if ($fieldNameFilter = $this->getFieldNameFilter()) {
+            $filteredKey = $fieldNameFilter->filter($key);
+            if ($this->hasField($filteredKey)) {
                 $key = $filteredKey;
             }
         }
@@ -116,21 +110,19 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function __toString()
     {
-        $output = 'Identifier: ' . $this->getIdentifier()
-                . ', DocumentClass: ' . $this->getDocumentClass()
-                . ', Relevance: ' . $this->getRelevance() . PHP_EOL;
+        $output = 'Identifier: ' . $this->getIdentifier() . PHP_EOL
+                . 'DocumentClass: ' . $this->getDocumentClass() . PHP_EOL
+                . 'Relevance: ' . $this->getRelevance() . PHP_EOL;
 
-        foreach ($this->_fields as $key => $config)
-        {
-            $output .= $key . ': ' . $this->getValue($key) . ' (';
+        foreach ($this->fields as $key => $config) {
+            $output .= $key . ': ' . var_export($this->getValue($key), true) . ' (';
 
             $dummy = array();
-            foreach ($config as $configKey => $configValue)
-            {
+            foreach ($config as $configKey => $configValue) {
                 $dummy[] = $configKey . ':' . $configValue;
             }
 
-            $output .= implode(',', $dummy) . ')';
+            $output .= implode(',', $dummy) . ')' . PHP_EOL;
         }
 
         return $output;
@@ -140,6 +132,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      * ArrayAccess exists
      *
      * @param mixed $index
+     *
      * @return boolean
      */
     public function offsetExists($index)
@@ -151,6 +144,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      * ArrayAccess get
      *
      * @param mixed $index
+     *
      * @return mixed
      */
     public function offsetGet($index)
@@ -171,10 +165,12 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
 
     /**
      * ArrayAccess unset
+     *
+     * @param mixed $index
      */
     public function offsetUnset($index)
     {
-        unset($this->_values[$index]);
+        unset($this->values[$index]);
     }
 
     /**
@@ -188,7 +184,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
             '_documenttype_'  => $this->getDocumentType(),
         );
 
-        return $values + $this->_values;
+        return $values + $this->values;
     }
 
     /**
@@ -196,10 +192,8 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setValues($values, $implicitCreateField = false)
     {
-        foreach ($values as $key => $value)
-        {
-            if ($key[0] == '_')
-            {
+        foreach ($values as $key => $value) {
+            if ($key[0] == '_') {
                 continue;
             }
 
@@ -214,7 +208,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function hasValue($key)
     {
-        return isset($this->_values[$key]);
+        return isset($this->values[$key]);
     }
 
     /**
@@ -222,17 +216,15 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getValue($key)
     {
-        if (!$this->hasField($key))
-        {
-            throw new InvalidArgumentException('Unknown field "' . $key . '"');
+        if (!$this->hasField($key)) {
+            throw new InvalidArgumentException("Unknown field $key");
         }
 
-        if (!$this->hasValue($key))
-        {
+        if (!$this->hasValue($key)) {
             return null;
         }
 
-        return $this->_values[$key];
+        return $this->values[$key];
     }
 
     /**
@@ -240,31 +232,25 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setValue($key, $value, $implicitCreateField = false)
     {
-        if (!$this->hasField($key))
-        {
-            if ($implicitCreateField)
-            {
+        if (!$this->hasField($key)) {
+            if ($implicitCreateField) {
                 $config = array();
 
-                if (is_array($value))
-                {
+                if (is_array($value)) {
                     $config[] = self::CONFIG_MULTIVALUE;
                 }
 
                 $this->setField($key, $config);
-            }
-            else
-            {
-                throw new InvalidArgumentException('Unknown field "' . $key . '"');
+            } else {
+                throw new InvalidArgumentException("Unknown field $key");
             }
         }
 
-        if (isset($this->_fields[$key][self::CONFIG_MULTIVALUE]))
-        {
+        if (isset($this->fields[$key][self::CONFIG_MULTIVALUE])) {
             $value = (array) $value;
         }
 
-        $this->_values[$key] = $value;
+        $this->values[$key] = $value;
 
         return $this;
     }
@@ -274,7 +260,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function hasField($key)
     {
-        return isset($this->_fields[$key]);
+        return isset($this->fields[$key]);
     }
 
     /**
@@ -282,8 +268,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setFields(array $fields)
     {
-        foreach ($fields as $key => $config)
-        {
+        foreach ($fields as $key => $config) {
             $this->setField($key, $config);
         }
 
@@ -295,7 +280,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getFields()
     {
-        return $this->_fields;
+        return $this->fields;
     }
 
     /**
@@ -303,12 +288,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setField($key, array $config = array())
     {
-        $this->_fields[$key] = array();
-
-        foreach ($config as $configKey)
-        {
-            $this->_fields[$key][$configKey] = true;
-        }
+        $this->fields[$key] = $config;
 
         return $this;
     }
@@ -318,7 +298,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getField($key)
     {
-        return $this->_fields[$key];
+        return $this->fields[$key];
     }
 
     /**
@@ -326,7 +306,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function removeField($key)
     {
-        unset($this->_fields[$key], $this->_values[$key]);
+        unset($this->fields[$key], $this->values[$key]);
 
         return $this;
     }
@@ -336,7 +316,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getIdentifier()
     {
-        return $this->_id;
+        return $this->id;
     }
 
     /**
@@ -344,7 +324,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setIdentifier($id)
     {
-        $this->_id = $id;
+        $this->id = $id;
 
         return $this;
     }
@@ -354,7 +334,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setBoost($boost)
     {
-        $this->_boost = $boost;
+        $this->boost = $boost;
 
         return $this;
     }
@@ -364,7 +344,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getBoost()
     {
-        return $this->_boost;
+        return $this->boost;
     }
 
     /**
@@ -380,7 +360,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getDocumentType()
     {
-        return $this->_documentType;
+        return $this->documentType;
     }
 
     /**
@@ -388,7 +368,7 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function setRelevance($relevance)
     {
-        $this->_relevance = $relevance;
+        $this->relevance = $relevance;
 
         return $this;
     }
@@ -398,19 +378,30 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
      */
     public function getRelevance()
     {
-        return $this->_relevance;
+        return $this->relevance;
     }
 
     /**
      * Set field name filter.
      *
      * @param \Zend_Filter_Interface $fieldNameFilter
+     *
      * @return $this
      */
     public function setFieldNameFilter(\Zend_Filter_Interface $fieldNameFilter)
     {
-        $this->_fieldNameFilter = $fieldNameFilter;
+        $this->fieldNameFilter = $fieldNameFilter;
 
         return $this;
+    }
+
+    /**
+     * return field name filter.
+     *
+     * @return \Zend_Filter_Interface $fieldNameFilter
+     */
+    public function getFieldNameFilter()
+    {
+        return $this->fieldNameFilter;
     }
 }

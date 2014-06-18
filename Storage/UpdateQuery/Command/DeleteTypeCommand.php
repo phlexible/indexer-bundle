@@ -11,30 +11,30 @@ namespace Phlexible\IndexerBundle\Storage\UpdateQuery\Command;
 use Phlexible\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Update command
+ * Delete type command
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class UpdateCommand implements CommandInterface
+class DeleteTypeCommand implements CommandInterface
 {
     /**
-     * @param DocumentInterface $document
+     * @var string
      */
-    private $document;
+    private $type;
 
     /**
-     * @param DocumentInterface $document
+     * @param string $type
      */
-    public function __construct(DocumentInterface $document)
+    public function __construct($type)
     {
-        $this->document = $document;
+        $this->type = $type;
     }
 
     /**
-     * @return DocumentInterface
+     * @return string
      */
-    public function getDocument()
+    public function getType()
     {
-        return $this->document;
+        return $this->type;
     }
 }

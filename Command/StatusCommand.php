@@ -8,18 +8,19 @@
 
 namespace Phlexible\IndexerBundle\Command;
 
+use Phlexible\IndexerBundle\Indexer\IndexerCollection;
+use Phlexible\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Phlexible\IndexerBundle\Storage\Optimizable;
 use Phlexible\IndexerBundle\Storage\Storage;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * List command
+ * Status command
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-class ListCommand extends ContainerAwareCommand
+class StatusCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -27,8 +28,8 @@ class ListCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('indexer:list')
-            ->setDescription('Lists available indexers, repositories ans searches')
+            ->setName('indexer:status')
+            ->setDescription('Show indexer status.')
         ;
     }
 
@@ -39,17 +40,45 @@ class ListCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $storages = $this->getContainer()->get('indexer.storages');
+        $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
         #$searches = $this->getContainer()->findTaggedComponents('indexer.search');
-        $indexers = $this->getContainer()->get('indexer.indexers');
+        $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
 
-        $output->writeln(
-            $this->_renderIndexers($indexers)
-         #    . $this->_renderSearches($searches)
-             . $this->_renderStorages($storages)
-        );
+        $this->showIndexers($output, $indexers);
+        $output->writeln('');
+        $this->showStorage($output, $storage);
+        $output->writeln('');
+         // $this->_renderSearches($searches) .
 
         return 0;
+    }
+
+    private function showIndexers(OutputInterface $output, IndexerCollection $indexers)
+    {
+        $output->writeln('Indexers');
+        if (!count($indexers)) {
+            $output->writeln('  No indexers.');
+        } else {
+            foreach ($indexers as $indexer) {
+                $output->writeln('  <info>' . $indexer->getLabel() . '</info>');
+                $output->writeln('    Indexer:  ' . get_class($indexer));
+                $output->writeln('    Storage:  ' . $indexer->getStorage()->getLabel());
+                $output->writeln('    Document: ' . $indexer->getDocumentClass());
+            }
+        }
+    }
+
+    private function showStorage(OutputInterface $output, Storage $storage)
+    {
+        $storageAdapter = $storage->getAdapter();
+
+        $output->writeln('Storage');
+        $output->writeln('  <info>' . $storage->getLabel() . '</info>');
+        $output->writeln('    Storage:        ' . get_class($storage));
+        $output->writeln('    Adapter:        ' . get_class($storageAdapter));
+        $output->writeln('    Connection:     ' . $storageAdapter->getConnectionString());
+        $output->writeln('    Optimizable:    ' . ($storage->isOptimizable() ? 'yes' : 'no'));
+        $output->writeln('    Is healthy:     ' . ($storageAdapter->isHealthy() ? 'yes' : 'no'));
     }
 
     protected function _header($title)
@@ -67,37 +96,6 @@ class ListCommand extends ContainerAwareCommand
     protected function _hr()
     {
         return ' -------------------------------------------------------------------------------';
-    }
-
-    protected function _renderIndexers($indexers)
-    {
-        $ret = array();
-        $ret[] = $this->_header('registered indexers');
-        $ret[] = ' ';
-
-        if (!count($indexers)) {
-            $ret[] = '  No indexers.';
-        } else {
-            foreach ($indexers as $id => $indexer)
-            {
-                $ret[] = $this->_renderIndexer($id, $indexer);
-            }
-        }
-
-        return implode(PHP_EOL, $ret);
-    }
-
-    protected function _renderIndexer($id, $indexer)
-    {
-        $ret = array();
-        $ret[] = $this->_hr();
-        $ret[] = ' ' . $indexer->getLabel() . ' (' . $id . ')';
-        $ret[] = $this->_hr();
-        $ret[] = ' Indexer:    ' . get_class($indexer);
-        $ret[] = ' Storage:    ' . get_class($indexer->getStorage());
-        $ret[] = ' Adapter:    ' . get_class($indexer->getStorage()->getAdapter());
-        $ret[] = ' Provides: ' . $indexer->getDocumentClass();
-        return implode(PHP_EOL, $ret);
     }
 
     protected function _renderSearches($searches)
@@ -170,42 +168,5 @@ class ListCommand extends ContainerAwareCommand
         }
 
         return (string) $table;
-    }
-
-    protected function _renderStorages($storages)
-    {
-        $ret = array();
-        $ret[] = $this->_header('registered storages');
-        $ret[] = ' ';
-
-        if (!count($storages)) {
-            $ret[] = '  No storages.';
-        } else {
-            foreach ($storages as $id => $storage)
-            {
-                $ret[] = $this->_renderStorage($id, $storage);
-            }
-        }
-
-        return implode(PHP_EOL, $ret);
-    }
-
-    protected function _renderStorage($id, Storage $storage)
-    {
-        $storageAdapter = $storage->getAdapter();
-
-        $ret = array();
-        $ret[] = $this->_hr();
-        $ret[] = ' ' . $storage->getLabel() . ' (' . $id . ')';
-        $ret[] = $this->_hr();
-        $ret[] = ' Storage:         ' . get_class($storage);
-        $ret[] = ' Adapter:         ' . get_class($storageAdapter);
-        $ret[] = ' Handles queries: ' . implode(', ', $storage->getAcceptQuery());
-        $ret[] = ' Storage accepts: ' . implode(', ', $storage->getAcceptStorage());
-        $ret[] = ' Result of type:  ' . $storage->getResultClass();
-        $ret[] = ' Optimizable:     ' . ($storage->isOptimizable() ? 'yes' : 'no');
-        $ret[] = ' Connection:      ' . $storageAdapter->getConnectionString();
-
-        return implode(PHP_EOL, $ret);
     }
 }

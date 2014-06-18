@@ -8,8 +8,8 @@
 
 namespace Phlexible\IndexerBundle\Document;
 
-use Phlexible\IndexerBundle\Exception\Events;
 use Phlexible\IndexerBundle\Event\DocumentEvent;
+use Phlexible\IndexerBundle\IndexerEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -22,17 +22,17 @@ class DocumentFactory
     /**
      * @var EventDispatcherInterface
      */
-    protected $dispatcher = null;
+    private $dispatcher = null;
 
     /**
      * @var array
      */
-    protected $prototypes = array();
+    private $prototypes = array();
 
     /**
      * @var \Zend_Filter_Interface
      */
-    protected $fieldNameFilter;
+    private $fieldNameFilter;
 
     /**
      * @param EventDispatcherInterface $dispatcher
@@ -50,26 +50,25 @@ class DocumentFactory
      *
      * @param string $documentClass
      * @param string $documentType
+     *
      * @return DocumentInterface
      */
     public function factory($documentClass, $documentType)
     {
         $prototypeKey = $documentClass . '___' . $documentType;
 
-        if (!isset($this->prototypes[$prototypeKey]))
-        {
+        if (!isset($this->prototypes[$prototypeKey])) {
             // create document
             $document = new $documentClass($documentType);
 
             // apply field name filter
-            if ($this->fieldNameFilter && method_exists($document, 'setFieldNameFilter'))
-            {
+            if ($this->fieldNameFilter && method_exists($document, 'setFieldNameFilter')) {
                 $document->setFieldNameFilter($this->fieldNameFilter);
             }
 
             // fire create event
             $event = new DocumentEvent($document);
-            $this->dispatcher->dispatch(Events::CREATE_DOCUMENT, $event);
+            $this->dispatcher->dispatch(IndexerEvents::CREATE_DOCUMENT, $event);
 
             // cache prototype
             $this->prototypes[$prototypeKey] = $document;

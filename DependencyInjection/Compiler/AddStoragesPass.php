@@ -25,9 +25,9 @@ class AddStoragesPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $storages = array();
-        foreach ($container->findTaggedServiceIds('indexer.storage') as $id => $definition) {
+        foreach ($container->findTaggedServiceIds('phlexible_indexer.storage') as $id => $definition) {
             $storages[$id] = new Reference($id);
         }
-        $container->getDefinition('indexer.storages')->replaceArgument(0, $storages);
+        $container->getDefinition('phlexible_indexer.storages')->replaceArgument(0, $storages);
     }
 }

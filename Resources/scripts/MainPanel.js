@@ -10,7 +10,7 @@ Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
             baseParams: {
                 query: ''
             },
-            fields: ['id', 'tid', 'eid', 'lang', 'content', 'online', 'title', 'node'],
+            fields: Phlexible.indexer.model.Result,
             root: 'docs',
             totalProperty: 'total',
             listeners: {
@@ -91,7 +91,7 @@ Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
             columns: [{
                 dataIndex: 'id',
                 header: this.strings.id,
-                width: 150
+                width: 200
             },{
                 dataIndex: 'tid',
                 header: this.strings.tid,
@@ -101,7 +101,7 @@ Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
                 header: this.strings.eid,
                 width: 60
             },{
-                dataIndex: 'lang',
+                dataIndex: 'language',
                 header: this.strings.language
             },{
                 dataIndex: 'title',
@@ -113,9 +113,9 @@ Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
                 hidden: true,
                 width: 60
             },{
-                dataIndex: 'node',
-                header: '_node', //this.strings.node,
-                width: 200
+                dataIndex: 'document',
+                header: this.strings.document,
+                width: 250
             }],
             bbar: new Ext.PagingToolbar({
                 store: this.store

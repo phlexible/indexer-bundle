@@ -14,22 +14,28 @@ namespace Phlexible\IndexerBundle\Query;
  * @author Marco Fischer <mf@brainbits.net>
  * @author Phillip Look <pl@brainbits.net>
  */
-class Query extends AbstractQuery
+class Query
 {
     /**
-     * Document types to find.
-     *
-     * @var array
+     * {@inheritdoc}
      */
-    protected $_documentTypes = array('media', 'elements');
+    public function getFields()
+    {
+        return array('title', 'tags');
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function getDocumentType()
+    {
+        return array('media', 'elements');
+    }
 
     /**
-     * @var array
+     * {@inheritdoc}
      */
-    protected $_fields = array('title', 'tags');
-
-    /**
-     * @var string
-     */
-    protected $_label = 'Indexer query';
+    public function getLabel()
+    {
+        return 'Indexer query';
+    }
 }

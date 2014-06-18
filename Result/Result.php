@@ -19,35 +19,55 @@ use Phlexible\IndexerBundle\Result\Sorter\SorterInterface;
 class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIterator
 {
     /**
-     * @var array
+     * @var DocumentInterface[]
      */
-    protected $_documents = array();
+    private $documents = array();
 
     /**
      * @var integer
      */
-    protected $_current = 0;
+    private $current = 0;
 
     /**
-     * @var SorterInterface
+     * @var int
      */
-    protected $_sorter = null;
+    private $total = 0;
 
     /**
-     * @param SorterInterface $sorter
+     * @var int
      */
-    public function __construct(SorterInterface $sorter)
-    {
-        $this->setSorter($sorter);
-    }
+    private $start = 0;
+
+    /**
+     * @var int
+     */
+    private $rows = 0;
+
+    /**
+     * @var int
+     */
+    private $maxScore = 0;
 
     /**
      * {@inheritdoc}
      */
-    public function addDocument(DocumentInterface $document)
+    public function add(DocumentInterface $document)
     {
-        $this->_documents[] = $document;
+        $this->documents[] = $document;
+
         return $this;
+    }
+
+    /**
+     * @param DocumentInterface[] $documents
+     *
+     * @return $this
+     */
+    public function setDocuments(array $documents)
+    {
+        $this->removeAll();
+
+        return $this->addDocuments($documents);
     }
 
     /**
@@ -55,11 +75,19 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function addDocuments(array $documents = array())
     {
-        foreach ($documents as $document)
-        {
-            $this->addDocument($document);
+        foreach ($documents as $document) {
+            $this->add($document);
         }
+
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDocuments()
+    {
+        return $this->documents;
     }
 
     /**
@@ -67,51 +95,19 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function addResult(ResultInterface $result)
     {
-        $this->addDocuments($result->getResult());
+        $this->addDocuments($result->getDocuments());
+
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getResult()
-    {
-        return $this->_documents;
-    }
-
-    public function getPaginator($limit, $current = 0, $range = 5)
-    {
-        $paginator = \Zend_Paginator::factory($this->_documents);
-        $paginator->setItemCountPerPage($limit);
-        $paginator->setCurrentPageNumber($current);
-        $paginator->setPageRange(5);
-
-        return $paginator;
-    }
 
     /**
-     * {@inheritdoc}
+     * @return $this
      */
-    public function setSorter(SorterInterface $sorter)
+    public function removeAll()
     {
-        $this->_sorter = $sorter;
-        return $this;
-    }
+        $this->documents = array();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSorter()
-    {
-        return $this->_sorter;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function sort()
-    {
-        $this->_documents = $this->_sorter->sort($this->_documents);
         return $this;
     }
 
@@ -122,20 +118,11 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     {
         $a = array();
 
-        foreach ($this->_documents as $document)
-        {
-            $a[$document->getIdentifier()] = (string)$document;
+        foreach ($this->documents as $document) {
+            $a[$document->getIdentifier()] = (string) $document;
         }
 
         return implode('', $a);
-    }
-
-    /**
-     * @deprecated
-     */
-    public function __toString()
-    {
-        return $this->toString();
     }
 
     /**
@@ -145,89 +132,193 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     {
         $a = array();
 
-        foreach ($this->_documents as $document)
-        {
+        foreach ($this->documents as $document) {
             $a[$document->getIdentifier()] = $document->toArray();
         }
 
         return $a;
     }
 
+    /**
+     * @param int $position
+     */
     public function seek($position)
     {
-        if ($this->offsetExists($position))
-        {
-            $this->_current = $position;
+        if ($this->offsetExists($position)) {
+            $this->current = $position;
         }
     }
 
+    /**
+     * @return DocumentInterface
+     */
     public function current()
     {
-        return $this->_documents[$this->_current];
+        return $this->documents[$this->current];
     }
 
+    /**
+     * @return mixed
+     */
     public function key()
     {
-        return $this->_current;
+        return $this->current;
     }
 
+    /**
+     * Next
+     */
     public function next()
     {
-        ++$this->_current;
+        ++$this->current;
     }
 
+    /**
+     * Rewind
+     */
     public function rewind()
     {
-        $this->_current = 0;
+        $this->current = 0;
     }
 
+    /**
+     * @return bool
+     */
     public function valid()
     {
-        return $this->offsetExists($this->_current);
+        return $this->offsetExists($this->current);
     }
 
+    /**
+     * @param mixed $index
+     *
+     * @return bool
+     */
     public function offsetExists($index)
     {
-        if (!isset($this->_documents[$index]))
-        {
+        if (!isset($this->documents[$index])) {
             return false;
-        } else
-        {
+        } else {
             return true;
         }
     }
 
+    /**
+     * @param mixed $index
+     *
+     * @return mixed|null
+     */
     public function offsetGet($index)
     {
-        if ($this->offsetExists($index))
-        {
-            return $this->_documents[$index];
-        } else
-        {
-            return null;
+        if ($this->offsetExists($index)) {
+            return $this->documents[$index];
         }
+
+        return null;
     }
 
+    /**
+     * @param mixed $index
+     * @param mixed $newval
+     */
     public function offsetSet($index, $newval)
     {
-        $this->_documents[$index] = $newval;
+        $this->documents[$index] = $newval;
     }
 
+    /**
+     * @param mixed $index
+     */
     public function offsetUnset($index)
     {
-        unset($this->_documents[$index]);
+        unset($this->documents[$index]);
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
-        return count($this->_documents);
+        return count($this->documents);
     }
 
-    public function clear()
+    /**
+     * @return int
+     */
+    public function getTotal()
     {
-        foreach (array_keys($this->_documents) as $index)
-        {
-            unset($this->_documents[$index]);
-        }
+        return $this->total;
+    }
+
+    /**
+     * @param int $total
+     *
+     * @return $this
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @param int $start
+     *
+     * @return $this
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRows()
+    {
+        return $this->rows;
+    }
+
+    /**
+     * @param int $rows
+     *
+     * @return $this
+     */
+    public function setRows($rows)
+    {
+        $this->rows = $rows;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxScore()
+    {
+        return $this->maxScore;
+    }
+
+    /**
+     * @param int $maxScore
+     *
+     * @return $this
+     */
+    public function setMaxScore($maxScore)
+    {
+        $this->maxScore = $maxScore;
+
+        return $this;
     }
 }

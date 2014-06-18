@@ -26,13 +26,6 @@ interface IndexerInterface
     public function getLabel();
 
     /**
-     * Use jobs for indexing single documents?
-     *
-     * @return boolean
-     */
-    public function useJobs();
-
-    /**
      * @return StorageInterface
      */
     public function getStorage();
@@ -48,6 +41,7 @@ interface IndexerInterface
      * Returns document for identifier
      *
      * @param string $id
+     *
      * @return DocumentInterface
      */
     public function getDocumentByIdentifier($id);
