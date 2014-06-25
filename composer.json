@@ -10,8 +10,7 @@
         }
     },
     "require": {
-        "php": ">=5.3.0",
-        "phlexible/queue-bundle": "*"
+        "php": ">=5.3.0"
     },
     "suggest": {
         "phlexible/indexer-storage-elastica-bundle": "Elastica indexer storage"
