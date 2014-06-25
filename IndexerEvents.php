@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle;
+namespace Phlexible\Bundle\IndexerBundle;
 
 /**
  * Indexer events

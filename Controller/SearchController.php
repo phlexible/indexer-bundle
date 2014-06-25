@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Controller;
+namespace Phlexible\Bundle\IndexerBundle\Controller;
 
-use Phlexible\IndexerBundle\Query\Query\QueryString;
-use Phlexible\IndexerBundle\Query\Query\TermsQuery;
+use Phlexible\Bundle\IndexerBundle\Query\Query\QueryString;
+use Phlexible\Bundle\IndexerBundle\Query\Query\TermsQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

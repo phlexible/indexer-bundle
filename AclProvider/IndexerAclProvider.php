@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\AclProvider;
+namespace Phlexible\Bundle\IndexerBundle\AclProvider;
 
-use Phlexible\SecurityBundle\Acl\AclProvider\AclProvider;
+use Phlexible\Bundle\SecurityBundle\Acl\AclProvider\AclProvider;
 
 /**
  * Indexer acl provider

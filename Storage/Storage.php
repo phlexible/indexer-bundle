@@ -6,23 +6,23 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Storage;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
-use Phlexible\FrontendSearchBundle\Query\SuggestQuery;
-use Phlexible\IndexerBundle\Event\DocumentEvent;
-use Phlexible\IndexerBundle\IndexerEvents;
-use Phlexible\IndexerBundle\Query\Query;
-use Phlexible\IndexerBundle\Result\Result;
-use Phlexible\IndexerBundle\Storage\SelectQuery\SelectQuery;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
+use Phlexible\Bundle\FrontendSearchBundle\Query\SuggestQuery;
+use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
+use Phlexible\Bundle\IndexerBundle\IndexerEvents;
+use Phlexible\Bundle\IndexerBundle\Query\Query;
+use Phlexible\Bundle\IndexerBundle\Result\Result;
+use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

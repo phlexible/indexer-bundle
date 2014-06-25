@@ -6,11 +6,11 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Command;
+namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Phlexible\IndexerBundle\Query\Filter\TermFilter;
-use Phlexible\IndexerBundle\Query\Query;
-use Phlexible\IndexerBundle\Query\Query\TermsQuery;
+use Phlexible\Bundle\IndexerBundle\Query\Filter\TermFilter;
+use Phlexible\Bundle\IndexerBundle\Query\Query;
+use Phlexible\Bundle\IndexerBundle\Query\Query\TermsQuery;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

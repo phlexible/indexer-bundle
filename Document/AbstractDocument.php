@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Document;
+namespace Phlexible\Bundle\IndexerBundle\Document;
 
-use Phlexible\IndexerBundle\Exception\InvalidArgumentException;
+use Phlexible\Bundle\IndexerBundle\Exception\InvalidArgumentException;
 
 /**
  * Abstract document

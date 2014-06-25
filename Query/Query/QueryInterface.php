@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Query\Query;
+namespace Phlexible\Bundle\IndexerBundle\Query\Query;
 
 /**
  * Query interface

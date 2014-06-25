@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Indexer;
+namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
 /**
  * Indexer collection

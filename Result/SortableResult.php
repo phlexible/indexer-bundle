@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Result;
+namespace Phlexible\Bundle\IndexerBundle\Result;
 
-use Phlexible\IndexerBundle\Document\DocumentInterface;
-use Phlexible\IndexerBundle\Result\Sorter\SorterInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Result\Sorter\SorterInterface;
 
 /**
  * Indexer result

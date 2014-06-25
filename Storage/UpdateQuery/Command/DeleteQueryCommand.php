@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
 
-use Phlexible\IndexerBundle\Query\Query;
+use Phlexible\Bundle\IndexerBundle\Query\Query;
 
 /**
  * Delete query command

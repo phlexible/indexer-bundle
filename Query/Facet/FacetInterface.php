@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Query\Facet;
+namespace Phlexible\Bundle\IndexerBundle\Query\Facet;
 
 /**
  * Facet interface

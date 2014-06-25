@@ -6,8 +6,8 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Result\Sorter;
-use Phlexible\IndexerBundle\Document\DocumentInterface;
+namespace Phlexible\Bundle\IndexerBundle\Result\Sorter;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Field sorter

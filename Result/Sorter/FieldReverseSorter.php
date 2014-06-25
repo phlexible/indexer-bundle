@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Result\Sorter;
+namespace Phlexible\Bundle\IndexerBundle\Result\Sorter;
 
-use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Reverse field sorter

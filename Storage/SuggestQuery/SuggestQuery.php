@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Storage\SuggestQuery;
+namespace Phlexible\Bundle\IndexerBundle\Storage\SuggestQuery;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

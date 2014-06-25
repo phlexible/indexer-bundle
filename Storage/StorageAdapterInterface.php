@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Storage;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
-use Phlexible\IndexerBundle\Document\DocumentInterface;
-use Phlexible\IndexerBundle\Storage\SelectQuery\SelectQuery;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
 
 /**
  * Storage adapter interface

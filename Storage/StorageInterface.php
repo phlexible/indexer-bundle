@@ -6,12 +6,12 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Storage;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
-use Phlexible\FrontendSearchBundle\Query\SuggestQuery;
-use Phlexible\IndexerBundle\Query\Query;
-use Phlexible\IndexerBundle\Storage\SelectQuery\SelectQuery;
-use Phlexible\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
+use Phlexible\Bundle\FrontendSearchBundle\Query\SuggestQuery;
+use Phlexible\Bundle\IndexerBundle\Query\Query;
+use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 
 /**
  * Storage interface

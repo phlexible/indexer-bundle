@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Event;
+namespace Phlexible\Bundle\IndexerBundle\Event;
 
-use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

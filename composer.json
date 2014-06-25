@@ -6,7 +6,7 @@
 	"keywords": ["indexer", "search"],
     "autoload": {
         "psr-4": {
-            "Phlexible\\IndexerBundle\\": ""
+            "Phlexible\\Bundle\\IndexerBundle\\": ""
         }
     },
     "require": {

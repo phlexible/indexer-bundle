@@ -6,9 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Event;
+namespace Phlexible\Bundle\IndexerBundle\Event;
 
-use Phlexible\IndexerBundle\Query\QueryInterface;
+use Phlexible\Bundle\IndexerBundle\Query\QueryInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

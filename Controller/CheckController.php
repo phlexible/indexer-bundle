@@ -6,11 +6,11 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Controller;
+namespace Phlexible\Bundle\IndexerBundle\Controller;
 
-use Phlexible\IndexerBundle\Query\Query\QueryString;
+use Phlexible\Bundle\IndexerBundle\Query\Query\QueryString;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Phlexible\GuiBundle\Response\ResultResponse;
+use Phlexible\Bundle\GuiBundle\Response\ResultResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;

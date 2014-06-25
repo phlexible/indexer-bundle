@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Query\Filter;
+namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
 
 /**
  * Term filter

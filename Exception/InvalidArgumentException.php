@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Exception;
+namespace Phlexible\Bundle\IndexerBundle\Exception;
 
 /**
  * Invalid argument exception

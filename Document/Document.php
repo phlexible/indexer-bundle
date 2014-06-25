@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Document;
+namespace Phlexible\Bundle\IndexerBundle\Document;
 
 /**
  * Document

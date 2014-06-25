@@ -6,12 +6,12 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Storage\SelectQuery;
+namespace Phlexible\Bundle\IndexerBundle\Storage\SelectQuery;
 
-use Phlexible\IndexerBundle\Boost\BoostInterface;
-use Phlexible\IndexerBundle\Query\Facet\FacetInterface;
-use Phlexible\IndexerBundle\Query\Filter\FilterInterface;
-use Phlexible\IndexerBundle\Query\Query\QueryInterface;
+use Phlexible\Bundle\IndexerBundle\Boost\BoostInterface;
+use Phlexible\Bundle\IndexerBundle\Query\Facet\FacetInterface;
+use Phlexible\Bundle\IndexerBundle\Query\Filter\FilterInterface;
+use Phlexible\Bundle\IndexerBundle\Query\Query\QueryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

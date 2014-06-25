@@ -6,12 +6,12 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Command;
+namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Phlexible\IndexerBundle\Indexer\IndexerCollection;
-use Phlexible\IndexerBundle\Indexer\IndexerInterface;
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Phlexible\IndexerBundle\Storage\Storage;
+use Phlexible\Bundle\IndexerBundle\Storage\Storage;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle;
+namespace Phlexible\Bundle\IndexerBundle;
 
-use Phlexible\IndexerBundle\DependencyInjection\Compiler\AddIndexersPass;
-use Phlexible\IndexerBundle\DependencyInjection\Compiler\AddStoragesPass;
+use Phlexible\Bundle\IndexerBundle\DependencyInjection\Compiler\AddIndexersPass;
+use Phlexible\Bundle\IndexerBundle\DependencyInjection\Compiler\AddStoragesPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

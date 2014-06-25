@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\ProblemChecker;
+namespace Phlexible\Bundle\IndexerBundle\ProblemChecker;
 
-use Phlexible\GuiBundle\Properties\Properties;
-use Phlexible\IndexerBundle\Query\QueryInterface;
-use Phlexible\IndexerBundle\Search\Search;
-use Phlexible\ProblemBundle\Entity\Problem;
-use Phlexible\ProblemBundle\ProblemChecker\ProblemCheckerInterface;
+use Phlexible\Bundle\GuiBundle\Properties\Properties;
+use Phlexible\Bundle\IndexerBundle\Query\QueryInterface;
+use Phlexible\Bundle\IndexerBundle\Search\Search;
+use Phlexible\Bundle\ProblemBundle\Entity\Problem;
+use Phlexible\Bundle\ProblemBundle\ProblemChecker\ProblemCheckerInterface;
 
 /**
  * Query checker

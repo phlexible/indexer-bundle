@@ -6,10 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Indexer;
+namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
-use Phlexible\IndexerBundle\Document\DocumentFactory;
-use Phlexible\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentFactory;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Abstract indexer

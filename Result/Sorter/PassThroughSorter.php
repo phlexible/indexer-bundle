@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\IndexerBundle\Result\Sorter;
+namespace Phlexible\Bundle\IndexerBundle\Result\Sorter;
 
 /**
  * Pass through sorter
