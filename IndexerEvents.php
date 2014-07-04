@@ -13,7 +13,7 @@ namespace Phlexible\Bundle\IndexerBundle;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-interface IndexerEvents
+class IndexerEvents
 {
     /**
      * Create Document Event
