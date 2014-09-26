@@ -103,11 +103,6 @@ interface StorageAdapterInterface
     public function removeAll();
 
     /**
-     * @return integer
-     */
-    public function getPreference();
-
-    /**
      * @return string
      */
     public function getLabel();

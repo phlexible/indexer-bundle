@@ -25,11 +25,6 @@ interface StorageInterface
     public function getAdapter();
 
     /**
-     * @return integer
-     */
-    public function getPreference();
-
-    /**
      * @return string
      */
     public function getId();

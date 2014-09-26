@@ -61,14 +61,6 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return integer
-     */
-    public function getPreference()
-    {
-        return $this->adapter->getPreference();
-    }
-
-    /**
      * @return string
      */
     public function getId()
