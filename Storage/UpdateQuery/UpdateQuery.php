@@ -15,7 +15,7 @@ use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommandInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteClassCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\RollbackCommand;
@@ -96,13 +96,13 @@ class UpdateQuery
     }
 
     /**
-     * @param string $type
+     * @param string $class
      *
      * @return $this
      */
-    public function addDeleteByType($type)
+    public function addDeleteByClass($class)
     {
-        return $this->addCommand(new DeleteTypeCommand($type));
+        return $this->addCommand(new DeleteClassCommand($class));
     }
 
     /**

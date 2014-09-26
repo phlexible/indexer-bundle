@@ -31,9 +31,8 @@ abstract class AbstractIndexer implements IndexerInterface
     public function createDocument()
     {
         $documentClass = $this->getDocumentClass();
-        $documentType  = $this->getDocumentType();
 
-        $document = $this->getDocumentFactory()->factory($documentClass, $documentType);
+        $document = $this->getDocumentFactory()->factory($documentClass);
 
         return $document;
     }

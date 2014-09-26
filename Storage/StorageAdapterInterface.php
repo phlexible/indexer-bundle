@@ -91,11 +91,11 @@ interface StorageAdapterInterface
     public function removeByQuery(SelectQuery $query);
 
     /**
-     * Remove documents by type
+     * Remove documents by class
      *
-     * @param string $type
+     * @param string $class
      */
-    public function removeByType($type);
+    public function removeByClass($class);
 
     /**
      * Remove all documents

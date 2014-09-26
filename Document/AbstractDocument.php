@@ -43,67 +43,9 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     private $values = array();
 
     /**
-     * @var string
-     */
-    private $documentType;
-
-    /**
      * @var \Zend_Filter_Interface
      */
     private $fieldNameFilter;
-
-    /**
-     * @param string $documentType
-     */
-    public function __construct($documentType)
-    {
-        $this->documentType = $documentType;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __get($key)
-    {
-        if ($fieldNameFilter = $this->getFieldNameFilter()) {
-            $filteredKey = $fieldNameFilter->filter($key);
-            if ($this->hasField($filteredKey)) {
-                $key = $filteredKey;
-            }
-        }
-
-        return $this->getValue($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __set($key, $value)
-    {
-        if ($fieldNameFilter = $this->getFieldNameFilter()) {
-            $filteredKey = $fieldNameFilter->filter($key);
-            if ($this->hasField($filteredKey)) {
-                $key = $filteredKey;
-            }
-        }
-
-        $this->setValue($key, $value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __isset($key)
-    {
-        if ($fieldNameFilter = $this->getFieldNameFilter()) {
-            $filteredKey = $fieldNameFilter->filter($key);
-            if ($this->hasField($filteredKey)) {
-                $key = $filteredKey;
-            }
-        }
-
-        return $this->hasValue($key);
-    }
 
     /**
      * {@inheritdoc}
@@ -353,14 +295,6 @@ abstract class AbstractDocument implements DocumentInterface, Boostable
     public function getDocumentClass()
     {
         return get_class($this);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDocumentType()
-    {
-        return $this->documentType;
     }
 
     /**

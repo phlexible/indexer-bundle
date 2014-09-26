@@ -29,7 +29,7 @@ class SelectQuery
     /**
      * @var array
      */
-    private $documentTypes = array();
+    private $documentClasses = array();
 
     /**
      * @var QueryInterface
@@ -180,40 +180,40 @@ class SelectQuery
     }
 
     /**
-     * Set document types to find.
+     * Set document classes to find.
      *
-     * @param array $documentTypes
+     * @param array $documentClasses
      *
      * @return $this
      */
-    public function setDocumentTypes(array $documentTypes)
+    public function setDocumentClasses(array $documentClasses)
     {
-        $this->documentTypes = $documentTypes;
+        $this->documentClasses = $documentClasses;
 
         return $this;
     }
 
     /**
-     * Get document types to find.
+     * Get document classes to find.
      *
      * @return array
      */
-    public function getDocumentTypes()
+    public function getDocumentClasses()
     {
-        return $this->documentTypes;
+        return $this->documentClasses;
     }
 
     /**
-     * Add a document type to find.
+     * Add a document class to find.
      *
-     * @param string $documentType
+     * @param string $documentClass
      *
      * @return $this
      */
-    public function addDocumentType($documentType)
+    public function addDocumentClass($documentClass)
     {
-        if (!in_array($documentType, $this->documentTypes)) {
-            $this->documentTypes[] = $documentType;
+        if (!in_array($documentClass, $this->documentClasses)) {
+            $this->documentClasss[] = $documentClass;
         }
 
         return $this;
@@ -276,7 +276,7 @@ class SelectQuery
         $query .= PHP_EOL;
 
         $query .= implode(',-', $terms->getNegativeTerms());
-        $query .= 'Document types: ' . implode(', ', $this->getDocumentTypes()) . PHP_EOL;
+        $query .= 'Document classes: ' . implode(', ', $this->getDocumentClasses()) . PHP_EOL;
         $query .= 'Fields: ' . implode(', ', $this->getFields()) . PHP_EOL;
 
         return $query;

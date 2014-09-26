@@ -8,7 +8,6 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
-use Phlexible\Bundle\FrontendSearchBundle\Query\SuggestQuery;
 use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Phlexible\Bundle\IndexerBundle\Query\Query;
@@ -17,7 +16,7 @@ use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteClassCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
@@ -169,8 +168,8 @@ class Storage implements StorageInterface
                 $this->adapter->removeByIdentifier($command->getDocument());
             } elseif ($command instanceof DeleteQueryCommand) {
                 $this->adapter->removeByQuery($command->getQuery());
-            } elseif ($command instanceof DeleteTypeCommand) {
-                $this->adapter->removeByType($command->getType());
+            } elseif ($command instanceof DeleteClassCommand) {
+                $this->adapter->removeByClass($command->getClass());
             } elseif ($command instanceof FlushCommand) {
                 $this->adapter->removeAll();
             } elseif ($command instanceof OptimizeCommand) {

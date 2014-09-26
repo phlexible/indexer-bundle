@@ -22,53 +22,16 @@ interface DocumentInterface extends \ArrayAccess
     const CONFIG_HIGHLIGHT  = 'highlight';
     const CONFIG_TYPE       = 'type';
 
-    const TYPE_COPY       = 'copy';
+    const TYPE_TEXT       = 'text';
     const TYPE_STRING     = 'string';
     const TYPE_INTEGER    = 'integer';
     const TYPE_FLOAT      = 'float';
     const TYPE_BOOLEAN    = 'boolean';
     const TYPE_DOUBLE     = 'double';
     const TYPE_LONG       = 'long';
+    const TYPE_DATETIME   = 'datetime';
     const TYPE_DATE       = 'date';
     const TYPE_CURRENCY   = 'currency';
-
-    /**
-     * @param string $documentType
-     */
-    public function __construct($documentType);
-
-    /**
-     * Magic __get
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    public function __get($key);
-
-    /**
-     * Magic __set
-     *
-     * @param string $key
-     * @param mixed  $value
-     */
-    public function __set($key, $value);
-
-    /**
-     * Magic __isset
-     *
-     * @param string $key
-     *
-     * @return boolean
-     */
-    public function __isset($key);
-
-    /**
-     * Magic __toString
-     *
-     * @return string
-     */
-    public function __toString();
 
     /**
      * Get values
@@ -191,13 +154,6 @@ interface DocumentInterface extends \ArrayAccess
      * @return string
      */
     public function getDocumentClass();
-
-    /**
-     * Return document type
-     *
-     * @return string
-     */
-    public function getDocumentType();
 
     /**
      * Set relevance

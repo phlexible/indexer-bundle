@@ -54,13 +54,6 @@ interface IndexerInterface
     public function getDocumentClass();
 
     /**
-     * Return document type
-     *
-     * @return string
-     */
-    public function getDocumentType();
-
-    /**
      * Return new instance of indexers document class
      *
      * @return DocumentInterface

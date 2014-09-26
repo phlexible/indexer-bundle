@@ -49,17 +49,16 @@ class DocumentFactory
      * Document factory
      *
      * @param string $documentClass
-     * @param string $documentType
      *
      * @return DocumentInterface
      */
-    public function factory($documentClass, $documentType)
+    public function factory($documentClass)
     {
-        $prototypeKey = $documentClass . '___' . $documentType;
+        $prototypeKey = $documentClass;
 
-        if (!isset($this->prototypes[$prototypeKey])) {
+        if (!isset($this->prototypes[$documentClass])) {
             // create document
-            $document = new $documentClass($documentType);
+            $document = new $documentClass();
 
             // apply field name filter
             if ($this->fieldNameFilter && method_exists($document, 'setFieldNameFilter')) {
@@ -71,9 +70,9 @@ class DocumentFactory
             $this->dispatcher->dispatch(IndexerEvents::CREATE_DOCUMENT, $event);
 
             // cache prototype
-            $this->prototypes[$prototypeKey] = $document;
+            $this->prototypes[$documentClass] = $document;
         }
 
-        return clone $this->prototypes[$prototypeKey];
+        return clone $this->prototypes[$documentClass];
     }
 }

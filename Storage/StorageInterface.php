@@ -8,7 +8,6 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
-use Phlexible\Bundle\FrontendSearchBundle\Query\SuggestQuery;
 use Phlexible\Bundle\IndexerBundle\Query\Query;
 use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
