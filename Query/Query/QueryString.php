@@ -13,26 +13,51 @@ namespace Phlexible\Bundle\IndexerBundle\Query\Query;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class QueryString implements QueryInterface
+class QueryString extends AbstractQuery
 {
     /**
-     * @var string
+     * @param string $queryString
      */
-    private $query;
-
-    /**
-     * @param string $query
-     */
-    public function __construct($query)
+    public function __construct($queryString)
     {
-        $this->query = $query;
+        $this->setQueryString($queryString);
     }
 
     /**
+     * @param string $queryString
+     *
      * @return string
      */
-    public function getQuery()
+    public function setQueryString($queryString)
     {
-        return $this->query;
+        $this->setParam('query', $queryString);
+
+        return $this;
+    }
+
+    /**
+     * Sets the default field
+     *
+     * @param string $field
+     *
+     * @return $this
+     */
+    public function setDefaultField($field)
+    {
+        return $this->setParam('defaultField', $field);
+    }
+
+    /**
+     * Sets the default operator AND or OR
+     *
+     * If no operator is set, OR is chosen
+     *
+     * @param string $operator
+     *
+     * @return $this
+     */
+    public function setDefaultOperator($operator)
+    {
+        return $this->setParam('defaultOperator', $operator);
     }
 }

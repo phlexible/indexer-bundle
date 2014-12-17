@@ -9,10 +9,10 @@
 namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
 
 /**
- * Or filter
+ * Bool or filter
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class OrFilter extends AndFilter
+class BoolOrFilter extends AbstractMultiFilter
 {
 }

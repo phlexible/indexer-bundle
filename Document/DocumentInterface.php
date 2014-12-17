@@ -34,6 +34,13 @@ interface DocumentInterface extends \ArrayAccess
     const TYPE_CURRENCY   = 'currency';
 
     /**
+     * Return document name
+     *
+     * @return string
+     */
+    public function getName();
+
+    /**
      * Get values
      *
      * @return array

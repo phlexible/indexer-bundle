@@ -9,7 +9,6 @@
 namespace Phlexible\Bundle\IndexerBundle\Result;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
-use Phlexible\Bundle\IndexerBundle\Result\Sorter\SorterInterface;
 
 /**
  * Indexer result

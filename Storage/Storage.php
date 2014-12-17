@@ -11,8 +11,6 @@ namespace Phlexible\Bundle\IndexerBundle\Storage;
 use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Phlexible\Bundle\IndexerBundle\Query\Query;
-use Phlexible\Bundle\IndexerBundle\Result\Result;
-use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
@@ -61,7 +59,7 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -69,7 +67,7 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getLabel()
     {
@@ -77,49 +75,23 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
-    public function getResultClass()
+    public function createQuery()
     {
-        return $this->adapter->getResultClass();
+        return new Query();
     }
 
     /**
-     * @return SelectQuery
+     * {@inheritdoc}
      */
-    public function createSelect()
-    {
-        return new SelectQuery($this->dispatcher);
-    }
-
-    /**
-     * @param SelectQuery $select
-     *
-     * @return Result
-     */
-    public function select(SelectQuery $select)
+    public function query(Query $select)
     {
         return $this->adapter->getByQuery($select);
     }
 
     /**
-     * @return SuggestQuery
-     */
-    public function createSuggest()
-    {
-        return new SuggestQuery($this->dispatcher);
-    }
-
-    /**
-     * @param SuggestQuery $query
-     */
-    public function suggest(SuggestQuery $query)
-    {
-
-    }
-
-    /**
-     * @return UpdateQuery
+     * {@inheritdoc}
      */
     public function createUpdate()
     {
@@ -127,9 +99,7 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @param UpdateQuery $update
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function update(UpdateQuery $update)
     {
@@ -176,7 +146,7 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isOptimizable()
     {
@@ -184,7 +154,7 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return $this
+     * {@inheritdoc}
      */
     public function optimize()
     {
@@ -196,7 +166,7 @@ class Storage implements StorageInterface
     }
 
     /**
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isHealthy()
     {

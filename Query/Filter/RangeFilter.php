@@ -13,92 +13,31 @@ namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class RangeFilter implements FilterInterface
+class RangeFilter extends AbstractFilter
 {
     /**
-     * @var string
+     * Construct range filter
+     *
+     * @param string|bool $fieldName Field name
+     * @param array       $args      Field arguments
      */
-    private $field;
-
-    /**
-     * @var int
-     */
-    private $from = '*';
-
-    /**
-     * @var int
-     */
-    private $to = '*';
-
-    /**
-     * @param string $field
-     * @param int    $from
-     * @param int    $to
-     */
-    public function __construct($field = null, $from = null, $to = null)
+    public function __construct($fieldName = false, array $args = array())
     {
-        $this->field = $field;
-        $this->from = $from;
-        $this->to = $to;
+        if ($fieldName) {
+            $this->addField($fieldName, $args);
+        }
     }
 
     /**
-     * @param string $field
+     * Ads a field with arguments to the range query
+     *
+     * @param string $fieldName Field name
+     * @param array  $args      Field arguments
      *
      * @return $this
      */
-    public function setField($field)
+    public function addField($fieldName, array $args)
     {
-        $this->field = $field;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @param int $from
-     *
-     * @return $this
-     */
-    public function setFrom($from)
-    {
-        $this->from = $from;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getFrom()
-    {
-        return $this->from;
-    }
-
-    /**
-     * @param int $to
-     *
-     * @return $this
-     */
-    public function setTo($to)
-    {
-        $this->to = $to;
-
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTo()
-    {
-        return $this->to;
+        return $this->setParam('fields', array($fieldName => $args));
     }
 }

@@ -9,7 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
-use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
+use Phlexible\Bundle\IndexerBundle\Query\Query;
 
 /**
  * Storage adapter interface
@@ -42,11 +42,11 @@ interface StorageAdapterInterface
     /**
      * Return documents by query
      *
-     * @param SelectQuery $query
+     * @param Query $query
      *
      * @return DocumentInterface[]
      */
-    public function getByQuery(SelectQuery $query);
+    public function getByQuery(Query $query);
 
     /**
      * Return all documents
@@ -86,9 +86,9 @@ interface StorageAdapterInterface
     /**
      * Remove documents by query
      *
-     * @param SelectQuery $query
+     * @param Query $query
      */
-    public function removeByQuery(SelectQuery $query);
+    public function removeByQuery(Query $query);
 
     /**
      * Remove documents by class

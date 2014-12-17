@@ -44,8 +44,8 @@ class SearchCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $client = $this->getContainer()->get('phlexible_indexer.storage.default');
-        $select = $client->createSelect()
-            ->addDocumentType('media')
+        $select = $client->createQuery()
+            ->addDocumentClass('MediaDocument')
             ->addField('title')
             ->setQuery(new TermsQuery('test'))
             ->setFilter(new TermFilter('document_type', 'jpg'))
@@ -55,19 +55,16 @@ class SearchCommand extends ContainerAwareCommand
         ldd($result);
 
         $search = '';
-        if ($input->getOption('search'))
-        {
+        if ($input->getOption('search')) {
             $search = $input->getOption('search');
         }
 
         $filterKey = '';
         $filterValue = '';
-        if ($input->getOption('filter'))
-        {
+        if ($input->getOption('filter')) {
             $filter = $input->getOption('filter');
 
-            if (!preg_match('/^(.*)=(.*)$/', $filter, $match))
-            {
+            if (!preg_match('/^(.*)=(.*)$/', $filter, $match)) {
                 echo 'Filter has to be of format key=value' . PHP_EOL;
                 die;
             }
@@ -83,10 +80,8 @@ class SearchCommand extends ContainerAwareCommand
         $indexerSearch = $container->get('indexer.search');
         $indexerSearches = $container->get('indexer.searches');
 
-        foreach ($indexerSearches as $id => $query)
-        {
-            if ($search && $search !== $id)
-            {
+        foreach ($indexerSearches as $id => $query) {
+            if ($search && $search !== $id) {
                 continue;
             }
 
@@ -94,17 +89,15 @@ class SearchCommand extends ContainerAwareCommand
             $output->writeln(' ' . $id);
             $output->writeln(str_repeat('=', 80));
 
-            if ($filterKey)
-            {
+            if ($filterKey) {
                 $query->setFilters(array($filterKey => $filterValue));
             }
 
             $query->parseInput($queryString);
             $result = $indexerSearch->query($query);
 
-            foreach ($result as $document)
-            {
-                $output->writeln((string)$document);
+            foreach ($result as $document) {
+                $output->writeln((string) $document);
                 $output->writeln(str_repeat('-', 80));
             }
         }

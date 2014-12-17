@@ -9,26 +9,28 @@
 namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
 
 /**
- * And filter
+ * Abstract multi filter
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class AndFilter implements FilterInterface
+abstract class AbstractMultiFilter extends AbstractFilter
 {
     /**
-     * @var FilterInterface[]
+     * @var array
      */
-    private $filters;
+    private $filters = array();
 
     /**
      * @param FilterInterface[] $filters
      */
     public function __construct(array $filters = array())
     {
-        $this->filters = $filters;
+        $this->setFilters($filters);
     }
 
     /**
+     * Add filter
+     *
      * @param FilterInterface $filter
      *
      * @return $this
@@ -41,7 +43,25 @@ class AndFilter implements FilterInterface
     }
 
     /**
-     * @return FilterInterface[]
+     * Set filters
+     *
+     * @param array $filters
+     *
+     * @return $this
+     */
+    public function setFilters(array $filters)
+    {
+        $this->filters = array();
+
+        foreach ($filters as $filter) {
+            $this->addFilter($filter);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array Filters
      */
     public function getFilters()
     {

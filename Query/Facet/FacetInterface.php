@@ -15,4 +15,20 @@ namespace Phlexible\Bundle\IndexerBundle\Query\Facet;
  */
 interface FacetInterface
 {
+    /**
+     * Sets the name of the facet. It is automatically set by
+     * the constructor.
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName($name);
+
+    /**
+     * Gets the name of the facet.
+     *
+     * @return string
+     */
+    public function getName();
 }

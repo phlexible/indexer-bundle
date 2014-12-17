@@ -8,34 +8,347 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Query;
 
+use Phlexible\Bundle\IndexerBundle\Query\Facet\FacetInterface;
+use Phlexible\Bundle\IndexerBundle\Query\Filter\FilterInterface;
+use Phlexible\Bundle\IndexerBundle\Query\Query\QueryInterface;
+use Phlexible\Bundle\IndexerBundle\Query\Suggest\SuggestInterface;
+
 /**
  * Query
  *
- * @author Marco Fischer <mf@brainbits.net>
- * @author Phillip Look <pl@brainbits.net>
+ * @author Stephan Wentz <sw@brainbits.net>
  */
 class Query
 {
     /**
-     * {@inheritdoc}
+     * @var QueryInterface
      */
-    public function getFields()
-    {
-        return array('title', 'tags');
-    }
+    private $query;
+
     /**
-     * {@inheritdoc}
+     * @var FilterInterface
      */
-    public function getDocumentType()
+    private $filter;
+
+    /**
+     * @var FacetInterface[]
+     */
+    private $facets = array();
+
+    /**
+     * @var SuggestInterface
+     */
+    private $suggest;
+
+    /**
+     * @var int
+     */
+    private $size = 100;
+
+    /**
+     * @var int
+     */
+    private $start = 0;
+
+    /**
+     * @var array
+     */
+    private $sort = array();
+
+    /**
+     * @var array
+     */
+    private $highlight = array();
+
+    /**
+     * @var int
+     */
+    private $minScore = 0;
+
+    /**
+     * @var bool
+     */
+    private $explain;
+
+    /**
+     * @var array
+     */
+    private $fields = array();
+
+    /**
+     * @var int
+     */
+    private $version;
+
+    /**
+     * @var array|false
+     */
+    private $source = false;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
     {
-        return array('media', 'elements');
     }
 
     /**
-     * {@inheritdoc}
+     * @param QueryInterface $query
+     *
+     * @return $this
      */
-    public function getLabel()
+    public function setQuery(QueryInterface $query)
     {
-        return 'Indexer query';
+        $this->query = $query;
+
+        return $this;
+    }
+
+    /**
+     * @return QueryInterface
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * @param FilterInterface $filter
+     *
+     * @return $this
+     */
+    public function setFilter(FilterInterface $filter)
+    {
+        $this->filter = $filter;
+
+        return $this;
+    }
+
+    /**
+     * @return FilterInterface
+     */
+    public function getFilter()
+    {
+        return $this->filter;
+    }
+
+    /**
+     * @param FacetInterface[] $facets
+     *
+     * @return $this
+     */
+    public function setFacets(array $facets = array())
+    {
+        $this->facets = $facets;
+
+        return $this;
+    }
+
+    /**
+     * @return FacetInterface
+     */
+    public function getFacets()
+    {
+        return $this->facets;
+    }
+
+    /**
+     * @param Suggest $suggest
+     *
+     * @return $this
+     */
+    public function setSuggest(Suggest $suggest)
+    {
+        $this->suggest = $suggest;
+
+        return $this;
+    }
+
+    /**
+     * @return Suggest
+     */
+    public function getSuggest()
+    {
+        return $this->suggest;
+    }
+
+    /**
+     * @param int $size
+     *
+     * @return $this
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param int $start
+     *
+     * @return $this
+     */
+    public function setStart($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+    /**
+     * @param array $sort
+     *
+     * @return $this
+     */
+    public function setSort(array $sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHighlight()
+    {
+        return $this->highlight;
+    }
+
+    /**
+     * @param array $highlight
+     *
+     * @return $this
+     */
+    public function setHighlight(array $highlight)
+    {
+        $this->highlight = $highlight;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinScore()
+    {
+        return $this->minScore;
+    }
+
+    /**
+     * @param int $minScore
+     *
+     * @return $this
+     */
+    public function setMinScore($minScore)
+    {
+        $this->minScore = $minScore;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getExplain()
+    {
+        return $this->explain;
+    }
+
+    /**
+     * @param boolean $explain
+     *
+     * @return $this
+     */
+    public function setExplain($explain)
+    {
+        $this->explain = $explain;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @param array $fields
+     *
+     * @return $this
+     */
+    public function setFields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion()
+    {
+        return $this->version;
+    }
+
+    /**
+     * @param int $version
+     *
+     * @return $this
+     */
+    public function setVersion($version)
+    {
+        $this->version = $version;
+
+        return $this;
+    }
+
+    /**
+     * @return array|false
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param array $source
+     *
+     * @return $this
+     */
+    public function setSource(array $source)
+    {
+        $this->source = $source;
+
+        return $this;
     }
 }

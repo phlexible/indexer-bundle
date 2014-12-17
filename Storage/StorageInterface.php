@@ -9,7 +9,6 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 use Phlexible\Bundle\IndexerBundle\Query\Query;
-use Phlexible\Bundle\IndexerBundle\Storage\SelectQuery\SelectQuery;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 
 /**
@@ -35,29 +34,14 @@ interface StorageInterface
     public function getLabel();
 
     /**
-     * @return string
+     * @return Query
      */
-    public function getResultClass();
+    public function createQuery();
 
     /**
-     * @return SelectQuery
+     * @param Query $query
      */
-    public function createSelect();
-
-    /**
-     * @param SelectQuery $select
-     */
-    public function select(SelectQuery $select);
-
-    /**
-     * @return SuggestQuery
-     */
-    public function createSuggest();
-
-    /**
-     * @param SuggestQuery $suggest
-     */
-    public function suggest(SuggestQuery $suggest);
+    public function query(Query $query);
 
     /**
      * @return UpdateQuery

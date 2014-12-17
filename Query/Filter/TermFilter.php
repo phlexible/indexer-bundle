@@ -13,65 +13,40 @@ namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class TermFilter implements FilterInterface
+class TermFilter extends AbstractFilter
 {
     /**
-     * @var string
+     * Construct term filter
+     *
+     * @param array $term Term array
      */
-    private $field;
-
-    /**
-     * @var string
-     */
-    private $term;
-
-    /**
-     * @param string $field
-     * @param mixed  $term
-     */
-    public function __construct($field = null, $term = null)
+    public function __construct(array $term = array())
     {
-        $this->field = $field;
-        $this->term = $term;
+        $this->setRawTerm($term);
     }
 
     /**
-     * @param string $field
+     * Sets/overwrites key and term directly
+     *
+     * @param array $term Key value pair
      *
      * @return $this
      */
-    public function setField($field)
+    public function setRawTerm(array $term)
     {
-        $this->field = $field;
-
-        return $this;
+        return $this->setParam('rawTerm', $term);
     }
 
     /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @param string $term
+     * Adds a term to the term query
+     *
+     * @param string       $key   Key to query
+     * @param string|array $value Values(s) for the query. Boost can be set with array
      *
      * @return $this
      */
-    public function setTerm($term)
+    public function setTerm($key, $value)
     {
-        $this->term = $term;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->term;
+        return $this->setRawTerm(array($key => $value));
     }
 }
