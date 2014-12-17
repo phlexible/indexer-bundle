@@ -18,11 +18,6 @@ use Phlexible\Bundle\IndexerBundle\Query\Query;
  */
 interface StorageAdapterInterface
 {
-    const PREFERENCE_DO_NOT_USE  = 0;
-    const PREFERENCE_LOW         = 10;
-    const PREFERENCE_HIGH        = 50;
-    const PREFERENCE_FIRST_COICE = 100;
-
     /**
      * Return connection parameters as string
      *
@@ -113,11 +108,17 @@ interface StorageAdapterInterface
     public function getId();
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHealthy();
 
+    /**
+     * Optimize index
+     */
     public function optimize();
 
+    /**
+     * Commit index
+     */
     public function commit();
 }
