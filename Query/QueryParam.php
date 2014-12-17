@@ -35,10 +35,27 @@ abstract class QueryParam
 
     /**
      * @param string $key
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    protected function addParam($key, $value)
+    {
+        if (!isset($this->params[$key])) {
+            $this->params[$key] = array();
+        }
+
+        $this->params[$key][] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $key
      *
      * @return mixed
      */
-    protected function getParam($key)
+    public function getParam($key)
     {
         return $this->params[$key];
     }
