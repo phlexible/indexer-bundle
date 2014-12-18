@@ -8,9 +8,11 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
+use Phlexible\Bundle\IndexerBundle\Query\Facet\TermsFacet;
 use Phlexible\Bundle\IndexerBundle\Query\Filter\TermFilter;
 use Phlexible\Bundle\IndexerBundle\Query\Query;
-use Phlexible\Bundle\IndexerBundle\Query\Query\TermsQuery;
+use Phlexible\Bundle\IndexerBundle\Query\Suggest;
+use Phlexible\Bundle\IndexerBundle\Query\Suggest\TermSuggest;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,9 +34,10 @@ class SearchCommand extends ContainerAwareCommand
         $this
             ->setName('indexer:search')
             ->setDescription('Run search.')
-            ->addArgument('queryString', InputArgument::REQUIRED, 'Query string')
-            ->addOption('search', null, InputOption::VALUE_REQUIRED, 'Search')
-            ->addOption('filter', null, InputOption::VALUE_REQUIRED, 'Filter')
+            ->addOption('query', null, InputOption::VALUE_REQUIRED, 'Query string')
+            ->addOption('facet', null, InputOption::VALUE_REQUIRED, 'Facet fields, use format "field1,field2')
+            ->addOption('filter', null, InputOption::VALUE_REQUIRED, 'Filter term, use format "field:term"')
+            ->addOption('suggest', null, InputOption::VALUE_REQUIRED, 'Suggest term, use format "field:term')
         ;
     }
 
@@ -43,64 +46,44 @@ class SearchCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $client = $this->getContainer()->get('phlexible_indexer.storage.default');
-        $select = $client->createQuery()
-            ->addDocumentClass('MediaDocument')
-            ->addField('title')
-            ->setQuery(new TermsQuery('test'))
-            ->setFilter(new TermFilter('document_type', 'jpg'))
-            ->setHighlight(true)
-        ;
-        $result = $client->select($select);
-        ldd($result);
+        $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
+        $query = $storage->createQuery();
 
-        $search = '';
-        if ($input->getOption('search')) {
-            $search = $input->getOption('search');
+        $queryString = $input->getOption('query');
+        if ($queryString) {
+            $query->setQuery(new Query\QueryString($queryString));
         }
 
-        $filterKey = '';
-        $filterValue = '';
-        if ($input->getOption('filter')) {
-            $filter = $input->getOption('filter');
-
-            if (!preg_match('/^(.*)=(.*)$/', $filter, $match)) {
-                echo 'Filter has to be of format key=value' . PHP_EOL;
-                die;
-            }
-
-            $filterKey   = $match[1];
-            $filterValue = $match[2];
+        $filter = $input->getOption('filter');
+        if ($filter) {
+            list($field, $value) = explode(':', $filter);
+            $filter = new TermFilter(array($field => $value));
+            $query->setFilter($filter);
         }
 
-        $queryString = $input->getArgument('queryString');
-
-        $container = $this->getContainer();
-
-        $indexerSearch = $container->get('indexer.search');
-        $indexerSearches = $container->get('indexer.searches');
-
-        foreach ($indexerSearches as $id => $query) {
-            if ($search && $search !== $id) {
-                continue;
+        $facet = $input->getOption('facet');
+        if ($facet) {
+            $facetFields = explode(',', $facet);
+            $facets = array();
+            foreach ($facetFields as $facetField) {
+                $facet = new TermsFacet($facetField);
+                $facet->setField($facetField);
+                $facets[] = $facet;
             }
-
-            $output->writeln(str_repeat('=', 80));
-            $output->writeln(' ' . $id);
-            $output->writeln(str_repeat('=', 80));
-
-            if ($filterKey) {
-                $query->setFilters(array($filterKey => $filterValue));
-            }
-
-            $query->parseInput($queryString);
-            $result = $indexerSearch->query($query);
-
-            foreach ($result as $document) {
-                $output->writeln((string) $document);
-                $output->writeln(str_repeat('-', 80));
-            }
+            $query->setFacets($facets);
         }
+
+        $suggest = $input->getOption('suggest');
+        if ($suggest) {
+            list($field, $value) = explode(':', $suggest);
+            $suggestion = new TermSuggest($field, $field);
+            $suggestion->setText($value);
+            $suggest = new Suggest($suggestion);
+            $query->setSuggest($suggest);
+        }
+
+        $result = $storage->query($query);
+        ld($result);
 
         return 0;
     }
