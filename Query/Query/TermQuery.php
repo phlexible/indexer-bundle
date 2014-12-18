@@ -9,7 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Query\Query;
 
 /**
- * Query string
+ * Term query
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

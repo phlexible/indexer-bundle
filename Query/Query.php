@@ -8,6 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Query;
 
+use Phlexible\Bundle\IndexerBundle\Query\Aggregation\AggregationInterface;
 use Phlexible\Bundle\IndexerBundle\Query\Facet\FacetInterface;
 use Phlexible\Bundle\IndexerBundle\Query\Filter\FilterInterface;
 use Phlexible\Bundle\IndexerBundle\Query\Query\QueryInterface;
@@ -34,6 +35,11 @@ class Query
      * @var FacetInterface[]
      */
     private $facets = array();
+
+    /**
+     * @var AggregationInterface[]
+     */
+    private $aggregations = array();
 
     /**
      * @var SuggestInterface
@@ -133,6 +139,18 @@ class Query
     }
 
     /**
+     * @param FacetInterface $facet
+     *
+     * @return $this
+     */
+    public function addFacet(FacetInterface $facet)
+    {
+        $this->facets[] = $facet;
+
+        return $this;
+    }
+
+    /**
      * @param FacetInterface[] $facets
      *
      * @return $this
@@ -150,6 +168,38 @@ class Query
     public function getFacets()
     {
         return $this->facets;
+    }
+
+    /**
+     * @param AggregationInterface $aggregation
+     *
+     * @return $this
+     */
+    public function addAggregation(AggregationInterface $aggregation)
+    {
+        $this->aggregations[] = $aggregation;
+
+        return $this;
+    }
+
+    /**
+     * @param AggregationInterface[] $aggregations
+     *
+     * @return $this
+     */
+    public function setAggregations(array $aggregations = array())
+    {
+        $this->aggregations = $aggregations;
+
+        return $this;
+    }
+
+    /**
+     * @return AggregationInterface
+     */
+    public function getAggregations()
+    {
+        return $this->aggregations;
     }
 
     /**
