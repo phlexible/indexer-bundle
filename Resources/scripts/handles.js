@@ -1,10 +1,6 @@
-Ext.provide('Phlexible.Handles');
-Ext.provide('Phlexible.gui.menuhandle.handle.XtypeHandle');
-Ext.provide('Phlexible.indexer.MainPanel');
-
-Phlexible.indexer.menuhandle.SearchHandle = Ext.extend(Phlexible.gui.menuhandle.handle.XtypeHandle, {
-
-});
+Ext.require('Phlexible.Handles');
+Ext.require('Phlexible.gui.menuhandle.handle.XtypeHandle');
+Ext.require('Phlexible.indexer.MainPanel');
 
 Phlexible.Handles.add('indexer', function() {
     return new Phlexible.gui.menuhandle.handle.XtypeHandle({

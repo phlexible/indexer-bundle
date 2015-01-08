@@ -1,4 +1,4 @@
-cachestats:
+indexer:
     parent: admin
     handle: indexer
     resources: [debug]
