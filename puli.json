@@ -1,0 +1,7 @@
+{
+    "resources": {
+        "/phlexible/icons/indexer": "Resources/public/icons",
+        "/phlexible/menu/indexer": "Resources/menu",
+        "/phlexible/scripts/indexer": "Resources/scripts"
+    }
+}

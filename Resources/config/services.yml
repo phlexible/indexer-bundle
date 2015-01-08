@@ -67,14 +67,6 @@ services:
         tags:
             - {name: phlexible_security.acl.provider}
 
-    # asset providers
-    phlexible_indexer.asset_provider:
-        class: Phlexible\Bundle\IndexerBundle\AssetProvider\IndexerAssetProvider
-        public: false
-        arguments: [@file_locator]
-        tags:
-            - {name: phlexible_gui.asset.provider}
-
     # problem checks
     phlexible_indexer.query.checker:
         class: Phlexible\Bundle\IndexerBundle\ProblemChecker\QueryChecker

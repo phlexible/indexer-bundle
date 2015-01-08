@@ -1,3 +1,7 @@
+Ext.provide('Phlexible.indexer.MainPanel');
+
+Ext.require('Phlexible.indexer.model.Result');
+
 Phlexible.indexer.MainPanel = Ext.extend(Ext.Panel, {
     title: Phlexible.indexer.Strings.indexer,
     strings: Phlexible.indexer.Strings,

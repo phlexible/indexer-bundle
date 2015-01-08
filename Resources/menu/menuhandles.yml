@@ -1,4 +1,4 @@
 cachestats:
     parent: admin
-    xtype: Phlexible.indexer.menuhandle.SearchHandle
+    handle: indexer
     resources: [debug]
