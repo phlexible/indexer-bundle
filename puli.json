@@ -1,4 +1,5 @@
 {
+    "version": "1.0",
     "resources": {
         "/phlexible/icons/indexer": "Resources/public/icons",
         "/phlexible/menu/indexer": "Resources/menu",
