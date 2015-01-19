@@ -1,8 +1,8 @@
 {
     "version": "1.0",
     "resources": {
-        "/phlexible/icons/indexer": "Resources/public/icons",
-        "/phlexible/menu/indexer": "Resources/menu",
-        "/phlexible/scripts/indexer": "Resources/scripts"
+        "/phlexible/indexer/icons": "Resources/public/icons",
+        "/phlexible/indexer/menu": "Resources/menu",
+        "/phlexible/indexer/scripts": "Resources/scripts"
     }
 }
