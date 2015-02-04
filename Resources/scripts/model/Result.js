@@ -9,4 +9,4 @@ Phlexible.indexer.model.Result = Ext.data.Record.create([
 	'title',
 	'content',
 	'document'
-])
+]);
