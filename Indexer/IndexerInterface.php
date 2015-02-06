@@ -26,6 +26,13 @@ interface IndexerInterface
     public function getName();
 
     /**
+     * Return type
+     *
+     * @return string
+     */
+    public function getType();
+
+    /**
      * Return associated storage
      *
      * @return StorageInterface
@@ -33,32 +40,36 @@ interface IndexerInterface
     public function getStorage();
 
     /**
-     * Returns all identifiers of indexable documents
+     * @param string|DocumentInterface $identifier
      *
-     * @return array
+     * @return bool
      */
-    public function findIdentifiers();
+    public function supports($identifier);
 
     /**
-     * Returns document for identifier
+     * Index document identified by identifier
      *
-     * @param string $id
+     * @param string $identifier
      *
-     * @return DocumentInterface
+     * @return bool
      */
-    public function buildDocument($id);
+    public function add($identifier);
 
     /**
-     * Return document class
+     * Index document identified by identifier
      *
-     * @return string
+     * @param string $identifier
+     *
+     * @return bool
      */
-    public function getDocumentClass();
+    public function update($identifier);
 
     /**
-     * Return new instance of indexers document class
+     * Index all documents
      *
-     * @return DocumentInterface
+     * @param bool $viaQueue
+     *
+     * @return bool
      */
-    public function createDocument();
+    public function indexAll($viaQueue = false);
 }

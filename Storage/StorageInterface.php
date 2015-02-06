@@ -9,6 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommandCollection;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 
 /**
@@ -82,16 +83,23 @@ interface StorageInterface
     public function deleteAll();
 
     /**
-     * @return UpdateQuery
+     * @return CommandCollection
      */
-    public function createUpdate();
+    public function createCommands();
 
     /**
-     * @param UpdateQuery $update
+     * @param CommandCollection $commands
      *
      * @return bool
      */
-    public function execute(UpdateQuery $update);
+    public function runCommands(CommandCollection $commands);
+
+    /**
+     * @param CommandCollection $commands
+     *
+     * @return bool
+     */
+    public function queueCommands(CommandCollection $commands);
 
     /**
      * @return boolean

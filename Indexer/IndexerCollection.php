@@ -8,6 +8,8 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+
 /**
  * Indexer collection
  *
@@ -43,9 +45,25 @@ class IndexerCollection implements \IteratorAggregate, \Countable
     /**
      * @return IndexerInterface[]
      */
-    public function getIndexers()
+    public function all()
     {
         return $this->indexers;
+    }
+
+    /**
+     * @param string|DocumentInterface $identifier
+     *
+     * @return bool
+     */
+    public function supports($identifier)
+    {
+        foreach ($this->indexers as $indexer) {
+            if ($indexer->supports($identifier)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

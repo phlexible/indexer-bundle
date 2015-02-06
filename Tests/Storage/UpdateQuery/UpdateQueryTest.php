@@ -11,8 +11,12 @@ namespace Phlexible\Bundle\IndexerBundle\Test\Storage\UpdateQuery;
 use Phlexible\Bundle\IndexerBundle\Document\Document;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommandCollection;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use Phlexible\Bundle\QueueBundle\Entity\Job;
+use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
+use Prophecy\Prophecy\ObjectProphecy;
+use Prophecy\Prophet;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class TestDocument extends Document
@@ -36,81 +40,149 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
     private $updateQuery;
 
     /**
-     * @var StorageInterface|MockObject
+     * @var JobManagerInterface|ObjectProphecy
      */
-    private $storageMock;
+    private $jobManager;
+
+    /**
+     * @var StorageInterface|ObjectProphecy
+     */
+    private $storage;
 
     /**
      * @var EventDispatcher
      */
     private $eventDispatcher;
 
-    public function setUp()
+    /**
+     * @var Prophet
+     */
+    private $prophet;
+
+    protected function setUp()
     {
+        $this->prophet = new Prophet;
+
         $this->eventDispatcher = new EventDispatcher();
-        $this->storageMock = $this->getMockBuilder('\Phlexible\Bundle\IndexerBundle\Storage\StorageInterface')
-            ->getMock();
-        $this->updateQuery = new UpdateQuery($this->eventDispatcher);
+        $this->jobManager = $this->prophet->prophesize('Phlexible\Bundle\QueueBundle\Model\JobManagerInterface');
+        $this->storage = $this->prophet->prophesize('Phlexible\Bundle\IndexerBundle\Storage\StorageInterface');
+        $this->updateQuery = new UpdateQuery($this->jobManager->reveal(), $this->eventDispatcher);
     }
 
-    public function testExecuteCommitIsNotCalledForStorageWithoutCommitableInterface()
+    protected function tearDown()
     {
-        $this->storageMock
-            ->expects($this->never())
-            ->method('commit');
-
-        $this->updateQuery
-            ->commit()
-            ->execute($this->storageMock);
+        $this->prophet->checkPredictions();
     }
 
-    public function testExecuteRollbackIsNotCalledForStorageWithoutRollbackableInterface()
+    /**
+     * @return CommandCollection
+     */
+    private function createCommands()
     {
-        $this->storageMock
-            ->expects($this->never())
-            ->method('rollback');
-
-        $this->updateQuery
-            ->rollback()
-            ->execute($this->storageMock);
+        return $this->updateQuery->createCommands();
     }
 
-    public function testExecuteOptimizeIsNotCalledForStorageWithoutOptimizableInterface()
+    public function testRunWithCommitIsCalledForStorageWithCommitableInterface()
     {
-        $this->storageMock
-            ->expects($this->never())
-            ->method('optimize');
+        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Commitable');
+        $this->storage->commit()->shouldBeCalledTimes(1);
 
-        $this->updateQuery
-            ->optimize()
-            ->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->commit());
+
+        $this->assertTrue($result);
     }
 
-    public function testExecuteFlushIsNotCalledForStorageWithoutFlushableInterface()
+    public function testQueueWithCommitIsCalled()
     {
-        $this->storageMock
-            ->expects($this->never())
-            ->method('flush');
+        $job = new Job('indexer:index', array('--commit'));
+        $this->jobManager->addJob($job)->shouldBeCalled();
 
-        $this->updateQuery
-            ->flush()
-            ->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->queue($this->createCommands()->commit());
+
+        $this->assertTrue($result);
     }
 
-    public function testExecuteAddDocumentIsCalled()
+    public function testRunWithRollbackIsCalledForStorageWithRollbackableInterface()
+    {
+        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Rollbackable');
+        $this->storage->rollback()->shouldBeCalledTimes(1);
+
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->rollback());
+
+        $this->assertTrue($result);
+    }
+
+    public function testQueueWithRollbackIsCalled()
+    {
+        $job = new Job('indexer:index', array('--rollback'));
+        $this->jobManager->addJob($job)->shouldBeCalled();
+
+        $result = $this->updateQuery
+            ->queue($this->createCommands()->rollback());
+
+        $this->assertTrue($result);
+    }
+
+    public function testRunWithOptimizeIsCalledForStorageWithOptimizableInterface()
+    {
+        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Optimizable');
+        $this->storage->optimize()->shouldBeCalledTimes(1);
+
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->optimize());
+
+        $this->assertTrue($result);
+    }
+
+    public function testQueueWithOptimizeIsCalled()
+    {
+        $job = new Job('indexer:index', array('--optimize'));
+        $this->jobManager->addJob($job)->shouldBeCalled();
+
+        $result = $this->updateQuery
+            ->queue($this->createCommands()->optimize());
+
+        $this->assertTrue($result);
+    }
+
+    public function testRunWithFlushIsCalledForStorageWithFlushableInterface()
+    {
+        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Flushable');
+        $this->storage->flush()->shouldBeCalledTimes(1);
+
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->flush());
+
+        $this->assertTrue($result);
+    }
+
+    public function testQueueWithFlushIsCalled()
+    {
+        $job = new Job('indexer:index', array('--flush'));
+        $this->jobManager->addJob($job)->shouldBeCalled();
+
+        $result = $this->updateQuery
+            ->queue($this->createCommands()->flush());
+
+        $this->assertTrue($result);
+    }
+
+    public function testRunWithAddDocumentIsCalled()
     {
         $doc = new TestDocument();
 
-        $this->storageMock
-            ->expects($this->once())
-            ->method('addDocument')
-            ->with($doc);
+        $this->storage->addDocument($doc)->shouldBeCalledTimes(1);
 
-        $this->updateQuery->addDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->addDocument($doc));
+
+        $this->assertTrue($result);
     }
 
-    public function testExecuteAddDocumentDispatchesEvents()
+    public function testRunWithAddDocumentDispatchesEvents()
     {
         $doc = new TestDocument();
 
@@ -122,13 +194,14 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $this->updateQuery->addDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->addDocument($doc));
 
+        $this->assertTrue($result);
         $this->assertSame(2, $called);
     }
 
-    public function testExecuteAddDocumentIsStoppedOnCancelledEvent()
+    public function testRunWithAddDocumentIsStoppedOnCancelledEvent()
     {
         $doc = new TestDocument();
 
@@ -141,26 +214,26 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $this->updateQuery->addDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->addDocument($doc));
 
+        $this->assertTrue($result);
         $this->assertSame(1, $called);
     }
 
-    public function testExecuteUpdateDocumentIsCalled()
+    public function testRunWithUpdateDocumentIsCalled()
     {
         $doc = new TestDocument();
 
-        $this->storageMock
-            ->expects($this->once())
-            ->method('updateDocument')
-            ->with($doc);
+        $this->storage->updateDocument($doc)->shouldBeCalledTimes(1);
 
-        $this->updateQuery->updateDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->updateDocument($doc));
+
+        $this->assertTrue($result);
     }
 
-    public function testExecuteUpdateDocumentDispatchesEvents()
+    public function testRunWithUpdateDocumentDispatchesEvents()
     {
         $doc = new TestDocument();
 
@@ -172,13 +245,14 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $this->updateQuery->updateDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->updateDocument($doc));
 
+        $this->assertTrue($result);
         $this->assertSame(2, $called);
     }
 
-    public function testExecuteUpdateDocumentIsStoppedOnCancelledEvent()
+    public function testRunWithUpdateDocumentIsStoppedOnCancelledEvent()
     {
         $doc = new TestDocument();
 
@@ -191,55 +265,42 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $this->updateQuery->updateDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->updateDocument($doc));
 
+        $this->assertTrue($result);
         $this->assertSame(1, $called);
     }
 
-    public function testExecuteDeleteDocumentIsCalled()
+    public function testRunWithDeleteDocumentIsCalled()
     {
         $doc = new TestDocument();
 
-        $this->storageMock
-            ->expects($this->once())
-            ->method('deleteDocument')
-            ->with($doc);
+        $this->storage->deleteDocument($doc)->shouldBeCalledTimes(1);
 
-        $this->updateQuery->deleteDocument($doc);
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->deleteDocument($doc));
+
+        $this->assertTrue($result);
     }
 
-    public function testExecuteDeleteIsCalled()
+    public function testRunWithDeleteIsCalled()
     {
-        $this->storageMock
-            ->expects($this->once())
-            ->method('delete')
-            ->with('abc');
+        $this->storage->delete('testIdentifier')->shouldBeCalledTimes(1);
 
-        $this->updateQuery->delete('abc');
-        $this->updateQuery->execute($this->storageMock);
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->delete('testIdentifier'));
+
+        $this->assertTrue($result);
     }
 
-    public function testExecuteDeleteTypeIsCalled()
+    public function testRunWithDeleteTypeIsCalled()
     {
-        $this->storageMock
-            ->expects($this->once())
-            ->method('deleteType')
-            ->with('abc');
+        $this->storage->deleteType('testType')->shouldBeCalledTimes(1);
 
-        $this->updateQuery->deleteType('abc');
-        $this->updateQuery->execute($this->storageMock);
-    }
+        $result = $this->updateQuery
+            ->run($this->storage->reveal(), $this->createCommands()->deleteType('testType'));
 
-    public function testExecuteDeleteAllIsCalled()
-    {
-        $this->storageMock
-            ->expects($this->once())
-            ->method('deleteType')
-            ->with('testType');
-
-        $this->updateQuery->deleteType('testType');
-        $this->updateQuery->execute($this->storageMock);
+        $this->assertTrue($result);
     }
 }
