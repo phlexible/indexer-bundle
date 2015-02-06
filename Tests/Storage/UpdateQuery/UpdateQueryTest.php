@@ -16,7 +16,6 @@ use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
 use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
 use Prophecy\Prophecy\ObjectProphecy;
-use Prophecy\Prophet;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class TestDocument extends Document
