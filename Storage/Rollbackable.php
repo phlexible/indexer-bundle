@@ -6,13 +6,17 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 /**
- * Bool and filter
+ * Rollbackable interface
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class BoolAndFilter extends AbstractMultiFilter
+interface Rollbackable
 {
+    /**
+     * Rollback index
+     */
+    public function rollback();
 }

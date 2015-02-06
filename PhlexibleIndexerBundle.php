@@ -9,7 +9,6 @@
 namespace Phlexible\Bundle\IndexerBundle;
 
 use Phlexible\Bundle\IndexerBundle\DependencyInjection\Compiler\AddIndexersPass;
-use Phlexible\Bundle\IndexerBundle\DependencyInjection\Compiler\AddStoragesPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -28,6 +27,5 @@ class PhlexibleIndexerBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(new AddIndexersPass());
-        $container->addCompilerPass(new AddStoragesPass());
     }
 }

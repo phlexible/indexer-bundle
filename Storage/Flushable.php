@@ -6,13 +6,17 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 /**
- * Bool or filter
+ * Flushable interface
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class BoolOrFilter extends AbstractMultiFilter
+interface Flushable
 {
+    /**
+     * Flush index
+     */
+    public function flush();
 }

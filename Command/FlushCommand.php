@@ -41,17 +41,16 @@ class FlushCommand extends ContainerAwareCommand
 
         $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
 
-        $output->writeln('Committing changes in storage ' . $storage->getLabel());
+        $output->writeln('Flushing storage ' . $storage->getConnectionString());
 
-        $update = $storage->createUpdate()->addFlush();
+        $update = $storage->createUpdate()
+            ->flush();
 
-        if ($storage->update($update)) {
-            $output->writeln('<info>Flushed</info>');
+        if ($storage->execute($update)) {
+            $output->writeln('<info>Flushed.</info>');
         } else {
-            $output->writeln('<erro>Flush failed</erro>');
+            $output->writeln('<error>Flush failed.</error>');
         }
-
-        $output->writeln('Flushing done.');
 
         return 0;
     }

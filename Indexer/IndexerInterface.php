@@ -9,7 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
-use Phlexible\Bundle\MediaCacheBundle\Storage\StorageInterface;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 
 /**
  * Indexer interface
@@ -19,13 +19,15 @@ use Phlexible\Bundle\MediaCacheBundle\Storage\StorageInterface;
 interface IndexerInterface
 {
     /**
-     * Return label
+     * Return name
      *
      * @return string
      */
-    public function getLabel();
+    public function getName();
 
     /**
+     * Return associated storage
+     *
      * @return StorageInterface
      */
     public function getStorage();
@@ -35,7 +37,7 @@ interface IndexerInterface
      *
      * @return array
      */
-    public function getAllIdentifiers();
+    public function findIdentifiers();
 
     /**
      * Returns document for identifier
@@ -44,7 +46,7 @@ interface IndexerInterface
      *
      * @return DocumentInterface
      */
-    public function getDocumentByIdentifier($id);
+    public function buildDocument($id);
 
     /**
      * Return document class

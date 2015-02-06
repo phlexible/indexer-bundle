@@ -11,11 +11,11 @@ namespace Phlexible\Bundle\IndexerBundle\Result;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Indexer result
+ * Result set
  *
- * @author Marco Fischer <mf@brainbits.net>
+ * @author Stephan Wentz <sw@brainbits.net>
  */
-class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIterator
+class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
 {
     /**
      * @var DocumentInterface[]
@@ -30,7 +30,12 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     /**
      * @var int
      */
-    private $total = 0;
+    private $totalHits = 0;
+
+    /**
+     * @var int
+     */
+    private $totalTime = 0;
 
     /**
      * @var int
@@ -40,7 +45,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     /**
      * @var int
      */
-    private $rows = 0;
+    private $limit = 0;
 
     /**
      * @var int
@@ -48,11 +53,15 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     private $maxScore = 0;
 
     /**
-     * {@inheritdoc}
+     * Adds a document to the result set.
+     *
+     * @param DocumentInterface $document
+     *
+     * @return $this
      */
     public function add(DocumentInterface $document)
     {
-        $this->documents[] = $document;
+        $this->documents[$document->getIdentifier()] = $document;
 
         return $this;
     }
@@ -92,13 +101,12 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     /**
      * {@inheritdoc}
      */
-    public function addResult(ResultInterface $result)
+    public function addResultSet(ResultSet $results)
     {
-        $this->addDocuments($result->getDocuments());
+        $this->addDocuments($results->getDocuments());
 
         return $this;
     }
-
 
     /**
      * @return $this
@@ -113,29 +121,9 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     /**
      * {@inheritdoc}
      */
-    public function toString()
+    public function all()
     {
-        $a = array();
-
-        foreach ($this->documents as $document) {
-            $a[$document->getIdentifier()] = (string) $document;
-        }
-
-        return implode('', $a);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $a = array();
-
-        foreach ($this->documents as $document) {
-            $a[$document->getIdentifier()] = $document->toArray();
-        }
-
-        return $a;
+        return $this->documents;
     }
 
     /**
@@ -153,7 +141,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function current()
     {
-        return $this->documents[$this->current];
+        return current($this->documents);
     }
 
     /**
@@ -161,7 +149,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function key()
     {
-        return $this->current;
+        return key($this->documents);
     }
 
     /**
@@ -169,7 +157,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function next()
     {
-        ++$this->current;
+        next($this->documents);
     }
 
     /**
@@ -177,7 +165,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function rewind()
     {
-        $this->current = 0;
+        rewind($this->documents);
     }
 
     /**
@@ -185,7 +173,7 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function valid()
     {
-        return $this->offsetExists($this->current);
+        return !!$this->key();
     }
 
     /**
@@ -195,17 +183,13 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
      */
     public function offsetExists($index)
     {
-        if (!isset($this->documents[$index])) {
-            return false;
-        } else {
-            return true;
-        }
+        return isset($this->documents[$index]);
     }
 
     /**
      * @param mixed $index
      *
-     * @return mixed|null
+     * @return DocumentInterface|null
      */
     public function offsetGet($index)
     {
@@ -217,12 +201,12 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     }
 
     /**
-     * @param mixed $index
-     * @param mixed $newval
+     * @param mixed             $index
+     * @param DocumentInterface $document
      */
-    public function offsetSet($index, $newval)
+    public function offsetSet($index, $document)
     {
-        $this->documents[$index] = $newval;
+        $this->documents[$index] = $document;
     }
 
     /**
@@ -244,19 +228,19 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     /**
      * @return int
      */
-    public function getTotal()
+    public function getTotalHits()
     {
-        return $this->total;
+        return $this->totalHits;
     }
 
     /**
-     * @param int $total
+     * @param int $totalHits
      *
      * @return $this
      */
-    public function setTotal($total)
+    public function setTotalHits($totalHits)
     {
-        $this->total = $total;
+        $this->totalHits = $totalHits;
 
         return $this;
     }
@@ -284,19 +268,19 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     /**
      * @return int
      */
-    public function getRows()
+    public function getLimit()
     {
-        return $this->rows;
+        return $this->limit;
     }
 
     /**
-     * @param int $rows
+     * @param int $limit
      *
      * @return $this
      */
-    public function setRows($rows)
+    public function setLimit($limit)
     {
-        $this->rows = $rows;
+        $this->limit = $limit;
 
         return $this;
     }
@@ -317,6 +301,26 @@ class Result implements ResultInterface, \Countable, \ArrayAccess, \SeekableIter
     public function setMaxScore($maxScore)
     {
         $this->maxScore = $maxScore;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalTime()
+    {
+        return $this->totalTime;
+    }
+
+    /**
+     * @param int $totalTime
+     *
+     * @return $this
+     */
+    public function setTotalTime($totalTime)
+    {
+        $this->totalTime = $totalTime;
 
         return $this;
     }

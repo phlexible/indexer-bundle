@@ -9,8 +9,11 @@
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
 use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
+use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
+use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
+use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Phlexible\Bundle\IndexerBundle\Storage\Storage;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -39,43 +42,44 @@ class StatusCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
-        #$searches = $this->getContainer()->findTaggedComponents('indexer.search');
         $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
 
         $this->showIndexers($output, $indexers);
-        $output->writeln('');
-        $this->showStorage($output, $storage);
-        $output->writeln('');
 
         return 0;
     }
 
     private function showIndexers(OutputInterface $output, IndexerCollection $indexers)
     {
-        $output->writeln('Indexers');
+        $output->writeln('Indexers:');
         if (!count($indexers)) {
             $output->writeln('  No indexers.');
         } else {
             foreach ($indexers as $indexer) {
                 $output->writeln('  <info>' . $indexer->getLabel() . '</info>');
-                $output->writeln('    Indexer:  ' . get_class($indexer));
-                $output->writeln('    Storage:  ' . $indexer->getStorage()->getLabel());
-                $output->writeln('    Document: ' . $indexer->getDocumentClass());
+                $output->writeln('    Indexer: ' . get_class($indexer));
+
+                $this->showStorage($output, $indexer->getStorage());
             }
         }
     }
 
-    private function showStorage(OutputInterface $output, Storage $storage)
+    private function showStorage(OutputInterface $output, StorageInterface $storage)
     {
-        $storageAdapter = $storage->getAdapter();
-
-        $output->writeln('Storage');
-        $output->writeln('  <info>' . $storage->getLabel() . '</info>');
-        $output->writeln('    Storage:        ' . get_class($storage));
-        $output->writeln('    Adapter:        ' . get_class($storageAdapter));
-        $output->writeln('    Connection:     ' . $storageAdapter->getConnectionString());
-        $output->writeln('    Optimizable:    ' . ($storage->isOptimizable() ? 'yes' : 'no'));
-        $output->writeln('    Is healthy:     ' . ($storageAdapter->isHealthy() ? 'yes' : 'no'));
+        $features = array();
+        if ($storage instanceof Flushable) {
+            $features[] = 'Flushable';
+        }
+        if ($storage instanceof Optimizable) {
+            $features[] = 'Optimizable';
+        }
+        if ($storage instanceof Commitable) {
+            $features[] = 'Commitable';
+        }
+        $output->writeln('    Storage: <info>' . $storage->getConnectionString() . '</info>');
+        $output->writeln('        Class:      ' . get_class($storage));
+        $output->writeln('        Connection: ' . $storage->getConnectionString());
+        $output->writeln('        Features:   ' . implode(', ', $features));
+        $output->writeln('        Is healthy: ' . ($storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
     }
 }

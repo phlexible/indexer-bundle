@@ -9,17 +9,26 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
-use Phlexible\Bundle\IndexerBundle\Query\Query;
+use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
+use Phlexible\Bundle\IndexerBundle\IndexerEvents;
+use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
+use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
+use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
+use Phlexible\Bundle\IndexerBundle\Storage\Rollbackable;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\AddCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\AddDocumentCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommandInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommitCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteAllCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteCommand;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteQueryCommand;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteClassCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteDocumentCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\DeleteTypeCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\FlushCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\OptimizeCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\RollbackCommand;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\UpdateCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\UpdateDocumentCommand;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -32,12 +41,12 @@ class UpdateQuery
     /**
       * @var EventDispatcherInterface
       */
-    protected $dispatcher;
+    private $dispatcher;
 
     /**
      * @var CommandInterface[]
      */
-    protected $commands = array();
+    private $commands = array();
 
     /**
      * @param EventDispatcherInterface $dispatcher
@@ -48,11 +57,61 @@ class UpdateQuery
     }
 
     /**
-     * @return CommandInterface[]
+     * @param StorageInterface $storage
      */
-    public function getCommands()
+    public function execute(StorageInterface $storage)
     {
-        return $this->commands;
+        foreach ($this->commands as $command) {
+            if ($command instanceof AddDocumentCommand) {
+                $document = $command->getDocument();
+                $event = new DocumentEvent($document);
+                if ($this->dispatcher->dispatch(IndexerEvents::BEFORE_STORAGE_ADD_DOCUMENT, $event)->isPropagationStopped()) {
+                    continue;
+                }
+
+                $storage->addDocument($command->getDocument());
+
+                $event = new DocumentEvent($document);
+                $this->dispatcher->dispatch(IndexerEvents::STORAGE_ADD_DOCUMENT, $event);
+            } elseif ($command instanceof UpdateDocumentCommand) {
+                $document = $command->getDocument();
+                $event = new DocumentEvent($document);
+                if ($this->dispatcher->dispatch(IndexerEvents::BEFORE_STORAGE_UPDATE_DOCUMENT, $event)->isPropagationStopped()) {
+                    continue;
+                }
+
+                $storage->updateDocument($document);
+
+                $event = new DocumentEvent($document);
+                $this->dispatcher->dispatch(IndexerEvents::STORAGE_UPDATE_DOCUMENT, $event);
+            } elseif ($command instanceof DeleteDocumentCommand) {
+                $storage->deleteDocument($command->getDocument());
+            } elseif ($command instanceof DeleteCommand) {
+                $storage->delete($command->getIdentifier());
+            } elseif ($command instanceof DeleteTypeCommand) {
+                $storage->deleteType($command->getType());
+            } elseif ($command instanceof DeleteAllCommand) {
+                $storage->deleteAll();
+            } elseif ($command instanceof FlushCommand) {
+                if ($storage instanceof Flushable) {
+                    $storage->flush();
+                }
+            } elseif ($command instanceof OptimizeCommand) {
+                if ($storage instanceof Optimizable) {
+                    $storage->optimize();
+                }
+            } elseif ($command instanceof CommitCommand) {
+                if ($storage instanceof Commitable) {
+                    $storage->commit();
+                }
+            } elseif ($command instanceof RollbackCommand) {
+                if ($storage instanceof Rollbackable) {
+                    $storage->rollback();
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -60,9 +119,9 @@ class UpdateQuery
      *
      * @return $this
      */
-    public function add(DocumentInterface $document)
+    public function addDocument(DocumentInterface $document)
     {
-        return $this->addCommand(new AddCommand($document));
+        return $this->addCommand(new AddDocumentCommand($document));
     }
 
     /**
@@ -70,45 +129,45 @@ class UpdateQuery
      *
      * @return $this
      */
-    public function addUpdate(DocumentInterface $document)
+    public function updateDocument(DocumentInterface $document)
     {
-        return $this->addCommand(new UpdateCommand($document));
+        return $this->addCommand(new UpdateDocumentCommand($document));
     }
 
     /**
-     * @param null $identifier
+     * @param DocumentInterface $document
      *
      * @return $this
      */
-    public function addDeleteByIdentifier($identifier = null)
+    public function deleteDocument(DocumentInterface $document)
+    {
+        return $this->addCommand(new DeleteDocumentCommand($document));
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return $this
+     */
+    public function delete($identifier)
     {
         return $this->addCommand(new DeleteCommand($identifier));
     }
 
     /**
-     * @param Query $query
+     * @param string $type
      *
      * @return $this
      */
-    public function addDeleteByQuery(Query $query)
+    public function deleteType($type)
     {
-        return $this->addCommand(new DeleteQueryCommand($query));
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return $this
-     */
-    public function addDeleteByClass($class)
-    {
-        return $this->addCommand(new DeleteClassCommand($class));
+        return $this->addCommand(new DeleteTypeCommand($type));
     }
 
     /**
      * @return $this
      */
-    public function addCommit()
+    public function commit()
     {
         return $this->addCommand(new CommitCommand());
     }
@@ -116,7 +175,7 @@ class UpdateQuery
     /**
      * @return $this
      */
-    public function addRollback()
+    public function rollback()
     {
         return $this->addCommand(new RollbackCommand());
     }
@@ -124,7 +183,7 @@ class UpdateQuery
     /**
      * @return $this
      */
-    public function addFlush()
+    public function flush()
     {
         return $this->addCommand(new FlushCommand());
     }
@@ -132,7 +191,7 @@ class UpdateQuery
     /**
      * @return $this
      */
-    public function addOptimize()
+    public function optimize()
     {
         return $this->addCommand(new OptimizeCommand());
     }

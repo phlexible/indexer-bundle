@@ -11,14 +11,12 @@ namespace Phlexible\Bundle\IndexerBundle\Storage;
 /**
  * Optimizable interface
  *
- * @author Marco Fischer <mf@brainbits.net>
+ * @author Stephan Wentz <sw@brainbits.net>
  */
 interface Optimizable
 {
     /**
      * Optimize index
-     *
-     * @return mixed
      */
     public function optimize();
 }

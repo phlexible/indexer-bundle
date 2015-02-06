@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Query\Filter;
+namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
 
 /**
- * Filter interface
+ * Delete all command
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-interface FilterInterface
+class DeleteAllCommand implements CommandInterface
 {
 }

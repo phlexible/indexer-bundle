@@ -9,30 +9,30 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
 
 /**
- * Delete class command
+ * Delete type command
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class DeleteClassCommand implements CommandInterface
+class DeleteTypeCommand implements CommandInterface
 {
     /**
      * @var string
      */
-    private $class;
+    private $type;
 
     /**
-     * @param string $class
+     * @param string $type
      */
-    public function __construct($class)
+    public function __construct($type)
     {
-        $this->class = $class;
+        $this->type = $type;
     }
 
     /**
      * @return string
      */
-    public function getClass()
+    public function getType()
     {
-        return $this->class;
+        return $this->type;
     }
 }

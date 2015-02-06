@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
-use Phlexible\Bundle\IndexerBundle\Query\Query;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 
 /**
@@ -19,29 +19,67 @@ use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
 interface StorageInterface
 {
     /**
-     * @return StorageAdapterInterface
-     */
-    public function getAdapter();
-
-    /**
+     * Return connection parameters as string
+     *
      * @return string
      */
-    public function getId();
+    public function getConnectionString();
 
     /**
-     * @return string
+     * Count all documents
+     *
+     * @return int
      */
-    public function getLabel();
+    public function count();
 
     /**
-     * @return Query
+     * Count all documents of type
+     *
+     * @param string $type
+     *
+     * @return int
      */
-    public function createQuery();
+    public function countType($type);
 
     /**
-     * @param Query $query
+     * Add document
+     *
+     * @param DocumentInterface $document
      */
-    public function query(Query $query);
+    public function addDocument(DocumentInterface $document);
+
+    /**
+     * Update document
+     *
+     * @param DocumentInterface $document
+     */
+    public function updateDocument(DocumentInterface $document);
+
+    /**
+     * Delete document
+     *
+     * @param DocumentInterface $document
+     */
+    public function deleteDocument(DocumentInterface $document);
+
+    /**
+     * Delete document by identifier
+     *
+     * @param string $identifier
+     */
+    public function delete($identifier);
+
+    /**
+     * Delete documents by type
+     *
+     * @param string $type
+     */
+    public function deleteType($type);
+
+    /**
+     * Remove all documents
+     */
+    public function deleteAll();
 
     /**
      * @return UpdateQuery
@@ -51,19 +89,9 @@ interface StorageInterface
     /**
      * @param UpdateQuery $update
      *
-     * @return $this
+     * @return bool
      */
-    public function update(UpdateQuery $update);
-
-    /**
-     * @return boolean
-     */
-    public function isOptimizable();
-
-    /**
-     * @return $this
-     */
-    public function optimize();
+    public function execute(UpdateQuery $update);
 
     /**
      * @return boolean

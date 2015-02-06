@@ -40,18 +40,15 @@ class OptimizeCommand extends ContainerAwareCommand
 
         $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
 
-        $output->writeln('Committing changes in storage ' . $storage->getLabel());
+        $output->writeln('Optimizing storage ' . $storage->getConnectionString());
 
-        if ($storage->isOptimizable()) {
-            $update = $storage->createUpdate()->addOptimize();
+            $update = $storage->createUpdate()
+                ->optimize();
 
-            if ($storage->update($update)) {
-                $output->writeln('<info>Optimized</info>');
-            } else {
-                $output->writeln('<erro>Optimize failed</erro>');
-            }
+        if ($storage->execute($update)) {
+            $output->writeln('<info>Optimized.</info>');
         } else {
-            $output->writeln('Optimize not supported.');
+            $output->writeln('<erro>Optimize failed.</erro>');
         }
 
         return 0;

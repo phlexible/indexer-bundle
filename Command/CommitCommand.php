@@ -39,14 +39,15 @@ class CommitCommand extends ContainerAwareCommand
 
         $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
 
-        $output->writeln('Committing changes in storage ' . $storage->getLabel());
+        $output->writeln('Committing storage ' . $storage->getConnectionString());
 
-        $update = $storage->createUpdate()->addCommit();
+        $update = $storage->createUpdate()
+            ->commit();
 
-        if ($storage->update($update)) {
-            $output->writeln('<info>Committed</info>');
+        if ($storage->execute($update)) {
+            $output->writeln('<info>Committed.</info>');
         } else {
-            $output->writeln('<erro>Commit failed</erro>');
+            $output->writeln('<erro>Commit failed.</erro>');
         }
 
         return 0;

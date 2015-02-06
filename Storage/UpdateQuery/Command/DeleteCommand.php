@@ -8,8 +8,6 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
 
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
-
 /**
  * Delete command
  *
@@ -18,23 +16,23 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 class DeleteCommand implements CommandInterface
 {
     /**
-     * @var DocumentInterface
+     * @var string
      */
-    private $document;
+    private $identifier;
 
     /**
-     * @param DocumentInterface $document
+     * @param string $identifier
      */
-    public function __construct(DocumentInterface $document)
+    public function __construct($identifier)
     {
-        $this->document = $document;
+        $this->identifier = $identifier;
     }
 
     /**
-     * @return DocumentInterface
+     * @return string
      */
-    public function getDocument()
+    public function getIdentifier()
     {
-        return $this->document;
+        return $this->identifier;
     }
 }

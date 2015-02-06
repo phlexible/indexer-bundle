@@ -11,11 +11,11 @@ namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Add command
+ * Add document command
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class AddCommand implements CommandInterface
+class AddDocumentCommand implements CommandInterface
 {
     /**
      * @var DocumentInterface

@@ -6,13 +6,17 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Query\Query;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 /**
- * Query interface
+ * Commitable interface
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-interface QueryInterface
+interface Commitable
 {
+    /**
+     * Commit index
+     */
+    public function commit();
 }
