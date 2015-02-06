@@ -54,24 +54,12 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
      */
     private $eventDispatcher;
 
-    /**
-     * @var Prophet
-     */
-    private $prophet;
-
     protected function setUp()
     {
-        $this->prophet = new Prophet;
-
         $this->eventDispatcher = new EventDispatcher();
-        $this->jobManager = $this->prophet->prophesize('Phlexible\Bundle\QueueBundle\Model\JobManagerInterface');
-        $this->storage = $this->prophet->prophesize('Phlexible\Bundle\IndexerBundle\Storage\StorageInterface');
+        $this->jobManager = $this->prophesize('Phlexible\Bundle\QueueBundle\Model\JobManagerInterface');
+        $this->storage = $this->prophesize('Phlexible\Bundle\IndexerBundle\Storage\StorageInterface');
         $this->updateQuery = new UpdateQuery($this->jobManager->reveal(), $this->eventDispatcher);
-    }
-
-    protected function tearDown()
-    {
-        $this->prophet->checkPredictions();
     }
 
     /**
