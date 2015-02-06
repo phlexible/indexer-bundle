@@ -6,6 +6,7 @@ use Symfony\Component\Finder\Finder;
 $iterator = Finder::create()
     ->files()
     ->name('*.php')
+    ->exclude('build')
     ->exclude('vendor')
     ->exclude('Tests')
     ->in(__DIR__)
