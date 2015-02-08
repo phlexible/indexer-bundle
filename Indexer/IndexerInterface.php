@@ -50,19 +50,31 @@ interface IndexerInterface
      * Index document identified by identifier
      *
      * @param string $identifier
+     * @param bool   $viaQueue
      *
      * @return bool
      */
-    public function add($identifier);
+    public function add($identifier, $viaQueue = false);
 
     /**
      * Index document identified by identifier
      *
      * @param string $identifier
+     * @param bool   $viaQueue
      *
      * @return bool
      */
-    public function update($identifier);
+    public function update($identifier, $viaQueue = false);
+
+    /**
+     * Delete document identified by identifier
+     *
+     * @param string $identifier
+     * @param bool   $viaQueue
+     *
+     * @return bool
+     */
+    public function delete($identifier, $viaQueue = false);
 
     /**
      * Index all documents
