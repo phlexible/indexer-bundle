@@ -43,11 +43,6 @@ abstract class Document implements DocumentInterface, Boostable
     private $values = array();
 
     /**
-     * @var \Zend_Filter_Interface
-     */
-    private $fieldNameFilter;
-
-    /**
      * {@inheritdoc}
      */
     public function __toString()
@@ -57,7 +52,7 @@ abstract class Document implements DocumentInterface, Boostable
             . 'Relevance: ' . $this->getRelevance() . PHP_EOL;
 
         foreach ($this->fields as $key => $config) {
-            $output .= $key . ': ' . var_export($this->getValue($key), true) . ' (';
+            $output .= $key . ': ' . var_export($this->get($key), true) . ' (';
 
             $dummy = array();
             foreach ($config as $configKey => $configValue) {
@@ -71,61 +66,11 @@ abstract class Document implements DocumentInterface, Boostable
     }
 
     /**
-     * ArrayAccess exists
-     *
-     * @param mixed $index
-     *
-     * @return boolean
-     */
-    public function offsetExists($index)
-    {
-        return $this->hasValue($index);
-    }
-
-    /**
-     * ArrayAccess get
-     *
-     * @param mixed $index
-     *
-     * @return mixed
-     */
-    public function offsetGet($index)
-    {
-        return $this->getValue($index);
-    }
-
-    /**
-     * ArrayAccess set
-     *
-     * @param mixed $index
-     * @param mixed $value
-     */
-    public function offsetSet($index, $value)
-    {
-        $this->setValue($index, $value);
-    }
-
-    /**
-     * ArrayAccess unset
-     *
-     * @param mixed $index
-     */
-    public function offsetUnset($index)
-    {
-        unset($this->values[$index]);
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function getValues()
+    public function all()
     {
-        $values = array(
-            '_identifier_'    => $this->getIdentifier(),
-            '_documentclass_' => $this->getDocumentClass(),
-        );
-
-        return $values + $this->values;
+        return $this->values;
     }
 
     /**
@@ -138,7 +83,7 @@ abstract class Document implements DocumentInterface, Boostable
                 continue;
             }
 
-            $this->setValue($key, $value, $implicitCreateField);
+            $this->set($key, $value, $implicitCreateField);
         }
 
         return $this;
@@ -147,7 +92,7 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
-    public function hasValue($key)
+    public function has($key)
     {
         return isset($this->values[$key]);
     }
@@ -155,13 +100,13 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
-    public function getValue($key)
+    public function get($key)
     {
         if (!$this->hasField($key)) {
             throw new InvalidArgumentException("Unknown field $key");
         }
 
-        if (!$this->hasValue($key)) {
+        if (!$this->has($key)) {
             return null;
         }
 
@@ -171,7 +116,7 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
-    public function setValue($key, $value, $implicitCreateField = false)
+    public function set($key, $value, $implicitCreateField = false)
     {
         if (!$this->hasField($key)) {
             if ($implicitCreateField) {
@@ -312,29 +257,5 @@ abstract class Document implements DocumentInterface, Boostable
     public function getRelevance()
     {
         return $this->relevance;
-    }
-
-    /**
-     * Set field name filter.
-     *
-     * @param \Zend_Filter_Interface $fieldNameFilter
-     *
-     * @return $this
-     */
-    public function setFieldNameFilter(\Zend_Filter_Interface $fieldNameFilter)
-    {
-        $this->fieldNameFilter = $fieldNameFilter;
-
-        return $this;
-    }
-
-    /**
-     * return field name filter.
-     *
-     * @return \Zend_Filter_Interface $fieldNameFilter
-     */
-    public function getFieldNameFilter()
-    {
-        return $this->fieldNameFilter;
     }
 }

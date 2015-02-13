@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\Document;
  * @author Marco Fischer <mf@brainbits.net>
  * @author Phillip Look <pl@brainbits.net>
  */
-interface DocumentInterface extends \ArrayAccess
+interface DocumentInterface
 {
     const CONFIG_NOTINDEXED = 'notindexed';
     const CONFIG_MULTIVALUE = 'multivalue';
@@ -45,7 +45,7 @@ interface DocumentInterface extends \ArrayAccess
      *
      * @return array
      */
-    public function getValues();
+    public function all();
 
     /**
      * Set values
@@ -64,7 +64,7 @@ interface DocumentInterface extends \ArrayAccess
      *
      * @return boolean
      */
-    public function hasValue($key);
+    public function has($key);
 
     /**
      * Return value
@@ -73,7 +73,7 @@ interface DocumentInterface extends \ArrayAccess
      *
      * @return array
      */
-    public function getValue($key);
+    public function get($key);
 
     /**
      * Set value
@@ -84,7 +84,7 @@ interface DocumentInterface extends \ArrayAccess
      *
      * @return $this
      */
-    public function setValue($key, $value, $implicitCreateField = false);
+    public function set($key, $value, $implicitCreateField = false);
 
     /**
      * Is field available?
