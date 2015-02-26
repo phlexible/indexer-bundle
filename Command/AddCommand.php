@@ -59,12 +59,12 @@ class AddCommand extends ContainerAwareCommand
                 $output->writeln('    DSN: ' . $storage->getConnectionString());
 
                 if (!$indexer->$method($identifier)) {
-                    $output->writeln("<error>Document $identifier could not be loaded.</error>");
+                    $output->writeln("<error>$identifier was NOT indexed.</error>");
 
                     return 1;
                 }
 
-                $output->writeln("$identifier index done.");
+                $output->writeln("$identifier indexed.");
 
                 return 0;
             }

@@ -6,19 +6,19 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Update document command
+ * Delete document operation
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class UpdateDocumentCommand implements CommandInterface
+class DeleteDocumentOperation implements OperationInterface
 {
     /**
-     * @param DocumentInterface $document
+     * @var DocumentInterface
      */
     private $document;
 

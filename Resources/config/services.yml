@@ -3,8 +3,8 @@ parameters:
     phlexible_indexer.result_sorter.relevance.case_sensitive: ~
 
 services:
-    phlexible_indexer.update_query:
-        class: Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery
+    phlexible_indexer.storage_operator:
+        class: Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator
         arguments: [@phlexible_queue.job_manager, @event_dispatcher]
 
     phlexible_indexer.document_field_name_filter.camelcasetounderscore:

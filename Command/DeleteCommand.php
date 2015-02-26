@@ -48,6 +48,7 @@ class DeleteCommand extends ContainerAwareCommand
 
         $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
 
+        $cnt = 0;
         foreach ($indexers as $indexer) {
             /* @var $indexer IndexerInterface */
 
@@ -58,15 +59,15 @@ class DeleteCommand extends ContainerAwareCommand
             $output->writeln('    DSN: ' . $storage->getConnectionString());
 
             if ($all) {
-                $storage->deleteAll();
+                $cnt += $storage->deleteAll();
             } elseif ($type && $indexer->getType() === $type) {
-                $storage->deleteType($type);
+                $cnt += $storage->deleteType($type);
             } elseif ($identifier && $indexer->supports($identifier)) {
-                $storage->delete($identifier);
+                $cnt += $storage->delete($identifier);
             }
         }
 
-        $output->writeln("Deleted");
+        $output->writeln("Deleted $cnt documents.");
 
         return 1;
     }

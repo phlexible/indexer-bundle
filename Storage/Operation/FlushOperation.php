@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Flush command
+ * Flush operation
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class FlushCommand implements CommandInterface
+class FlushOperation implements OperationInterface
 {
 }

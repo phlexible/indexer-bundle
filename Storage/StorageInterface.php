@@ -9,8 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommandCollection;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
+use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
 
 /**
  * Storage interface
@@ -46,6 +45,8 @@ interface StorageInterface
      * Add document
      *
      * @param DocumentInterface $document
+     *
+     * @return int
      */
     public function addDocument(DocumentInterface $document);
 
@@ -53,6 +54,8 @@ interface StorageInterface
      * Update document
      *
      * @param DocumentInterface $document
+     *
+     * @return int
      */
     public function updateDocument(DocumentInterface $document);
 
@@ -60,6 +63,8 @@ interface StorageInterface
      * Delete document
      *
      * @param DocumentInterface $document
+     *
+     * @return int
      */
     public function deleteDocument(DocumentInterface $document);
 
@@ -67,6 +72,8 @@ interface StorageInterface
      * Delete document by identifier
      *
      * @param string $identifier
+     *
+     * @return int
      */
     public function delete($identifier);
 
@@ -74,32 +81,36 @@ interface StorageInterface
      * Delete documents by type
      *
      * @param string $type
+     *
+     * @return int
      */
     public function deleteType($type);
 
     /**
      * Remove all documents
+     *
+     * @return int
      */
     public function deleteAll();
 
     /**
-     * @return CommandCollection
+     * @return Operations
      */
-    public function createCommands();
+    public function createOperations();
 
     /**
-     * @param CommandCollection $commands
+     * @param Operations $operations
      *
      * @return bool
      */
-    public function runCommands(CommandCollection $commands);
+    public function execute(Operations $operations);
 
     /**
-     * @param CommandCollection $commands
+     * @param Operations $operations
      *
      * @return bool
      */
-    public function queueCommands(CommandCollection $commands);
+    public function queue(Operations $operations);
 
     /**
      * @return boolean

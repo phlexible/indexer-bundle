@@ -46,22 +46,22 @@ class IndexCommand extends ContainerAwareCommand
 
         $output->writeln('Committing storage ' . $storage->getConnectionString());
 
-        $update = $storage->createUpdate();
+        $operations = $storage->createOperations();
 
         if ($input->getOption('commit')) {
-            $update->commit();
+            $operations->commit();
         }
         if ($input->getOption('flush')) {
-            $update->flush();
+            $operations->flush();
         }
         if ($input->getOption('optimize')) {
-            $update->optimize();
+            $operations->optimize();
         }
         if ($input->getOption('rollback')) {
-            $update->rollback();
+            $operations->rollback();
         }
 
-        if ($storage->execute($update)) {
+        if ($storage->execute($operations)) {
             $output->writeln('<info>Maintenance done.</info>');
         } else {
             $output->writeln('<erro>Maintenance failed.</erro>');

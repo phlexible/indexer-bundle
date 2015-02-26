@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Delete all command
+ * Delete all operation
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class DeleteAllCommand implements CommandInterface
+class DeleteAllOperation implements OperationInterface
 {
 }

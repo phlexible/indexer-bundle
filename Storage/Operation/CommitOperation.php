@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Command interface
+ * Commit operation
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-interface CommandInterface
+class CommitOperation implements OperationInterface
 {
 }

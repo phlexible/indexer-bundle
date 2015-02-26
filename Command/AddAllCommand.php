@@ -58,7 +58,7 @@ class AddAllCommand extends ContainerAwareCommand
                 if ($viaQueue) {
                     $output->writeln("Queued $result document-adds.");
                 } else {
-                    $output->writeln("Addded $result documents to index.");
+                    $output->writeln("Added $result documents to index.");
                 }
             }
         }

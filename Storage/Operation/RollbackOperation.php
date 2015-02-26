@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Optimize command
+ * Rollback operation
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class OptimizeCommand implements CommandInterface
+class RollbackOperation implements OperationInterface
 {
 }

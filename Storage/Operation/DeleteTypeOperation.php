@@ -6,14 +6,14 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Delete type command
+ * Delete type operation
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class DeleteTypeCommand implements CommandInterface
+class DeleteTypeOperation implements OperationInterface
 {
     /**
      * @var string

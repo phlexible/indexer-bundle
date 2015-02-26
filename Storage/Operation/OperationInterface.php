@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command;
+namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Rollback command
+ * Operation interface
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class RollbackCommand implements CommandInterface
+interface OperationInterface
 {
 }
