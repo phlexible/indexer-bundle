@@ -11,8 +11,8 @@ namespace Phlexible\Bundle\IndexerBundle\Command;
 use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Webmozart\Console\Input\InputOption;
 
 /**
  * Delete command
