@@ -6,13 +6,13 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Test\Storage\UpdateQuery;
+namespace Phlexible\Bundle\IndexerBundle\Tests\Storage\Operation;
 
 use Phlexible\Bundle\IndexerBundle\Document\Document;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\Command\CommandCollection;
-use Phlexible\Bundle\IndexerBundle\Storage\UpdateQuery\UpdateQuery;
+use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
+use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
 use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -27,16 +27,16 @@ class TestDocument extends Document
 }
 
 /**
- * Update query test
+ * Operator test
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class UpdateQueryTest extends \PHPUnit_Framework_TestCase
+class OperatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-      * @var UpdateQuery
+      * @var Operator
       */
-    private $updateQuery;
+    private $operator;
 
     /**
      * @var JobManagerInterface|ObjectProphecy
@@ -58,15 +58,15 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $this->eventDispatcher = new EventDispatcher();
         $this->jobManager = $this->prophesize('Phlexible\Bundle\QueueBundle\Model\JobManagerInterface');
         $this->storage = $this->prophesize('Phlexible\Bundle\IndexerBundle\Storage\StorageInterface');
-        $this->updateQuery = new UpdateQuery($this->jobManager->reveal(), $this->eventDispatcher);
+        $this->operator = new Operator($this->jobManager->reveal(), $this->eventDispatcher);
     }
 
     /**
-     * @return CommandCollection
+     * @return Operations
      */
-    private function createCommands()
+    private function createOperations()
     {
-        return $this->updateQuery->createCommands();
+        return $this->operator->createOperations();
     }
 
     public function testRunWithCommitIsCalledForStorageWithCommitableInterface()
@@ -74,8 +74,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Commitable');
         $this->storage->commit()->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->commit());
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->commit());
 
         $this->assertTrue($result);
     }
@@ -85,8 +85,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $job = new Job('indexer:index', array('--commit'));
         $this->jobManager->addJob($job)->shouldBeCalled();
 
-        $result = $this->updateQuery
-            ->queue($this->createCommands()->commit());
+        $result = $this->operator
+            ->queue($this->createOperations()->commit());
 
         $this->assertTrue($result);
     }
@@ -96,8 +96,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Rollbackable');
         $this->storage->rollback()->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->rollback());
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->rollback());
 
         $this->assertTrue($result);
     }
@@ -107,8 +107,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $job = new Job('indexer:index', array('--rollback'));
         $this->jobManager->addJob($job)->shouldBeCalled();
 
-        $result = $this->updateQuery
-            ->queue($this->createCommands()->rollback());
+        $result = $this->operator
+            ->queue($this->createOperations()->rollback());
 
         $this->assertTrue($result);
     }
@@ -118,8 +118,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Optimizable');
         $this->storage->optimize()->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->optimize());
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->optimize());
 
         $this->assertTrue($result);
     }
@@ -129,8 +129,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $job = new Job('indexer:index', array('--optimize'));
         $this->jobManager->addJob($job)->shouldBeCalled();
 
-        $result = $this->updateQuery
-            ->queue($this->createCommands()->optimize());
+        $result = $this->operator
+            ->queue($this->createOperations()->optimize());
 
         $this->assertTrue($result);
     }
@@ -140,8 +140,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Flushable');
         $this->storage->flush()->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->flush());
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->flush());
 
         $this->assertTrue($result);
     }
@@ -151,8 +151,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
         $job = new Job('indexer:index', array('--flush'));
         $this->jobManager->addJob($job)->shouldBeCalled();
 
-        $result = $this->updateQuery
-            ->queue($this->createCommands()->flush());
+        $result = $this->operator
+            ->queue($this->createOperations()->flush());
 
         $this->assertTrue($result);
     }
@@ -163,8 +163,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
 
         $this->storage->addDocument($doc)->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->addDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->addDocument($doc));
 
         $this->assertTrue($result);
     }
@@ -181,8 +181,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->addDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->addDocument($doc));
 
         $this->assertTrue($result);
         $this->assertSame(2, $called);
@@ -201,8 +201,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->addDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->addDocument($doc));
 
         $this->assertTrue($result);
         $this->assertSame(1, $called);
@@ -214,8 +214,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
 
         $this->storage->updateDocument($doc)->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->updateDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->updateDocument($doc));
 
         $this->assertTrue($result);
     }
@@ -232,8 +232,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->updateDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->updateDocument($doc));
 
         $this->assertTrue($result);
         $this->assertSame(2, $called);
@@ -252,8 +252,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
             $called++;
         });
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->updateDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->updateDocument($doc));
 
         $this->assertTrue($result);
         $this->assertSame(1, $called);
@@ -265,18 +265,18 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
 
         $this->storage->deleteDocument($doc)->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->deleteDocument($doc));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->deleteDocument($doc));
 
         $this->assertTrue($result);
     }
 
-    public function testRunWithDeleteIsCalled()
+    public function testRunWithDeleteIdentifierIsCalled()
     {
         $this->storage->delete('testIdentifier')->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->delete('testIdentifier'));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->deleteIdentifier('testIdentifier'));
 
         $this->assertTrue($result);
     }
@@ -285,8 +285,8 @@ class UpdateQueryTest extends \PHPUnit_Framework_TestCase
     {
         $this->storage->deleteType('testType')->shouldBeCalledTimes(1);
 
-        $result = $this->updateQuery
-            ->run($this->storage->reveal(), $this->createCommands()->deleteType('testType'));
+        $result = $this->operator
+            ->execute($this->storage->reveal(), $this->createOperations()->deleteType('testType'));
 
         $this->assertTrue($result);
     }
