@@ -55,9 +55,8 @@ class StatusCommand extends ContainerAwareCommand
         if (!count($indexers)) {
             $output->writeln('  No indexers.');
         } else {
-            foreach ($indexers as $indexer) {
-                $output->writeln('  <info>' . $indexer->getLabel() . '</info>');
-                $output->writeln('    Indexer: ' . get_class($indexer));
+            foreach ($indexers as $indexerName => $indexer) {
+                $output->writeln('  <info>' . get_class($indexer) . '</info>');
 
                 $this->showStorage($output, $indexer->getStorage());
             }
@@ -77,9 +76,9 @@ class StatusCommand extends ContainerAwareCommand
             $features[] = 'Commitable';
         }
         $output->writeln('    Storage: <info>' . $storage->getConnectionString() . '</info>');
-        $output->writeln('        Class:      ' . get_class($storage));
-        $output->writeln('        Connection: ' . $storage->getConnectionString());
-        $output->writeln('        Features:   ' . implode(', ', $features));
-        $output->writeln('        Is healthy: ' . ($storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
+        $output->writeln('      Class:      ' . get_class($storage));
+        $output->writeln('      Connection: ' . $storage->getConnectionString());
+        $output->writeln('      Features:   ' . implode(', ', $features));
+        $output->writeln('      Is healthy: ' . ($storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
     }
 }
