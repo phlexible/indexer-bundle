@@ -116,4 +116,9 @@ interface StorageInterface
      * @return boolean
      */
     public function isHealthy();
+
+    /**
+     * @return array
+     */
+    public function check();
 }

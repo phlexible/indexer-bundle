@@ -8,7 +8,6 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
 use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
 use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
 use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
@@ -44,13 +43,6 @@ class StatusCommand extends ContainerAwareCommand
 
         $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
 
-        $this->showIndexers($output, $indexers);
-
-        return 0;
-    }
-
-    private function showIndexers(OutputInterface $output, IndexerCollection $indexers)
-    {
         $output->writeln('Indexers:');
         if (!count($indexers)) {
             $output->writeln('  No indexers.');
@@ -61,6 +53,8 @@ class StatusCommand extends ContainerAwareCommand
                 $this->showStorage($output, $indexer->getStorage());
             }
         }
+
+        return 0;
     }
 
     private function showStorage(OutputInterface $output, StorageInterface $storage)
@@ -79,6 +73,12 @@ class StatusCommand extends ContainerAwareCommand
         $output->writeln('      Class:      ' . get_class($storage));
         $output->writeln('      Connection: ' . $storage->getConnectionString());
         $output->writeln('      Features:   ' . implode(', ', $features));
-        $output->writeln('      Is healthy: ' . ($storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
+        $output->writeln('      Is healthy: ' . ($healthy = $storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
+
+        if (!$healthy) {
+            foreach ($storage->check() as $error) {
+                $output->writeln('      - <error>' . $error . '</error>');
+            }
+        }
     }
 }
