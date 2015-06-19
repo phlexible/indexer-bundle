@@ -16,7 +16,8 @@
         "zf1/zend-filter": "~1.12"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.5"
+        "phpunit/phpunit": "~4.5",
+        "phlexible/queue-bundle": "~1.0"
     },
     "suggest": {
         "phlexible/indexer-storage-elastica-bundle": "Elastica indexer storage"
