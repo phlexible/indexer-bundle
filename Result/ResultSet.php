@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Result;
 
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
 
 /**
  * Result set

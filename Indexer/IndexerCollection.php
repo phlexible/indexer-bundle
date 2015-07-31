@@ -8,7 +8,8 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Model\IndexerInterface;
 
 /**
  * Indexer collection

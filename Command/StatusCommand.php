@@ -8,10 +8,10 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
+use Phlexible\Bundle\IndexerBundle\Model\StorageInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
 use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
 use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
-use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

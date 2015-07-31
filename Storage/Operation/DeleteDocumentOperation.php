@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
 
 /**
  * Delete document operation

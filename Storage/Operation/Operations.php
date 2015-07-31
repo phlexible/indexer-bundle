@@ -9,7 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
 
 /**
  * Operation collection

@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
+use Phlexible\Bundle\IndexerBundle\Model\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

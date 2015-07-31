@@ -12,7 +12,7 @@ use Phlexible\Bundle\GuiBundle\Properties\Properties;
 use Phlexible\Bundle\IndexerBundle\Query\QueryInterface;
 use Phlexible\Bundle\IndexerBundle\Search\Search;
 use Phlexible\Bundle\ProblemBundle\Entity\Problem;
-use Phlexible\Bundle\ProblemBundle\ProblemChecker\ProblemCheckerInterface;
+use Phlexible\Bundle\ProblemBundle\Model\ProblemCheckerInterface;
 
 /**
  * Query checker
