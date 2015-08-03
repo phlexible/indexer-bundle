@@ -8,8 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
-use Phlexible\Bundle\IndexerBundle\Model\IndexerInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Indexer collection
@@ -52,7 +51,7 @@ class IndexerCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param string|DocumentInterface $identifier
+     * @param string|\Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $identifier
      *
      * @return bool
      */

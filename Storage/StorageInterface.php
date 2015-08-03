@@ -6,8 +6,9 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Model;
+namespace Phlexible\Bundle\IndexerBundle\Storage;
 
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
 
 /**

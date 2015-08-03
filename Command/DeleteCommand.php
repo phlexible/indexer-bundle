@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Phlexible\Bundle\IndexerBundle\Model\IndexerInterface;
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -50,7 +50,7 @@ class DeleteCommand extends ContainerAwareCommand
 
         $cnt = 0;
         foreach ($indexers as $indexer) {
-            /* @var $indexer IndexerInterface */
+            /* @var $indexer \Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface */
 
             $storage = $indexer->getStorage();
 

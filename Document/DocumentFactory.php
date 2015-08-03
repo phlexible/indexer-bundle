@@ -10,7 +10,6 @@ namespace Phlexible\Bundle\IndexerBundle\Document;
 
 use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

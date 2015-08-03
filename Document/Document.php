@@ -9,7 +9,6 @@
 namespace Phlexible\Bundle\IndexerBundle\Document;
 
 use Phlexible\Bundle\IndexerBundle\Exception\InvalidArgumentException;
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
 
 /**
  * Document

@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Event;
 
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**

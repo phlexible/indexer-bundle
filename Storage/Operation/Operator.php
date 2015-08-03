@@ -10,11 +10,11 @@ namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
-use Phlexible\Bundle\IndexerBundle\Model\StorageInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
 use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
 use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
 use Phlexible\Bundle\IndexerBundle\Storage\Rollbackable;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
 use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

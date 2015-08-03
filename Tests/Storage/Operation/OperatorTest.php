@@ -10,7 +10,6 @@ namespace Phlexible\Bundle\IndexerBundle\Tests\Storage\Operation;
 
 use Phlexible\Bundle\IndexerBundle\Document\Document;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
-use Phlexible\Bundle\IndexerBundle\Model\StorageInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
@@ -44,7 +43,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
     private $jobManager;
 
     /**
-     * @var \Phlexible\Bundle\IndexerBundle\Model\StorageInterface|ObjectProphecy
+     * @var \Phlexible\Bundle\IndexerBundle\Storage\StorageInterface|ObjectProphecy
      */
     private $storage;
 
@@ -57,7 +56,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->eventDispatcher = new EventDispatcher();
         $this->jobManager = $this->prophesize('Phlexible\Bundle\QueueBundle\Model\JobManagerInterface');
-        $this->storage = $this->prophesize('Phlexible\Bundle\IndexerBundle\Model\StorageInterface');
+        $this->storage = $this->prophesize('Phlexible\Bundle\IndexerBundle\Storage\StorageInterface');
         $this->operator = new Operator($this->jobManager->reveal(), $this->eventDispatcher);
     }
 

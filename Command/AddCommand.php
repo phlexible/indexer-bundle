@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Phlexible\Bundle\IndexerBundle\Model\IndexerInterface;
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,7 +49,7 @@ class AddCommand extends ContainerAwareCommand
 
         $indexers = $container->get('phlexible_indexer.indexers');
         foreach ($indexers as $indexer) {
-            /* @var $indexer IndexerInterface */
+            /* @var $indexer \Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface */
 
             if ($indexer->supports($identifier)) {
                 $storage = $indexer->getStorage();

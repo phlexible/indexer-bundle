@@ -6,7 +6,10 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Model;
+namespace Phlexible\Bundle\IndexerBundle\Indexer;
+
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 
 /**
  * Indexer interface
@@ -32,7 +35,7 @@ interface IndexerInterface
     /**
      * Return associated storage
      *
-     * @return StorageInterface
+     * @return \Phlexible\Bundle\IndexerBundle\Storage\StorageInterface
      */
     public function getStorage();
 

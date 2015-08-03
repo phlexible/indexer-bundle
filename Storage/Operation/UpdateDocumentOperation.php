@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Update document operation
@@ -18,12 +18,12 @@ use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
 class UpdateDocumentOperation implements OperationInterface
 {
     /**
-     * @param DocumentInterface $document
+     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
      */
     private $document;
 
     /**
-     * @param DocumentInterface $document
+     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
      */
     public function __construct(DocumentInterface $document)
     {
@@ -31,7 +31,7 @@ class UpdateDocumentOperation implements OperationInterface
     }
 
     /**
-     * @return DocumentInterface
+     * @return \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface
      */
     public function getDocument()
     {

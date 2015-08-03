@@ -6,7 +6,7 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Model;
+namespace Phlexible\Bundle\IndexerBundle\Document;
 
 /**
  * Document interface

@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Result;
 
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Result set
@@ -55,7 +55,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
     /**
      * Adds a document to the result set.
      *
-     * @param DocumentInterface $document
+     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
      *
      * @return $this
      */
@@ -67,7 +67,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
     }
 
     /**
-     * @param DocumentInterface[] $documents
+     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface[] $documents
      *
      * @return $this
      */

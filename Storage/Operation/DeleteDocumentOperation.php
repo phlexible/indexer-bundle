@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
-use Phlexible\Bundle\IndexerBundle\Model\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
  * Delete document operation
@@ -23,7 +23,7 @@ class DeleteDocumentOperation implements OperationInterface
     private $document;
 
     /**
-     * @param DocumentInterface $document
+     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
      */
     public function __construct(DocumentInterface $document)
     {
@@ -31,7 +31,7 @@ class DeleteDocumentOperation implements OperationInterface
     }
 
     /**
-     * @return DocumentInterface
+     * @return \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface
      */
     public function getDocument()
     {
