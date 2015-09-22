@@ -61,7 +61,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
      */
     public function add(DocumentInterface $document)
     {
-        $this->documents[$document->getIdentifier()] = $document;
+        $this->documents[(string) $document->getIdentity()] = $document;
 
         return $this;
     }
@@ -165,7 +165,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
      */
     public function rewind()
     {
-        rewind($this->documents);
+        reset($this->documents);
     }
 
     /**
