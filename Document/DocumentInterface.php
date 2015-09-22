@@ -11,6 +11,7 @@ namespace Phlexible\Bundle\IndexerBundle\Document;
 /**
  * Document interface
  *
+ * @author Stephan Wentz <sw@brainbits.net>
  * @author Marco Fischer <mf@brainbits.net>
  * @author Phillip Look <pl@brainbits.net>
  */
@@ -50,12 +51,11 @@ interface DocumentInterface
     /**
      * Set values
      *
-     * @param array   $values
-     * @param boolean $implicitCreateField
+     * @param array $values
      *
      * @return $this
      */
-    public function setValues($values, $implicitCreateField = false);
+    public function setValues($values);
 
     /**
      * Is value set?
@@ -78,13 +78,12 @@ interface DocumentInterface
     /**
      * Set value
      *
-     * @param string  $key
-     * @param string  $value
-     * @param boolean $implicitCreateField
+     * @param string $key
+     * @param string $value
      *
      * @return $this
      */
-    public function set($key, $value, $implicitCreateField = false);
+    public function set($key, $value);
 
     /**
      * Is field available?
@@ -140,20 +139,16 @@ interface DocumentInterface
     public function removeField($key);
 
     /**
-     * Get identifier
-     *
      * @return string
      */
-    public function getIdentifier();
+    public function getIdentity();
 
     /**
-     * Set identifier
-     *
-     * @param string $id
+     * @param DocumentIdentity $identity
      *
      * @return $this
      */
-    public function setIdentifier($id);
+    public function setIdentity(DocumentIdentity $identity);
 
     /**
      * Return document class

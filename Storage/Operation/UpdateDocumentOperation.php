@@ -18,12 +18,12 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 class UpdateDocumentOperation implements OperationInterface
 {
     /**
-     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
+     * @param DocumentInterface $document
      */
     private $document;
 
     /**
-     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
+     * @param DocumentInterface $document
      */
     public function __construct(DocumentInterface $document)
     {
@@ -31,7 +31,7 @@ class UpdateDocumentOperation implements OperationInterface
     }
 
     /**
-     * @return \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface
+     * @return DocumentInterface
      */
     public function getDocument()
     {

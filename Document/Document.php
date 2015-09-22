@@ -18,9 +18,9 @@ use Phlexible\Bundle\IndexerBundle\Exception\InvalidArgumentException;
 abstract class Document implements DocumentInterface, Boostable
 {
     /**
-     * @var string
+     * @var DocumentIdentity
      */
-    private $id;
+    private $identity;
 
     /**
      * @var integer
@@ -47,7 +47,7 @@ abstract class Document implements DocumentInterface, Boostable
      */
     public function __toString()
     {
-        $output = 'Identifier: ' . $this->getIdentifier() . PHP_EOL
+        $output = 'Identity: ' . (string) $this->getIdentity() . PHP_EOL
             . 'DocumentClass: ' . $this->getDocumentClass() . PHP_EOL
             . 'Relevance: ' . $this->getRelevance() . PHP_EOL;
 
@@ -68,6 +68,23 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
+    public function setIdentity(DocumentIdentity $identity)
+    {
+        $this->identity = $identity;
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIdentity()
+    {
+        return $this->identity;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function all()
     {
         return $this->values;
@@ -76,14 +93,14 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
-    public function setValues($values, $implicitCreateField = false)
+    public function setValues($values)
     {
         foreach ($values as $key => $value) {
             if ($key[0] == '_') {
                 continue;
             }
 
-            $this->set($key, $value, $implicitCreateField);
+            $this->set($key, $value);
         }
 
         return $this;
@@ -116,20 +133,10 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $implicitCreateField = false)
+    public function set($key, $value)
     {
         if (!$this->hasField($key)) {
-            if ($implicitCreateField) {
-                $config = array();
-
-                if (is_array($value)) {
-                    $config[] = self::CONFIG_MULTIVALUE;
-                }
-
-                $this->setField($key, $config);
-            } else {
-                throw new InvalidArgumentException("Unknown field $key");
-            }
+            throw new InvalidArgumentException("Unknown field $key");
         }
 
         if (isset($this->fields[$key][self::CONFIG_MULTIVALUE])) {
@@ -200,27 +207,9 @@ abstract class Document implements DocumentInterface, Boostable
     /**
      * {@inheritdoc}
      */
-    public function getIdentifier()
-    {
-        return $this->id;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setIdentifier($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setBoost($boost)
     {
-        $this->boost = $boost;
+        $this->boost = (float) $boost;
 
         return $this;
     }
@@ -230,7 +219,7 @@ abstract class Document implements DocumentInterface, Boostable
      */
     public function getBoost()
     {
-        return $this->boost;
+        return (float) $this->boost;
     }
 
     /**

@@ -66,22 +66,23 @@ class Operator
     {
         foreach ($operations->getOperations() as $operation) {
             if ($operation instanceof AddDocumentOperation) {
-                $identifier = $operation->getDocument()->getIdentifier();
-                $job = new Job('indexer:add', array($identifier));
-            } elseif ($operation instanceof AddIdentifierOperation) {
-                $identifier = $operation->getIdentifier();
-                $job = new Job('indexer:add', array($identifier));
+                $identity = $operation->getDocument()->getIdentity();
+                $job = new Job('indexer:add', array((string) $identity));
+            } elseif ($operation instanceof AddIdentityOperation) {
+                $identity = $operation->getIdentity();
+                $job = new Job('indexer:add', array((string) $identity));
             } elseif ($operation instanceof UpdateDocumentOperation) {
-                $identifier = $operation->getDocument()->getIdentifier();
-                $job = new Job('indexer:add', array('--update', $identifier));
-            } elseif ($operation instanceof UpdateIdentifierOperation) {
-                $identifier = $operation->getIdentifier();
-                $job = new Job('indexer:add', array('--update', $identifier));
+                $identity = $operation->getDocument()->getIdentity();
+                $job = new Job('indexer:add', array('--update', (string) $identity));
+            } elseif ($operation instanceof UpdateIdentityOperation) {
+                $identity = $operation->getIdentity();
+                $job = new Job('indexer:add', array('--update', (string) $identity));
             } elseif ($operation instanceof DeleteDocumentOperation) {
-                $identifier = $operation->getDocument()->getIdentifier();
-                $job = new Job('indexer:delete', array('--identifier', $identifier));
-            } elseif ($operation instanceof DeleteIdentifierOperation) {
-                $job = new Job('indexer:delete', array('--identifier', $operation->getIdentifier()));
+                $identity = $operation->getDocument()->getIdentity();
+                $job = new Job('indexer:delete', array('--identifier', (string) $identity));
+            } elseif ($operation instanceof DeleteIdentityOperation) {
+                $identity = $operation->getIdentity();
+                $job = new Job('indexer:delete', array('--identifier', (string) $identity));
             } elseif ($operation instanceof DeleteTypeOperation) {
                 $job = new Job('indexer:delete', array('--type', $operation->getType()));
             } elseif ($operation instanceof DeleteAllOperation) {
@@ -128,8 +129,8 @@ class Operator
 
                 $event = new DocumentEvent($document);
                 $this->eventDispatcher->dispatch(IndexerEvents::STORAGE_ADD_DOCUMENT, $event);
-            } elseif ($operation instanceof AddIdentifierOperation) {
-                throw new \InvalidArgumentException("Add identifier command not supported by run().");
+            } elseif ($operation instanceof AddIdentityOperation) {
+                throw new \InvalidArgumentException("Add identity command not supported by run().");
             } elseif ($operation instanceof UpdateDocumentOperation) {
                 $document = $operation->getDocument();
                 $event = new DocumentEvent($document);
@@ -141,12 +142,12 @@ class Operator
 
                 $event = new DocumentEvent($document);
                 $this->eventDispatcher->dispatch(IndexerEvents::STORAGE_UPDATE_DOCUMENT, $event);
-            } elseif ($operation instanceof UpdateIdentifierOperation) {
-                throw new \InvalidArgumentException("Update identifier command not supported by run().");
+            } elseif ($operation instanceof UpdateIdentityOperation) {
+                throw new \InvalidArgumentException("Update identity command not supported by run().");
             } elseif ($operation instanceof DeleteDocumentOperation) {
                 $storage->deleteDocument($operation->getDocument());
-            } elseif ($operation instanceof DeleteIdentifierOperation) {
-                $storage->delete($operation->getIdentifier());
+            } elseif ($operation instanceof DeleteIdentityOperation) {
+                $storage->delete($operation->getIdentity());
             } elseif ($operation instanceof DeleteTypeOperation) {
                 $storage->deleteType($operation->getType());
             } elseif ($operation instanceof DeleteAllOperation) {

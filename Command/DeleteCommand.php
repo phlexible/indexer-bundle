@@ -54,7 +54,7 @@ class DeleteCommand extends ContainerAwareCommand
 
             $storage = $indexer->getStorage();
 
-            $output->writeln('Indexer: ' . $indexer->getName());
+            $output->writeln('Indexer: ' . get_class($indexer));
             $output->writeln('  Storage: ' . get_class($storage));
             $output->writeln('    DSN: ' . $storage->getConnectionString());
 

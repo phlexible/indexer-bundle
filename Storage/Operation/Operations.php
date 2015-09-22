@@ -9,6 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
@@ -46,7 +47,9 @@ class Operations
      */
     public function addOperation(OperationInterface $operation)
     {
-        $this->operations->add($operation);
+        if (!$this->operations->contains($operation)) {
+            $this->operations->add($operation);
+        }
 
         return $this;
     }
@@ -66,7 +69,7 @@ class Operations
     }
 
     /**
-     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
+     * @param DocumentInterface $document
      *
      * @return $this
      */
@@ -76,17 +79,17 @@ class Operations
     }
 
     /**
-     * @param string $identifier
+     * @param DocumentIdentity $identity
      *
      * @return $this
      */
-    public function addIdentifier($identifier)
+    public function addIdentity(DocumentIdentity $identity)
     {
-        return $this->addOperation(new AddIdentifierOperation($identifier));
+        return $this->addOperation(new AddIdentityOperation($identity));
     }
 
     /**
-     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
+     * @param DocumentInterface $document
      *
      * @return $this
      */
@@ -96,17 +99,17 @@ class Operations
     }
 
     /**
-     * @param string $identifier
+     * @param DocumentIdentity $identity
      *
      * @return $this
      */
-    public function updateIdentifier($identifier)
+    public function updateIdentity(DocumentIdentity $identity)
     {
-        return $this->addOperation(new UpdateIdentifierOperation($identifier));
+        return $this->addOperation(new UpdateIdentityOperation($identity));
     }
 
     /**
-     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
+     * @param DocumentInterface $document
      *
      * @return $this
      */
@@ -116,13 +119,13 @@ class Operations
     }
 
     /**
-     * @param string $identifier
+     * @param DocumentIdentity $identity
      *
      * @return $this
      */
-    public function deleteIdentifier($identifier)
+    public function deleteIdentity(DocumentIdentity $identity)
     {
-        return $this->addOperation(new DeleteIdentifierOperation($identifier));
+        return $this->addOperation(new DeleteIdentityOperation($identity));
     }
 
     /**

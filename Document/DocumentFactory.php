@@ -22,7 +22,7 @@ class DocumentFactory
     /**
      * @var EventDispatcherInterface
      */
-    private $dispatcher = null;
+    private $dispatcher;
 
     /**
      * @var array
@@ -30,40 +30,26 @@ class DocumentFactory
     private $prototypes = array();
 
     /**
-     * @var \Zend_Filter_Interface
-     */
-    private $fieldNameFilter;
-
-    /**
      * @param EventDispatcherInterface $dispatcher
-     * @param \Zend_Filter_Interface   $fieldNameFilter
      */
-    public function __construct(EventDispatcherInterface $dispatcher,
-                                \Zend_Filter_Interface $fieldNameFilter = null)
+    public function __construct(EventDispatcherInterface $dispatcher)
     {
-        $this->dispatcher      = $dispatcher;
-        $this->fieldNameFilter = $fieldNameFilter;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
      * Document factory
      *
-     * @param string $documentClass
+     * @param string           $documentClass
+     * @param DocumentIdentity $identity
      *
      * @return DocumentInterface
      */
-    public function factory($documentClass)
+    public function factory($documentClass, DocumentIdentity $identity = null)
     {
-        $prototypeKey = $documentClass;
-
         if (!isset($this->prototypes[$documentClass])) {
             // create document
             $document = new $documentClass();
-
-            // apply field name filter
-            if ($this->fieldNameFilter && method_exists($document, 'setFieldNameFilter')) {
-                $document->setFieldNameFilter($this->fieldNameFilter);
-            }
 
             // fire create event
             $event = new DocumentEvent($document);
@@ -73,6 +59,12 @@ class DocumentFactory
             $this->prototypes[$documentClass] = $document;
         }
 
-        return clone $this->prototypes[$documentClass];
+        $document = clone $this->prototypes[$documentClass];
+
+        if ($identity) {
+            $document->setIdentity($identity);
+        }
+
+        return $document;
     }
 }

@@ -23,7 +23,7 @@ class DeleteDocumentOperation implements OperationInterface
     private $document;
 
     /**
-     * @param \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $document
+     * @param DocumentInterface $document
      */
     public function __construct(DocumentInterface $document)
     {
@@ -31,7 +31,7 @@ class DeleteDocumentOperation implements OperationInterface
     }
 
     /**
-     * @return \Phlexible\Bundle\IndexerBundle\Document\DocumentInterface
+     * @return DocumentInterface
      */
     public function getDocument()
     {

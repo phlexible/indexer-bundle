@@ -9,9 +9,15 @@
 namespace Phlexible\Bundle\IndexerBundle\Tests\Storage\Operation;
 
 use Phlexible\Bundle\IndexerBundle\Document\Document;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
+use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
+use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator;
+use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
+use Phlexible\Bundle\IndexerBundle\Storage\Rollbackable;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
 use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -43,7 +49,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
     private $jobManager;
 
     /**
-     * @var \Phlexible\Bundle\IndexerBundle\Storage\StorageInterface|ObjectProphecy
+     * @var StorageInterface|ObjectProphecy
      */
     private $storage;
 
@@ -55,8 +61,8 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->eventDispatcher = new EventDispatcher();
-        $this->jobManager = $this->prophesize('Phlexible\Bundle\QueueBundle\Model\JobManagerInterface');
-        $this->storage = $this->prophesize('Phlexible\Bundle\IndexerBundle\Storage\StorageInterface');
+        $this->jobManager = $this->prophesize(JobManagerInterface::class);
+        $this->storage = $this->prophesize(StorageInterface::class);
         $this->operator = new Operator($this->jobManager->reveal(), $this->eventDispatcher);
     }
 
@@ -70,7 +76,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testRunWithCommitIsCalledForStorageWithCommitableInterface()
     {
-        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Commitable');
+        $this->storage->willImplement(Commitable::class);
         $this->storage->commit()->shouldBeCalledTimes(1);
 
         $result = $this->operator
@@ -92,7 +98,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testRunWithRollbackIsCalledForStorageWithRollbackableInterface()
     {
-        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Rollbackable');
+        $this->storage->willImplement(Rollbackable::class);
         $this->storage->rollback()->shouldBeCalledTimes(1);
 
         $result = $this->operator
@@ -114,7 +120,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testRunWithOptimizeIsCalledForStorageWithOptimizableInterface()
     {
-        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Optimizable');
+        $this->storage->willImplement(Optimizable::class);
         $this->storage->optimize()->shouldBeCalledTimes(1);
 
         $result = $this->operator
@@ -136,7 +142,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testRunWithFlushIsCalledForStorageWithFlushableInterface()
     {
-        $this->storage->willImplement('Phlexible\Bundle\IndexerBundle\Storage\Flushable');
+        $this->storage->willImplement(Flushable::class);
         $this->storage->flush()->shouldBeCalledTimes(1);
 
         $result = $this->operator
@@ -270,12 +276,14 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
-    public function testRunWithDeleteIdentifierIsCalled()
+    public function testRunWithDeleteIdentityIsCalled()
     {
-        $this->storage->delete('testIdentifier')->shouldBeCalledTimes(1);
+        $identity = new DocumentIdentity('testIdentity');
+
+        $this->storage->delete($identity)->shouldBeCalledTimes(1);
 
         $result = $this->operator
-            ->execute($this->storage->reveal(), $this->createOperations()->deleteIdentifier('testIdentifier'));
+            ->execute($this->storage->reveal(), $this->createOperations()->deleteIdentity($identity));
 
         $this->assertTrue($result);
     }

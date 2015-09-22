@@ -6,14 +6,14 @@
  * @license   proprietary
  */
 
-namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
+namespace Phlexible\Bundle\IndexerBundle\Document;
 
 /**
- * Delete identifier operation
+ * Document identity
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class DeleteIdentifierOperation implements OperationInterface
+class DocumentIdentity
 {
     /**
      * @var string
@@ -32,6 +32,14 @@ class DeleteIdentifierOperation implements OperationInterface
      * @return string
      */
     public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
     {
         return $this->identifier;
     }

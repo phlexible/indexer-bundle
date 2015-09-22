@@ -8,6 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 
@@ -19,13 +20,6 @@ use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 interface IndexerInterface
 {
     /**
-     * Return name
-     *
-     * @return string
-     */
-    public function getName();
-
-    /**
      * Return type
      *
      * @return string
@@ -35,46 +29,51 @@ interface IndexerInterface
     /**
      * Return associated storage
      *
-     * @return \Phlexible\Bundle\IndexerBundle\Storage\StorageInterface
+     * @return StorageInterface
      */
     public function getStorage();
 
     /**
-     * @param string|DocumentInterface $identifier
+     * @param DocumentIdentity $identity
      *
      * @return bool
      */
-    public function supports($identifier);
+    public function supports(DocumentIdentity $identity);
 
     /**
-     * Index document identified by identifier
-     *
-     * @param string $identifier
-     * @param bool   $viaQueue
-     *
-     * @return bool
+     * @return DocumentInterface
      */
-    public function add($identifier, $viaQueue = false);
+    public function createDocument();
 
     /**
-     * Index document identified by identifier
+     * Index document identified by identity
      *
-     * @param string $identifier
-     * @param bool   $viaQueue
+     * @param DocumentIdentity $identity
+     * @param bool             $viaQueue
      *
      * @return bool
      */
-    public function update($identifier, $viaQueue = false);
+    public function add(DocumentIdentity $identity, $viaQueue = false);
 
     /**
-     * Delete document identified by identifier
+     * Index document identified by identity
      *
-     * @param string $identifier
-     * @param bool   $viaQueue
+     * @param DocumentIdentity $identity
+     * @param bool             $viaQueue
      *
      * @return bool
      */
-    public function delete($identifier, $viaQueue = false);
+    public function update(DocumentIdentity $identity, $viaQueue = false);
+
+    /**
+     * Delete document identified by identity
+     *
+     * @param DocumentIdentity $identity
+     * @param bool             $viaQueue
+     *
+     * @return bool
+     */
+    public function delete(DocumentIdentity $identity, $viaQueue = false);
 
     /**
      * Index all documents

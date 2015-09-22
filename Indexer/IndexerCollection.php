@@ -8,7 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 
 /**
  * Indexer collection
@@ -20,14 +20,16 @@ class IndexerCollection implements \IteratorAggregate, \Countable
     /**
      * @var IndexerInterface[]
      */
-    protected $indexers = array();
+    private $indexers = array();
 
     /**
      * @param IndexerInterface[] $indexers
      */
     public function __construct(array $indexers = array())
     {
-        $this->indexers = $indexers;
+        foreach ($indexers as $indexer) {
+            $this->addIndexer($indexer);
+        }
     }
 
     /**
@@ -51,14 +53,14 @@ class IndexerCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @param string|\Phlexible\Bundle\IndexerBundle\Document\DocumentInterface $identifier
+     * @param DocumentIdentity $identity
      *
      * @return bool
      */
-    public function supports($identifier)
+    public function supports(DocumentIdentity $identity)
     {
         foreach ($this->indexers as $indexer) {
-            if ($indexer->supports($identifier)) {
+            if ($indexer->supports($identity)) {
                 return true;
             }
         }
