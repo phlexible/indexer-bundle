@@ -7,21 +7,9 @@ services:
         class: Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator
         arguments: [@phlexible_queue.job_manager, @event_dispatcher]
 
-    phlexible_indexer.document_field_name_filter.camelcasetounderscore:
-        class: Zend_Filter_Word_CamelCaseToUnderscore
-
-    phlexible_indexer.document_field_name_filter.stringtolower:
-        class: Zend_Filter_StringToLower
-
-    phlexible_indexer.document_field_name_filter:
-        class: Zend_Filter
-        calls:
-            - [addFilter, [@phlexible_indexer.document_field_name_filter.camelcasetounderscore]]
-            - [addFilter, [@phlexible_indexer.document_field_name_filter.stringtolower]]
-
     phlexible_indexer.document_factory:
         class: Phlexible\Bundle\IndexerBundle\Document\DocumentFactory
-        arguments: [@event_dispatcher, @phlexible_indexer.document_field_name_filter]
+        arguments: [@event_dispatcher]
 
     phlexible_indexer.indexers:
         class: Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection
