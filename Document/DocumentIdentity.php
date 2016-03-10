@@ -10,6 +10,7 @@ namespace Phlexible\Bundle\IndexerBundle\Document;
 
 /**
  * Document identity
+ * Helper for bi-directional identifier (e.g. element_20_de) resolution
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
