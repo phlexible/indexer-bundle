@@ -8,6 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
+use Countable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
@@ -17,7 +18,7 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class Operations
+class Operations implements Countable
 {
     /**
      * @var OperationInterface[]|ArrayCollection
@@ -168,5 +169,13 @@ class Operations
     public function optimize()
     {
         return $this->addOperation(new OptimizeOperation());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return count($this->operations);
     }
 }

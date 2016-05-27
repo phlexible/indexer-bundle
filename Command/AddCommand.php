@@ -8,6 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,7 +41,7 @@ class AddCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $identifier = $input->getArgument('identifier');
+        $identifier = new DocumentIdentity($input->getArgument('identifier'));
         $method = $input->getOption('update') ? 'update' : 'add';
 
         ini_set('memory_limit', -1);
@@ -61,18 +62,14 @@ class AddCommand extends ContainerAwareCommand
                 if (!$indexer->$method($identifier)) {
                     $output->writeln("<error>$identifier was NOT indexed.</error>");
 
-                    return 1;
+                    continue;
                 }
 
                 $output->writeln("$identifier indexed.");
-
-                return 0;
             }
         }
 
-        $output->writeln("<error>No indexer supports identifier $identifier</error>");
-
-        return 1;
+        return 0;
     }
 
 }
