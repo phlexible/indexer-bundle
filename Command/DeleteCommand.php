@@ -8,6 +8,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -62,8 +63,11 @@ class DeleteCommand extends ContainerAwareCommand
                 $cnt += $storage->deleteAll();
             } elseif ($type && $indexer->getType() === $type) {
                 $cnt += $storage->deleteType($type);
-            } elseif ($identifier && $indexer->supports($identifier)) {
-                $cnt += $storage->delete($identifier);
+            } elseif ($identifier) {
+                $identity = new DocumentIdentity($identifier);
+                if ($indexer->supports($identity)) {
+                    $cnt += $storage->delete($identity);
+                }
             }
         }
 
