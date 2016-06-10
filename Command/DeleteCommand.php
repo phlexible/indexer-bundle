@@ -73,6 +73,6 @@ class DeleteCommand extends ContainerAwareCommand
 
         $output->writeln("Deleted $cnt documents.");
 
-        return 1;
+        return 0;
     }
 }
