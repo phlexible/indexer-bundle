@@ -5,11 +5,14 @@ parameters:
 services:
     phlexible_indexer.storage_operator:
         class: Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator
-        arguments: [@phlexible_queue.job_manager, @event_dispatcher]
+        arguments:
+            - "@phlexible_queue.job_manager"
+            - "@event_dispatcher"
 
     phlexible_indexer.document_factory:
         class: Phlexible\Bundle\IndexerBundle\Document\DocumentFactory
-        arguments: [@event_dispatcher]
+        arguments:
+            - "@event_dispatcher"
 
     phlexible_indexer.indexers:
         class: Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection
@@ -19,7 +22,9 @@ services:
     phlexible_indexer.query.checker:
         class: Phlexible\Bundle\IndexerBundle\ProblemChecker\QueryChecker
         public: false
-        arguments: [@phlexible_indexer.search, @properties]
+        arguments:
+            - "@phlexible_indexer.search"
+            - "@properties"
         tags:
             - {name: phlexible_problem.problem_checker}
 
