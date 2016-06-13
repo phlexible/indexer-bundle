@@ -71,6 +71,8 @@ abstract class Document implements DocumentInterface, Boostable
     public function setIdentity(DocumentIdentity $identity)
     {
         $this->identity = $identity;
+
+        return $this;
     }
 
 
