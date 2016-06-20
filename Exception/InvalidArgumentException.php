@@ -11,8 +11,8 @@ namespace Phlexible\Bundle\IndexerBundle\Exception;
 /**
  * Invalid argument exception
  *
- * @author Marco Fischer <mf@brainbits.net>
+ * @author Stephan Wentz <sw@brainbits.net>
  */
-class InvalidArgumentException extends \InvalidArgumentException
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
 }

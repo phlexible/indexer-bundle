@@ -9,10 +9,10 @@
 namespace Phlexible\Bundle\IndexerBundle\Exception;
 
 /**
- * Base exception
+ * Exception interface
  *
- * @author Marco Fischer <mf@brainbits.net>
+ * @author Stephan Wentz <sw@brainbits.net>
  */
-class Exception extends \RuntimeException
+interface ExceptionInterface
 {
 }

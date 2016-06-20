@@ -9,6 +9,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
+use Phlexible\Bundle\IndexerBundle\Exception\InvalidArgumentException;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
 use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
@@ -130,7 +131,7 @@ class Operator
                 $event = new DocumentEvent($document);
                 $this->eventDispatcher->dispatch(IndexerEvents::STORAGE_ADD_DOCUMENT, $event);
             } elseif ($operation instanceof AddIdentityOperation) {
-                throw new \InvalidArgumentException("Add identity command not supported by run().");
+                throw new InvalidArgumentException("Add identity command not supported by run().");
             } elseif ($operation instanceof UpdateDocumentOperation) {
                 $document = $operation->getDocument();
                 $event = new DocumentEvent($document);
@@ -143,7 +144,7 @@ class Operator
                 $event = new DocumentEvent($document);
                 $this->eventDispatcher->dispatch(IndexerEvents::STORAGE_UPDATE_DOCUMENT, $event);
             } elseif ($operation instanceof UpdateIdentityOperation) {
-                throw new \InvalidArgumentException("Update identity command not supported by run().");
+                throw new InvalidArgumentException("Update identity command not supported by run().");
             } elseif ($operation instanceof DeleteDocumentOperation) {
                 $storage->deleteDocument($operation->getDocument());
             } elseif ($operation instanceof DeleteIdentityOperation) {
