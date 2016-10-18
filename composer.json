@@ -10,7 +10,7 @@
         }
     },
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.6.0",
         "doctrine/collections": "~1.0",
         "symfony/event-dispatcher": "~2.3"
     },
@@ -21,15 +21,9 @@
     "suggest": {
         "phlexible/indexer-storage-elastica-bundle": "Elastica indexer storage"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.brainbits.net/repo/private/"
-        }
-    ],
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.1-dev"
         }
     },
     "minimum-stability": "dev",
