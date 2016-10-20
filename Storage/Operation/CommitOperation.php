@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Commit operation
+ * Commit operation.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

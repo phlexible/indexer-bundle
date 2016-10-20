@@ -18,21 +18,21 @@ use Phlexible\Bundle\ProblemBundle\Entity\Problem;
 use Phlexible\Bundle\ProblemBundle\Model\ProblemCheckerInterface;
 
 /**
- * Query checker
+ * Query checker.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
 class QueryChecker implements ProblemCheckerInterface
 {
     /**
-     * Indexer
+     * Indexer.
      *
      * @var QueryInterface
      */
     protected $indexerQuery;
 
     /**
-     * Indexer search
+     * Indexer search.
      *
      * @var Search
      */
@@ -44,8 +44,8 @@ class QueryChecker implements ProblemCheckerInterface
     protected $properties;
 
     /**
-     * @param Search         $indexerSearch
-     * @param Properties     $properties
+     * @param Search     $indexerSearch
+     * @param Properties $properties
      */
     public function __construct(Search $indexerSearch, Properties $properties)
     {
@@ -98,7 +98,7 @@ class QueryChecker implements ProblemCheckerInterface
                 ->setCheckClass(__CLASS__)
                 ->setIconClass('p-indexer-component-icon')
                 ->setSeverity(Problem::SEVERITY_WARNING)
-                ->setMessage(get_class($e) . ': ' . $e->getMessage())
+                ->setMessage(get_class($e).': '.$e->getMessage())
             ;
             $problems[] = $problem;
         }

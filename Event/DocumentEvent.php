@@ -15,7 +15,7 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Document event
+ * Document event.
  *
  * @author Phillip Look <plook@brainbits.net>
  */

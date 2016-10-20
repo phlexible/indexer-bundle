@@ -16,7 +16,7 @@ use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Document factory
+ * Document factory.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
@@ -41,7 +41,7 @@ class DocumentFactory
     }
 
     /**
-     * Document factory
+     * Document factory.
      *
      * @param string           $documentClass
      * @param DocumentIdentity $identity

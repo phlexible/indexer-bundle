@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\RoleProvider;
 use Phlexible\Bundle\GuiBundle\Security\RoleProvider\RoleProvider;
 
 /**
- * Indexer role provider
+ * Indexer role provider.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

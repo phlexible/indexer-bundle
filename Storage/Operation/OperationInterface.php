@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Operation interface
+ * Operation interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

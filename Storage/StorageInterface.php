@@ -15,28 +15,28 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
 
 /**
- * Storage interface
+ * Storage interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
 interface StorageInterface
 {
     /**
-     * Return connection parameters as string
+     * Return connection parameters as string.
      *
      * @return string
      */
     public function getConnectionString();
 
     /**
-     * Count all documents
+     * Count all documents.
      *
      * @return int
      */
     public function count();
 
     /**
-     * Count all documents of type
+     * Count all documents of type.
      *
      * @param string $type
      *
@@ -45,7 +45,7 @@ interface StorageInterface
     public function countType($type);
 
     /**
-     * Add document
+     * Add document.
      *
      * @param DocumentInterface $document
      *
@@ -54,7 +54,7 @@ interface StorageInterface
     public function addDocument(DocumentInterface $document);
 
     /**
-     * Update document
+     * Update document.
      *
      * @param DocumentInterface $document
      *
@@ -63,7 +63,7 @@ interface StorageInterface
     public function updateDocument(DocumentInterface $document);
 
     /**
-     * Delete document
+     * Delete document.
      *
      * @param DocumentInterface $document
      *
@@ -72,7 +72,7 @@ interface StorageInterface
     public function deleteDocument(DocumentInterface $document);
 
     /**
-     * Delete document by identifier
+     * Delete document by identifier.
      *
      * @param string $identifier
      *
@@ -81,7 +81,7 @@ interface StorageInterface
     public function delete($identifier);
 
     /**
-     * Delete documents by type
+     * Delete documents by type.
      *
      * @param string $type
      *
@@ -90,7 +90,7 @@ interface StorageInterface
     public function deleteType($type);
 
     /**
-     * Remove all documents
+     * Remove all documents.
      *
      * @return int
      */
@@ -116,7 +116,7 @@ interface StorageInterface
     public function queue(Operations $operations);
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHealthy();
 

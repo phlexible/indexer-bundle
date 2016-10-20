@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Update document operation
+ * Update document operation.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

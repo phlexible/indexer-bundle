@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Boost;
 
 /**
- * Abstract boost
+ * Abstract boost.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */

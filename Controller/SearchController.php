@@ -12,15 +12,14 @@
 namespace Phlexible\Bundle\IndexerBundle\Controller;
 
 use Phlexible\Bundle\IndexerBundle\Query\Query\QueryString;
-use Phlexible\Bundle\IndexerBundle\Query\Query\TermsQuery;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Search controller
+ * Search controller.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  * @Route("/indexer/search")
@@ -36,10 +35,10 @@ class SearchController extends Controller
      */
     public function searchAction(Request $request)
     {
-        $start       = $request->get('start', 0);
-        $limit       = $request->get('limit', 20);
+        $start = $request->get('start', 0);
+        $limit = $request->get('limit', 20);
         $queryString = $request->get('query');
-        $language    = $request->get('language', 'de');
+        $language = $request->get('language', 'de');
 
         $client = $this->get('phlexible_indexer_storage_solr.storage');
         $select = $client->createSelect()
@@ -54,20 +53,20 @@ class SearchController extends Controller
         $data = array();
         foreach ($results as $result) {
             $data[] = array(
-                'id'       => $result->getIdentifier(),
-                'lang'     => $result->hasField('language') ? $result->getValue('language') : '',
-                'tid'      => $result->hasField('tid') ? $result->getValue('tid') : '',
-                'eid'      => $result->hasField('eid') ? $result->getValue('eid') : '',
-                'title'    => $result->getValue('title'),
-                'content'  => $result->getValue('copy'),
-                'online'   => 1,
+                'id' => $result->getIdentifier(),
+                'lang' => $result->hasField('language') ? $result->getValue('language') : '',
+                'tid' => $result->hasField('tid') ? $result->getValue('tid') : '',
+                'eid' => $result->hasField('eid') ? $result->getValue('eid') : '',
+                'title' => $result->getValue('title'),
+                'content' => $result->getValue('copy'),
+                'online' => 1,
                 'document' => get_class($result),
             );
         }
 
         return new JsonResponse(
             array(
-                'docs'  => $data,
+                'docs' => $data,
                 'total' => $results->getTotal(),
             )
         );

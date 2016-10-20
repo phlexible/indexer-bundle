@@ -12,7 +12,6 @@
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
-use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,7 +19,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Add command
+ * Add command.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -58,9 +57,9 @@ class AddCommand extends ContainerAwareCommand
             if ($indexer->supports($identifier)) {
                 $storage = $indexer->getStorage();
 
-                $output->writeln('Indexer: ' . get_class($indexer));
-                $output->writeln('  Storage: ' . get_class($storage));
-                $output->writeln('    DSN: ' . $storage->getConnectionString());
+                $output->writeln('Indexer: '.get_class($indexer));
+                $output->writeln('  Storage: '.get_class($storage));
+                $output->writeln('    DSN: '.$storage->getConnectionString());
 
                 if (!$indexer->$method($identifier)) {
                     $output->writeln("<error>$identifier was NOT indexed.</error>");
@@ -74,5 +73,4 @@ class AddCommand extends ContainerAwareCommand
 
         return 0;
     }
-
 }

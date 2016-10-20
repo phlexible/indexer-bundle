@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Optimize operation
+ * Optimize operation.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Exception;
 
 /**
- * Exception interface
+ * Exception interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

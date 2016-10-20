@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Boost;
 
 /**
- * Boost interface
+ * Boost interface.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
@@ -31,7 +31,6 @@ interface BoostInterface
      * @return float
      */
     public function getPrecision($field);
-
 
     /**
      * @param string $field

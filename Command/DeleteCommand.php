@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Delete command
+ * Delete command.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -57,9 +57,9 @@ class DeleteCommand extends ContainerAwareCommand
 
             $storage = $indexer->getStorage();
 
-            $output->writeln('Indexer: ' . get_class($indexer));
-            $output->writeln('  Storage: ' . get_class($storage));
-            $output->writeln('    DSN: ' . $storage->getConnectionString());
+            $output->writeln('Indexer: '.get_class($indexer));
+            $output->writeln('  Storage: '.get_class($storage));
+            $output->writeln('    DSN: '.$storage->getConnectionString());
 
             if ($all) {
                 $cnt += $storage->deleteAll();

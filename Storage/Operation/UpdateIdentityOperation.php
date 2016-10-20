@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 
 /**
- * Update identity operation
+ * Update identity operation.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
