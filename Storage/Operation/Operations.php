@@ -17,7 +17,7 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Operation collection
+ * Operation collection.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

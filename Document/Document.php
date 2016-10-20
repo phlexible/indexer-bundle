@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\Document;
 use Phlexible\Bundle\IndexerBundle\Exception\InvalidArgumentException;
 
 /**
- * Document
+ * Document.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
@@ -26,7 +26,7 @@ abstract class Document implements DocumentInterface, Boostable
     private $identity;
 
     /**
-     * @var integer
+     * @var int
      */
     private $relevance = 0;
 
@@ -50,19 +50,19 @@ abstract class Document implements DocumentInterface, Boostable
      */
     public function __toString()
     {
-        $output = 'Identity: ' . (string) $this->getIdentity() . PHP_EOL
-            . 'DocumentClass: ' . $this->getDocumentClass() . PHP_EOL
-            . 'Relevance: ' . $this->getRelevance() . PHP_EOL;
+        $output = 'Identity: '.(string) $this->getIdentity().PHP_EOL
+            .'DocumentClass: '.$this->getDocumentClass().PHP_EOL
+            .'Relevance: '.$this->getRelevance().PHP_EOL;
 
         foreach ($this->fields as $key => $config) {
-            $output .= $key . ': ' . var_export($this->get($key), true) . ' (';
+            $output .= $key.': '.var_export($this->get($key), true).' (';
 
             $dummy = array();
             foreach ($config as $configKey => $configValue) {
-                $dummy[] = $configKey . ':' . $configValue;
+                $dummy[] = $configKey.':'.$configValue;
             }
 
-            $output .= implode(',', $dummy) . ')' . PHP_EOL;
+            $output .= implode(',', $dummy).')'.PHP_EOL;
         }
 
         return $output;
@@ -77,7 +77,6 @@ abstract class Document implements DocumentInterface, Boostable
 
         return $this;
     }
-
 
     /**
      * {@inheritdoc}
@@ -101,7 +100,7 @@ abstract class Document implements DocumentInterface, Boostable
     public function setValues($values)
     {
         foreach ($values as $key => $value) {
-            if ($key[0] == '_') {
+            if ($key[0] === '_') {
                 continue;
             }
 

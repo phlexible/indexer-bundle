@@ -19,12 +19,15 @@ use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
-class TestDocument extends Document {
-    public function getName() {}
+class TestDocument extends Document
+{
+    public function getName()
+    {
+    }
 }
 
 /**
- * Document factory test
+ * Document factory test.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */

@@ -20,7 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Status command
+ * Status command.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
@@ -51,7 +51,7 @@ class StatusCommand extends ContainerAwareCommand
             $output->writeln('  No indexers.');
         } else {
             foreach ($indexers as $indexerName => $indexer) {
-                $output->writeln('  <info>' . get_class($indexer) . '</info>');
+                $output->writeln('  <info>'.get_class($indexer).'</info>');
 
                 $this->showStorage($output, $indexer->getStorage());
             }
@@ -72,15 +72,15 @@ class StatusCommand extends ContainerAwareCommand
         if ($storage instanceof Commitable) {
             $features[] = 'Commitable';
         }
-        $output->writeln('    Storage: <info>' . $storage->getConnectionString() . '</info>');
-        $output->writeln('      Class:      ' . get_class($storage));
-        $output->writeln('      Connection: ' . $storage->getConnectionString());
-        $output->writeln('      Features:   ' . implode(', ', $features));
-        $output->writeln('      Is healthy: ' . ($healthy = $storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
+        $output->writeln('    Storage: <info>'.$storage->getConnectionString().'</info>');
+        $output->writeln('      Class:      '.get_class($storage));
+        $output->writeln('      Connection: '.$storage->getConnectionString());
+        $output->writeln('      Features:   '.implode(', ', $features));
+        $output->writeln('      Is healthy: '.($healthy = $storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
 
         if (!$healthy) {
             foreach ($storage->check() as $error) {
-                $output->writeln('      - <error>' . $error . '</error>');
+                $output->writeln('      - <error>'.$error.'</error>');
             }
         }
     }

@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Add all command
+ * Add all command.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -50,9 +50,9 @@ class AddAllCommand extends ContainerAwareCommand
             /* @var $indexer IndexerInterface */
             $storage = $indexer->getStorage();
 
-            $output->writeln('Indexer: ' . get_class($indexer));
-            $output->writeln('  Storage: ' . get_class($storage));
-            $output->writeln('    DSN: ' . $storage->getConnectionString());
+            $output->writeln('Indexer: '.get_class($indexer));
+            $output->writeln('  Storage: '.get_class($storage));
+            $output->writeln('    DSN: '.$storage->getConnectionString());
 
             $result = $indexer->indexAll($viaQueue);
             if (!$result) {
@@ -68,5 +68,4 @@ class AddAllCommand extends ContainerAwareCommand
 
         return 0;
     }
-
 }

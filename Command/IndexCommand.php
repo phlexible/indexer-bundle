@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Index command
+ * Index command.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -47,7 +47,7 @@ class IndexCommand extends ContainerAwareCommand
 
         $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
 
-        $output->writeln('Committing storage ' . $storage->getConnectionString());
+        $output->writeln('Committing storage '.$storage->getConnectionString());
 
         $operations = $storage->createOperations();
 
@@ -72,5 +72,4 @@ class IndexCommand extends ContainerAwareCommand
 
         return 0;
     }
-
 }

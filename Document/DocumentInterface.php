@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Document;
 
 /**
- * Document interface
+ * Document interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  * @author Marco Fischer <mf@brainbits.net>
@@ -22,38 +22,38 @@ interface DocumentInterface
 {
     const CONFIG_NOTINDEXED = 'notindexed';
     const CONFIG_MULTIVALUE = 'multivalue';
-    const CONFIG_READONLY   = 'readonly';
-    const CONFIG_HIGHLIGHT  = 'highlight';
-    const CONFIG_TYPE       = 'type';
+    const CONFIG_READONLY = 'readonly';
+    const CONFIG_HIGHLIGHT = 'highlight';
+    const CONFIG_TYPE = 'type';
 
-    const TYPE_TEXT     = 'text';
-    const TYPE_STRING   = 'string';
-    const TYPE_INTEGER  = 'integer';
-    const TYPE_FLOAT    = 'float';
-    const TYPE_BOOLEAN  = 'boolean';
-    const TYPE_DOUBLE   = 'double';
-    const TYPE_LONG     = 'long';
+    const TYPE_TEXT = 'text';
+    const TYPE_STRING = 'string';
+    const TYPE_INTEGER = 'integer';
+    const TYPE_FLOAT = 'float';
+    const TYPE_BOOLEAN = 'boolean';
+    const TYPE_DOUBLE = 'double';
+    const TYPE_LONG = 'long';
     const TYPE_DATETIME = 'datetime';
-    const TYPE_DATE     = 'date';
+    const TYPE_DATE = 'date';
     const TYPE_CURRENCY = 'currency';
-    const TYPE_OBJECT   = 'object';
+    const TYPE_OBJECT = 'object';
 
     /**
-     * Return document name
+     * Return document name.
      *
      * @return string
      */
     public function getName();
 
     /**
-     * Get values
+     * Get values.
      *
      * @return array
      */
     public function all();
 
     /**
-     * Set values
+     * Set values.
      *
      * @param array $values
      *
@@ -66,12 +66,12 @@ interface DocumentInterface
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function has($key);
 
     /**
-     * Return value
+     * Return value.
      *
      * @param string $key
      *
@@ -80,7 +80,7 @@ interface DocumentInterface
     public function get($key);
 
     /**
-     * Set value
+     * Set value.
      *
      * @param string $key
      * @param string $value
@@ -94,12 +94,12 @@ interface DocumentInterface
      *
      * @param string $key
      *
-     * @return boolean
+     * @return bool
      */
     public function hasField($key);
 
     /**
-     * Set fields
+     * Set fields.
      *
      * @param array $fields
      *
@@ -108,14 +108,14 @@ interface DocumentInterface
     public function setFields(array $fields);
 
     /**
-     * Return fields
+     * Return fields.
      *
      * @return array
      */
     public function getFields();
 
     /**
-     * Set field
+     * Set field.
      *
      * @param string $key
      * @param array  $config
@@ -125,7 +125,7 @@ interface DocumentInterface
     public function setField($key, array $config = array());
 
     /**
-     * Return field
+     * Return field.
      *
      * @param string $key
      *
@@ -134,7 +134,7 @@ interface DocumentInterface
     public function getField($key);
 
     /**
-     * Remove a field
+     * Remove a field.
      *
      * @param string $key
      *
@@ -155,14 +155,14 @@ interface DocumentInterface
     public function setIdentity(DocumentIdentity $identity);
 
     /**
-     * Return document class
+     * Return document class.
      *
      * @return string
      */
     public function getDocumentClass();
 
     /**
-     * Set relevance
+     * Set relevance.
      *
      * @param mixed $relevance
      *
@@ -171,7 +171,7 @@ interface DocumentInterface
     public function setRelevance($relevance);
 
     /**
-     * Get relevance
+     * Get relevance.
      *
      * @return mixed
      */

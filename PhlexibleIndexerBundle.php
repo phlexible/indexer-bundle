@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Indexer bundle
+ * Indexer bundle.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */

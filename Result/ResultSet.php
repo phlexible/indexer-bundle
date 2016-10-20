@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\Result;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 
 /**
- * Result set
+ * Result set.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -26,7 +26,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
     private $documents = array();
 
     /**
-     * @var integer
+     * @var int
      */
     private $current = 0;
 
@@ -156,7 +156,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
     }
 
     /**
-     * Next
+     * Next.
      */
     public function next()
     {
@@ -164,7 +164,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
     }
 
     /**
-     * Rewind
+     * Rewind.
      */
     public function rewind()
     {
@@ -176,7 +176,7 @@ class ResultSet implements \Countable, \ArrayAccess, \SeekableIterator
      */
     public function valid()
     {
-        return !!$this->key();
+        return (bool) $this->key();
     }
 
     /**

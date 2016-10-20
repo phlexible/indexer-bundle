@@ -37,8 +37,8 @@ class Operator
     private $jobManager;
 
     /**
-      * @var EventDispatcherInterface
-      */
+     * @var EventDispatcherInterface
+     */
     private $eventDispatcher;
 
     /**
@@ -134,7 +134,7 @@ class Operator
                 $event = new DocumentEvent($document);
                 $this->eventDispatcher->dispatch(IndexerEvents::STORAGE_ADD_DOCUMENT, $event);
             } elseif ($operation instanceof AddIdentityOperation) {
-                throw new InvalidArgumentException("Add identity command not supported by run().");
+                throw new InvalidArgumentException('Add identity command not supported by run().');
             } elseif ($operation instanceof UpdateDocumentOperation) {
                 $document = $operation->getDocument();
                 $event = new DocumentEvent($document);
@@ -147,7 +147,7 @@ class Operator
                 $event = new DocumentEvent($document);
                 $this->eventDispatcher->dispatch(IndexerEvents::STORAGE_UPDATE_DOCUMENT, $event);
             } elseif ($operation instanceof UpdateIdentityOperation) {
-                throw new InvalidArgumentException("Update identity command not supported by run().");
+                throw new InvalidArgumentException('Update identity command not supported by run().');
             } elseif ($operation instanceof DeleteDocumentOperation) {
                 $storage->deleteDocument($operation->getDocument());
             } elseif ($operation instanceof DeleteIdentityOperation) {

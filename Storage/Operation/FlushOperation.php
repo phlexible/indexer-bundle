@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Flush operation
+ * Flush operation.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

@@ -35,15 +35,15 @@ class TestDocument extends Document
 }
 
 /**
- * Operator test
+ * Operator test.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
 class OperatorTest extends \PHPUnit_Framework_TestCase
 {
     /**
-      * @var Operator
-      */
+     * @var Operator
+     */
     private $operator;
 
     /**
@@ -183,10 +183,10 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
         $called = 0;
         $this->eventDispatcher->addListener(IndexerEvents::BEFORE_STORAGE_ADD_DOCUMENT, function() use (&$called) {
-            $called++;
+            ++$called;
         });
         $this->eventDispatcher->addListener(IndexerEvents::STORAGE_ADD_DOCUMENT, function() use (&$called) {
-            $called++;
+            ++$called;
         });
 
         $result = $this->operator
@@ -202,11 +202,11 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
         $called = 0;
         $this->eventDispatcher->addListener(IndexerEvents::BEFORE_STORAGE_ADD_DOCUMENT, function($event) use (&$called) {
-            $called++;
+            ++$called;
             $event->stopPropagation();
         });
         $this->eventDispatcher->addListener(IndexerEvents::STORAGE_ADD_DOCUMENT, function() use (&$called) {
-            $called++;
+            ++$called;
         });
 
         $result = $this->operator
@@ -234,10 +234,10 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
         $called = 0;
         $this->eventDispatcher->addListener(IndexerEvents::BEFORE_STORAGE_UPDATE_DOCUMENT, function() use (&$called) {
-            $called++;
+            ++$called;
         });
         $this->eventDispatcher->addListener(IndexerEvents::STORAGE_UPDATE_DOCUMENT, function() use (&$called) {
-            $called++;
+            ++$called;
         });
 
         $result = $this->operator
@@ -253,11 +253,11 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
         $called = 0;
         $this->eventDispatcher->addListener(IndexerEvents::BEFORE_STORAGE_UPDATE_DOCUMENT, function($event) use (&$called) {
-            $called++;
+            ++$called;
             $event->stopPropagation();
         });
         $this->eventDispatcher->addListener(IndexerEvents::STORAGE_UPDATE_DOCUMENT, function() use (&$called) {
-            $called++;
+            ++$called;
         });
 
         $result = $this->operator

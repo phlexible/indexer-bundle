@@ -16,21 +16,21 @@ use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 
 /**
- * Indexer interface
+ * Indexer interface.
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
 interface IndexerInterface
 {
     /**
-     * Return type
+     * Return type.
      *
      * @return string
      */
     public function getType();
 
     /**
-     * Return associated storage
+     * Return associated storage.
      *
      * @return StorageInterface
      */
@@ -49,7 +49,7 @@ interface IndexerInterface
     public function createDocument();
 
     /**
-     * Index document identified by identity
+     * Index document identified by identity.
      *
      * @param DocumentIdentity $identity
      * @param bool             $viaQueue
@@ -59,7 +59,7 @@ interface IndexerInterface
     public function add(DocumentIdentity $identity, $viaQueue = false);
 
     /**
-     * Index document identified by identity
+     * Index document identified by identity.
      *
      * @param DocumentIdentity $identity
      * @param bool             $viaQueue
@@ -69,7 +69,7 @@ interface IndexerInterface
     public function update(DocumentIdentity $identity, $viaQueue = false);
 
     /**
-     * Delete document identified by identity
+     * Delete document identified by identity.
      *
      * @param DocumentIdentity $identity
      * @param bool             $viaQueue
@@ -79,7 +79,7 @@ interface IndexerInterface
     public function delete(DocumentIdentity $identity, $viaQueue = false);
 
     /**
-     * Index all documents
+     * Index all documents.
      *
      * @param bool $viaQueue
      *

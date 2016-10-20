@@ -12,14 +12,14 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 /**
- * Commitable interface
+ * Commitable interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
 interface Commitable
 {
     /**
-     * Commit index
+     * Commit index.
      */
     public function commit();
 }

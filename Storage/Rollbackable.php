@@ -12,14 +12,14 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 /**
- * Rollbackable interface
+ * Rollbackable interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
 interface Rollbackable
 {
     /**
-     * Rollback index
+     * Rollback index.
      */
     public function rollback();
 }

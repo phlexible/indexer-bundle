@@ -12,7 +12,7 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage\Operation;
 
 /**
- * Delete all operation
+ * Delete all operation.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */

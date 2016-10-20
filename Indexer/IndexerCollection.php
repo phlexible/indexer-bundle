@@ -14,7 +14,7 @@ namespace Phlexible\Bundle\IndexerBundle\Indexer;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 
 /**
- * Indexer collection
+ * Indexer collection.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
@@ -80,7 +80,7 @@ class IndexerCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function count()
     {

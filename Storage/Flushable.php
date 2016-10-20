@@ -12,14 +12,14 @@
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
 /**
- * Flushable interface
+ * Flushable interface.
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
 interface Flushable
 {
     /**
-     * Flush index
+     * Flush index.
      */
     public function flush();
 }
