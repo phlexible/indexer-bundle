@@ -23,6 +23,7 @@ use Phlexible\Bundle\IndexerBundle\Storage\Rollbackable;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
 use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -90,8 +91,11 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testQueueWithCommitIsCalled()
     {
-        $job = new Job('indexer:index', array('--commit'));
-        $this->jobManager->addJob($job)->shouldBeCalled();
+        $this->jobManager->addJob(Argument::that(function(Job $job) {
+            $this->assertSame('indexer:index', $job->getCommand());
+            $this->assertSame(array('--commit'), $job->getArguments());
+            return true;
+        }))->shouldBeCalled();
 
         $result = $this->operator
             ->queue($this->createOperations()->commit());
@@ -112,8 +116,11 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testQueueWithRollbackIsCalled()
     {
-        $job = new Job('indexer:index', array('--rollback'));
-        $this->jobManager->addJob($job)->shouldBeCalled();
+        $this->jobManager->addJob(Argument::that(function(Job $job) {
+            $this->assertSame('indexer:index', $job->getCommand());
+            $this->assertSame(array('--rollback'), $job->getArguments());
+            return true;
+        }))->shouldBeCalled();
 
         $result = $this->operator
             ->queue($this->createOperations()->rollback());
@@ -134,8 +141,11 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testQueueWithOptimizeIsCalled()
     {
-        $job = new Job('indexer:index', array('--optimize'));
-        $this->jobManager->addJob($job)->shouldBeCalled();
+        $this->jobManager->addJob(Argument::that(function(Job $job) {
+            $this->assertSame('indexer:index', $job->getCommand());
+            $this->assertSame(array('--optimize'), $job->getArguments());
+            return true;
+        }))->shouldBeCalled();
 
         $result = $this->operator
             ->queue($this->createOperations()->optimize());
@@ -156,8 +166,11 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
 
     public function testQueueWithFlushIsCalled()
     {
-        $job = new Job('indexer:index', array('--flush'));
-        $this->jobManager->addJob($job)->shouldBeCalled();
+        $this->jobManager->addJob(Argument::that(function(Job $job) {
+            $this->assertSame('indexer:index', $job->getCommand());
+            $this->assertSame(array('--flush'), $job->getArguments());
+            return true;
+        }))->shouldBeCalled();
 
         $result = $this->operator
             ->queue($this->createOperations()->flush());
