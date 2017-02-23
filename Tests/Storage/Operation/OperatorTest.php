@@ -23,6 +23,7 @@ use Phlexible\Bundle\IndexerBundle\Storage\Rollbackable;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 use Phlexible\Bundle\QueueBundle\Entity\Job;
 use Phlexible\Bundle\QueueBundle\Model\JobManagerInterface;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -39,8 +40,10 @@ class TestDocument extends Document
  * Operator test.
  *
  * @author Stephan Wentz <sw@brainbits.net>
+ *
+ * @covers \Phlexible\Bundle\IndexerBundle\Storage\Operation\Operator
  */
-class OperatorTest extends \PHPUnit_Framework_TestCase
+class OperatorTest extends TestCase
 {
     /**
      * @var Operator
