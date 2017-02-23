@@ -94,6 +94,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
         $this->jobManager->addJob(Argument::that(function(Job $job) {
             $this->assertSame('indexer:index', $job->getCommand());
             $this->assertSame(array('--commit'), $job->getArguments());
+
             return true;
         }))->shouldBeCalled();
 
@@ -119,6 +120,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
         $this->jobManager->addJob(Argument::that(function(Job $job) {
             $this->assertSame('indexer:index', $job->getCommand());
             $this->assertSame(array('--rollback'), $job->getArguments());
+
             return true;
         }))->shouldBeCalled();
 
@@ -144,6 +146,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
         $this->jobManager->addJob(Argument::that(function(Job $job) {
             $this->assertSame('indexer:index', $job->getCommand());
             $this->assertSame(array('--optimize'), $job->getArguments());
+
             return true;
         }))->shouldBeCalled();
 
@@ -169,6 +172,7 @@ class OperatorTest extends \PHPUnit_Framework_TestCase
         $this->jobManager->addJob(Argument::that(function(Job $job) {
             $this->assertSame('indexer:index', $job->getCommand());
             $this->assertSame(array('--flush'), $job->getArguments());
+
             return true;
         }))->shouldBeCalled();
 
