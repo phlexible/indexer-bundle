@@ -81,9 +81,14 @@ interface IndexerInterface
     /**
      * Index all documents.
      *
-     * @param bool $viaQueue
+     * @return bool
+     */
+    public function indexAll();
+
+    /**
+     * Index all documents via queue.
      *
      * @return bool
      */
-    public function indexAll($viaQueue = false);
+    public function queueAll();
 }
