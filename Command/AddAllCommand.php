@@ -54,7 +54,15 @@ class AddAllCommand extends ContainerAwareCommand
             $output->writeln('  Storage: '.get_class($storage));
             $output->writeln('    DSN: '.$storage->getConnectionString());
 
-            $result = $indexer->indexAll($viaQueue);
+            if ($viaQueue) {
+                $result = $indexer->queueAll();
+            } else {
+                $this->getContainer()->get('doctrine.orm.default_entity_manager')->getConnection()->getConfiguration()
+                    ->setSQLLogger(null);
+
+                $result = $indexer->indexAll();
+            }
+
             if (!$result) {
                 $output->writeln('Nothing to index.');
             } else {
