@@ -12,7 +12,6 @@
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
-use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 
 /**
@@ -42,11 +41,6 @@ interface IndexerInterface
      * @return bool
      */
     public function supports(DocumentIdentity $identity);
-
-    /**
-     * @return DocumentInterface
-     */
-    public function createDocument();
 
     /**
      * Index document identified by identity.
