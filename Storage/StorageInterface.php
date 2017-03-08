@@ -11,6 +11,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
+use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
 
@@ -43,6 +44,13 @@ interface StorageInterface
      * @return int
      */
     public function countType($type);
+
+    /**
+     * @param DocumentIdentity $identity
+     *
+     * @return DocumentInterface
+     */
+    public function find(DocumentIdentity $identity);
 
     /**
      * Add document.
