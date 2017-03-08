@@ -45,6 +45,11 @@ abstract class Document implements DocumentInterface, Boostable
      */
     private $values = array();
 
+    public function __construct()
+    {
+        $this->setField('_document_class', array('type' => self::TYPE_STRING, 'stored' => true, 'indexed' => false));
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -165,6 +170,8 @@ abstract class Document implements DocumentInterface, Boostable
      */
     public function setFields(array $fields)
     {
+        $this->setField('_document_class', array('type' => self::TYPE_STRING, 'stored' => true, 'indexed' => false));
+
         foreach ($fields as $key => $config) {
             $this->setField($key, $config);
         }

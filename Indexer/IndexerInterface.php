@@ -11,7 +11,9 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Indexer;
 
+use Countable;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
+use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
 
 /**
@@ -19,7 +21,7 @@ use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-interface IndexerInterface
+interface IndexerInterface extends Countable
 {
     /**
      * Return type.
@@ -36,11 +38,25 @@ interface IndexerInterface
     public function getStorage();
 
     /**
+     * Create document.
+     *
+     * @return DocumentInterface
+     */
+    public function createDocument();
+
+    /**
      * @param DocumentIdentity $identity
      *
      * @return bool
      */
     public function supports(DocumentIdentity $identity);
+
+    /**
+     * @param DocumentIdentity $identity
+     *
+     * @return DocumentInterface|null
+     */
+    public function find(DocumentIdentity $identity);
 
     /**
      * Index document identified by identity.

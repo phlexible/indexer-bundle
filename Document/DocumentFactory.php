@@ -63,6 +63,7 @@ class DocumentFactory
         }
 
         $document = clone $this->prototypes[$documentClass];
+        $document->set('_document_class', $documentClass);
 
         if ($identity) {
             $document->setIdentity($identity);

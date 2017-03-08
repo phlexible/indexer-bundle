@@ -16,7 +16,6 @@ use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -24,7 +23,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class AddCommand extends Command
+class FindCommand extends Command
 {
     /**
      * @var IndexerCollection
@@ -47,10 +46,9 @@ class AddCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('indexer:add')
-            ->setDescription('Add document to index.')
+            ->setName('indexer:find')
+            ->setDescription('Find document in index.')
             ->addArgument('identifier', InputArgument::REQUIRED, 'Document identifier')
-            ->addOption('update', null, InputOption::VALUE_NONE, 'Update document')
         ;
     }
 
@@ -60,9 +58,6 @@ class AddCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $identifier = new DocumentIdentity($input->getArgument('identifier'));
-        $method = $input->getOption('update') ? 'update' : 'add';
-
-        ini_set('memory_limit', -1);
 
         foreach ($this->indexers as $indexer) {
             /* @var $indexer \Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface */
@@ -74,13 +69,8 @@ class AddCommand extends Command
                 $output->writeln('  Storage: '.get_class($storage));
                 $output->writeln('    DSN: '.$storage->getConnectionString());
 
-                if (!$indexer->$method($identifier)) {
-                    $output->writeln("<error>$identifier was NOT indexed.</error>");
-
-                    continue;
-                }
-
-                $output->writeln("$identifier indexed.");
+                $document = $storage->find($identifier);
+                dump($document);
             }
         }
 

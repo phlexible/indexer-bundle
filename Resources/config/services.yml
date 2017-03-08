@@ -18,19 +18,54 @@ services:
         class: Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection
         arguments: [[]]
 
+    # commands
+    phlexible_indexer.command.add_all:
+        class: Phlexible\Bundle\IndexerBundle\Command\AddAllCommand
+        arguments:
+            - "@phlexible_indexer.indexers"
+        tags:
+            - {name: console.command}
+
+    phlexible_indexer.command.add:
+        class: Phlexible\Bundle\IndexerBundle\Command\AddCommand
+        arguments:
+            - "@phlexible_indexer.indexers"
+        tags:
+            - {name: console.command}
+
+    phlexible_indexer.command.delete:
+        class: Phlexible\Bundle\IndexerBundle\Command\DeleteCommand
+        arguments:
+            - "@phlexible_indexer.indexers"
+        tags:
+            - {name: console.command}
+
+    phlexible_indexer.command.find:
+        class: Phlexible\Bundle\IndexerBundle\Command\FindCommand
+        arguments:
+            - "@phlexible_indexer.indexers"
+        tags:
+            - {name: console.command}
+
+    phlexible_indexer.command.index:
+        class: Phlexible\Bundle\IndexerBundle\Command\IndexCommand
+        arguments:
+            - "@phlexible_indexer.storage.default"
+        tags:
+            - {name: console.command}
+
+    phlexible_indexer.command.status:
+        class: Phlexible\Bundle\IndexerBundle\Command\StatusCommand
+        arguments:
+            - "@phlexible_indexer.indexers"
+        tags:
+            - {name: console.command}
+
     # problem checks
-    phlexible_indexer.query.checker:
-        class: Phlexible\Bundle\IndexerBundle\ProblemChecker\QueryChecker
+    phlexible_indexer.checker.indexer:
+        class: Phlexible\Bundle\IndexerBundle\ProblemChecker\IndexerChecker
         public: false
         arguments:
-            - "@phlexible_indexer.search"
-            - "@properties"
+            - "@phlexible_indexer.indexers"
         tags:
-            - {name: phlexible_problem.problem_checker}
-
-    # role providers
-    phlexible_indexer.acl_provider:
-        class: Phlexible\Bundle\IndexerBundle\RoleProvider\IndexerRoleProvider
-        public: false
-        tags:
-            - {name: phlexible_gui.role_provider}
+            - {name: phlexible_problem.checker}

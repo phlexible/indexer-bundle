@@ -11,6 +11,7 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Storage;
 
+use Countable;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentInterface;
 use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
@@ -20,7 +21,7 @@ use Phlexible\Bundle\IndexerBundle\Storage\Operation\Operations;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-interface StorageInterface
+interface StorageInterface extends Countable
 {
     /**
      * Return connection parameters as string.
@@ -28,13 +29,6 @@ interface StorageInterface
      * @return string
      */
     public function getConnectionString();
-
-    /**
-     * Count all documents.
-     *
-     * @return int
-     */
-    public function count();
 
     /**
      * Count all documents of type.

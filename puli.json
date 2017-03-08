@@ -1,22 +1,12 @@
 {
     "version": "1.0",
     "path-mappings": {
-        "/phlexible/phlexibleindexer/icons": "Resources/public/icons",
-        "/phlexible/phlexibleindexer/menu": "Resources/menu",
-        "/phlexible/phlexibleindexer/scripts": "Resources/scripts"
+        "/phlexible/phlexibleindexer/icons": "Resources/public/icons"
     },
     "bindings": {
-        "f32829f2-fb9f-54f1-a0ff-4f8e397f84cb": {
-            "query": "/phlexible/phlexibleindexer/scripts/**/*.js",
-            "type": "phlexible/scripts"
-        },
         "76afcf08-832a-5f51-b2bf-ec541b38c7cb": {
             "query": "/phlexible/phlexibleindexer/icons/*.png",
             "type": "phlexible/icons"
-        },
-        "585e6e17-b0d3-5fde-ad39-387e908c0a8c": {
-            "query": "/phlexible/phlexibleindexer/menu/*.yml",
-            "type": "phlexible/menu"
         }
     }
 }

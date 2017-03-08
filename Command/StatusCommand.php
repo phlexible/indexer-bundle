@@ -11,11 +11,12 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
 use Phlexible\Bundle\IndexerBundle\Storage\Commitable;
 use Phlexible\Bundle\IndexerBundle\Storage\Flushable;
 use Phlexible\Bundle\IndexerBundle\Storage\Optimizable;
 use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -24,8 +25,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Marco Fischer <mf@brainbits.net>
  */
-class StatusCommand extends ContainerAwareCommand
+class StatusCommand extends Command
 {
+    /**
+     * @var IndexerCollection
+     */
+    private $indexers;
+
+    /**
+     * @param IndexerCollection $indexers
+     */
+    public function __construct(IndexerCollection $indexers)
+    {
+        parent::__construct();
+
+        $this->indexers = $indexers;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -44,17 +60,20 @@ class StatusCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
-
         $output->writeln('Indexers:');
-        if (!count($indexers)) {
+        if (!count($this->indexers)) {
             $output->writeln('  No indexers.');
-        } else {
-            foreach ($indexers as $indexerName => $indexer) {
-                $output->writeln('  <info>'.get_class($indexer).'</info>');
+            return 0;
+        }
 
-                $this->showStorage($output, $indexer->getStorage());
-            }
+        foreach ($this->indexers as $indexerName => $indexer) {
+            $output->writeln('  <info>'.$indexer->getType().'</>');
+            $numDocuments = count($indexer);
+            $output->writeln('    Indexer Class: '.get_class($indexer));
+            $output->writeln('    Document Class: '.get_class($indexer->createDocument()));
+            $output->writeln('    Num documents: '.($numDocuments?'<info>':'<error>').count($indexer).'</>');
+
+            $this->showStorage($output, $indexer->getStorage());
         }
 
         return 0;
@@ -72,11 +91,11 @@ class StatusCommand extends ContainerAwareCommand
         if ($storage instanceof Commitable) {
             $features[] = 'Commitable';
         }
-        $output->writeln('    Storage: <info>'.$storage->getConnectionString().'</info>');
-        $output->writeln('      Class:      '.get_class($storage));
+        $output->writeln('    Storage:');
+        $output->writeln('      Storage Class:      '.get_class($storage));
         $output->writeln('      Connection: '.$storage->getConnectionString());
         $output->writeln('      Features:   '.implode(', ', $features));
-        $output->writeln('      Is healthy: '.($healthy = $storage->isHealthy() ? '<info>yes</info>' : '<error>no</error>'));
+        $output->writeln('      Is healthy: '.($healthy = $storage->isHealthy() ? '<info>yes' : '<error>no').'</>');
 
         if (!$healthy) {
             foreach ($storage->check() as $error) {

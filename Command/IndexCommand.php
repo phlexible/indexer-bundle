@@ -11,7 +11,8 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Phlexible\Bundle\IndexerBundle\Storage\StorageInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,8 +22,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class IndexCommand extends ContainerAwareCommand
+class IndexCommand extends Command
 {
+    /**
+     * @var StorageInterface
+     */
+    private $storage;
+
+    /**
+     * @param StorageInterface $storage
+     */
+    public function __construct(StorageInterface $storage)
+    {
+        parent::__construct();
+
+        $this->storage = $storage;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -45,11 +61,9 @@ class IndexCommand extends ContainerAwareCommand
     {
         ini_set('memory_limit', -1);
 
-        $storage = $this->getContainer()->get('phlexible_indexer.storage.default');
+        $output->writeln('Committing storage '.$this->storage->getConnectionString());
 
-        $output->writeln('Committing storage '.$storage->getConnectionString());
-
-        $operations = $storage->createOperations();
+        $operations = $this->storage->createOperations();
 
         if ($input->getOption('commit')) {
             $operations->commit();
@@ -64,7 +78,7 @@ class IndexCommand extends ContainerAwareCommand
             $operations->rollback();
         }
 
-        if ($storage->execute($operations)) {
+        if ($this->storage->execute($operations)) {
             $output->writeln('<info>Maintenance done.</info>');
         } else {
             $output->writeln('<erro>Maintenance failed.</erro>');

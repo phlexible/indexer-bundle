@@ -11,8 +11,9 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
 use Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,8 +23,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class AddAllCommand extends ContainerAwareCommand
+class AddAllCommand extends Command
 {
+    /**
+     * @var IndexerCollection
+     */
+    private $indexers;
+
+    /**
+     * @param IndexerCollection $indexers
+     */
+    public function __construct(IndexerCollection $indexers)
+    {
+        parent::__construct();
+
+        $this->indexers = $indexers;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -45,8 +61,7 @@ class AddAllCommand extends ContainerAwareCommand
 
         ini_set('memory_limit', -1);
 
-        $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
-        foreach ($indexers as $indexer) {
+        foreach ($this->indexers as $indexer) {
             /* @var $indexer IndexerInterface */
             $storage = $indexer->getStorage();
 
@@ -57,9 +72,6 @@ class AddAllCommand extends ContainerAwareCommand
             if ($viaQueue) {
                 $result = $indexer->queueAll();
             } else {
-                $this->getContainer()->get('doctrine.orm.default_entity_manager')->getConnection()->getConfiguration()
-                    ->setSQLLogger(null);
-
                 $result = $indexer->indexAll();
             }
 

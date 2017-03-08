@@ -12,7 +12,8 @@
 namespace Phlexible\Bundle\IndexerBundle\Command;
 
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Phlexible\Bundle\IndexerBundle\Indexer\IndexerCollection;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,8 +23,23 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Stephan Wentz <sw@brainbits.net>
  */
-class DeleteCommand extends ContainerAwareCommand
+class DeleteCommand extends Command
 {
+    /**
+     * @var IndexerCollection
+     */
+    private $indexers;
+
+    /**
+     * @param IndexerCollection $indexers
+     */
+    public function __construct(IndexerCollection $indexers)
+    {
+        parent::__construct();
+
+        $this->indexers = $indexers;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -49,10 +65,8 @@ class DeleteCommand extends ContainerAwareCommand
 
         ini_set('memory_limit', -1);
 
-        $indexers = $this->getContainer()->get('phlexible_indexer.indexers');
-
         $cnt = 0;
-        foreach ($indexers as $indexer) {
+        foreach ($this->indexers as $indexer) {
             /* @var $indexer \Phlexible\Bundle\IndexerBundle\Indexer\IndexerInterface */
 
             $storage = $indexer->getStorage();
