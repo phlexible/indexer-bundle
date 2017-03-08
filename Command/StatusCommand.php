@@ -63,7 +63,7 @@ class StatusCommand extends Command
         $output->writeln('Indexers:');
         if (!count($this->indexers)) {
             $output->writeln('  No indexers.');
-            
+
             return 0;
         }
 
