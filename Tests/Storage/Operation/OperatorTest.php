@@ -11,7 +11,6 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Tests\Storage\Operation;
 
-use Phlexible\Bundle\IndexerBundle\Document\Document;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
 use Phlexible\Bundle\IndexerBundle\Storage\Commitable;

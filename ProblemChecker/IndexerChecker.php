@@ -23,7 +23,7 @@ use Phlexible\Bundle\ProblemBundle\ProblemChecker\ProblemCheckerInterface;
 class IndexerChecker implements ProblemCheckerInterface
 {
     /**
-     * @var IndexerCollection $indexers
+     * @var IndexerCollection
      */
     private $indexers;
 
@@ -41,7 +41,7 @@ class IndexerChecker implements ProblemCheckerInterface
 
         try {
             foreach ($this->indexers as $indexer) {
-                echo get_class($indexer)." ".count($indexer).PHP_EOL;
+                echo get_class($indexer).' '.count($indexer).PHP_EOL;
                 if (!count($indexer)) {
                     $problem = new Problem();
                     $problem

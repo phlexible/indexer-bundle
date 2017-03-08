@@ -71,7 +71,7 @@ class StatusCommand extends Command
             $numDocuments = count($indexer);
             $output->writeln('    Indexer Class: '.get_class($indexer));
             $output->writeln('    Document Class: '.get_class($indexer->createDocument()));
-            $output->writeln('    Num documents: '.($numDocuments?'<info>':'<error>').count($indexer).'</>');
+            $output->writeln('    Num documents: '.($numDocuments ? '<info>' : '<error>').count($indexer).'</>');
 
             $this->showStorage($output, $indexer->getStorage());
         }
