@@ -11,21 +11,14 @@
 
 namespace Phlexible\Bundle\IndexerBundle\Tests\Document;
 
-use Phlexible\Bundle\IndexerBundle\Document\Document;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentFactory;
 use Phlexible\Bundle\IndexerBundle\Document\DocumentIdentity;
 use Phlexible\Bundle\IndexerBundle\Event\DocumentEvent;
 use Phlexible\Bundle\IndexerBundle\IndexerEvents;
+use Phlexible\Bundle\IndexerBundle\Tests\Fixture\TestDocument;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-
-class TestDocument extends Document
-{
-    public function getName()
-    {
-    }
-}
 
 /**
  * Document factory test.
