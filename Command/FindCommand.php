@@ -70,7 +70,7 @@ class FindCommand extends Command
                 $output->writeln('    DSN: '.$storage->getConnectionString());
 
                 $document = $storage->find($identifier);
-                dump($document);
+                var_dump($document);
             }
         }
 
