@@ -27,18 +27,25 @@ interface DocumentInterface
     const CONFIG_TYPE = 'type';
 
     const TYPE_TEXT = 'text';
-    const TYPE_STRING = 'string';
+    const TYPE_KEYWORD = 'keyword';
+
     const TYPE_INTEGER = 'integer';
     const TYPE_FLOAT = 'float';
     const TYPE_BOOLEAN = 'boolean';
     const TYPE_DOUBLE = 'double';
     const TYPE_LONG = 'long';
+
     const TYPE_DATETIME = 'datetime';
     const TYPE_DATE = 'date';
+
     const TYPE_CURRENCY = 'currency';
     const TYPE_OBJECT = 'object';
-    const TYPE_KEYWORD = 'keyword';
     const TYPE_COMPLETION = 'completion';
+
+    /**
+     * @deprecated
+     */
+    const TYPE_STRING = 'string';
 
     /**
      * Return document name.
