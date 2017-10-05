@@ -37,6 +37,8 @@ interface DocumentInterface
     const TYPE_DATE = 'date';
     const TYPE_CURRENCY = 'currency';
     const TYPE_OBJECT = 'object';
+    const TYPE_KEYWORD = 'keyword';
+    const TYPE_COMPLETION = 'completion';
 
     /**
      * Return document name.
